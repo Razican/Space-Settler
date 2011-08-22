@@ -1,0 +1,12 @@
+*redcar*
+*geany*
+*error_log*
+.DS_Store
+
+space-settler/cache/*
+!space-settler/cache/index.html
+!space-settler/cache/.htaccess
+
+space-settler/logs/*
+!space-settler/logs/index.html
+!space-settler/logs/.htaccess

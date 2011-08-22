@@ -1,0 +1,20 @@
+@charset "utf8"; #codeigniter_profiler{text-align:left;clear:both;background-color:#fff;background-image:linear-gradient(top, darkgrey, #fff 150px);padding:10px;margin-top:25px;font-family:auto;border-radius:10px}
+#codeigniter_profiler p{border:1px solid #5a0099;margin:20px 0;background-color:#eee}
+#codeigniter_profiler div{padding:4px 0 4px 0}
+#codeigniter_profiler div.fieldset{padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#fff;border-radius:10px}
+#codeigniter_profiler div.fieldset span.legend{position:relative;bottom:15px;background-color:#fff}
+#codeigniter_profiler table{width:100%;text-align:left;font-size:16px}
+#codeigniter_profiler td{padding:5px;width:50%;background-color:#ddd}
+#ci_profiler_benchmarks{border:1px solid #900;color:#900}
+#ci_profiler_benchmarks table{font-size:14px}
+#ci_profiler_queries{border:1px solid #0000FF;color:#0000FF}
+#ci_profiler_queries table{border:none}
+#ci_profiler_queries td{width:100%;color:#0000FF;background-color:#eee}
+.ci_profiler_query{border:1px solid #0000FF}
+.ci_profiler_query td{font-size:12px}
+#ci_profiler_post{border:1px solid #090;color:#090}
+#ci_profiler_uri_string{border:1px solid #000;color:#000}
+#ci_profiler_controller_info{border:1px solid #995300;color:#995300}
+#ci_profiler_memory_usage{border:1px solid #5a0099;color:#5a0099}
+#ci_profiler_http_headers{border:1px solid #000;color:#000}
+#ci_profiler_config{border:1px solid #000;color:#000}
