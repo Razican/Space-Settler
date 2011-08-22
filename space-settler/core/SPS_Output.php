@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * XB_Output Class
+ * SPS_Output Class
  *
  * @subpackage	Libraries
  * @author		Razican
@@ -9,7 +9,7 @@
  * @link		http://www.razican.com/
  */
 
-class XB_Output extends CI_Output {
+class SPS_Output extends CI_Output {
 
 	function __construct()
 	{
@@ -159,5 +159,5 @@ class XB_Output extends CI_Output {
 }
 
 
-/* End of file XB_Output.php */
-/* Location: ./application/core/XB_Output.php */
+/* End of file SPS_Output.php */
+/* Location: ./application/core/SPS_Output.php */

@@ -10,7 +10,7 @@
 |
 */
 
-$config['version']		= '0.0';
+$config['version']		= '0.0.0';
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ $config['forum_url']	= 'http://www.razican.com/';
 | This is the URL of the forum.
 |
 */
-$config['game_name']	= 'X-Battle';
+$config['game_name']	= 'Space Settler';
 
 
 /* End of file x-battle.php */

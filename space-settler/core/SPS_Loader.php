@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * XB_Loader Class
+ * SPS_Loader Class
  *
  * @subpackage	Libraries
  * @author		Razican
@@ -9,7 +9,7 @@
  * @link		http://www.razican.com/
  */
 
-class XB_Loader extends CI_Loader {
+class SPS_Loader extends CI_Loader {
 
 	function view($view, $vars = array(), $return = FALSE)
 	{
@@ -18,5 +18,5 @@ class XB_Loader extends CI_Loader {
 }
 
 
-/* End of file XB_Loader.php */
-/* Location: ./application/core/XB_Loader.php */
+/* End of file SPS_Loader.php */
+/* Location: ./application/core/SPS_Loader.php */

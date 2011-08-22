@@ -80,7 +80,7 @@ $autoload['helper'] = array('overal', 'language', 'form', 'html', 'url', 'date')
 |
 */
 
-$autoload['config'] = array('enviroment', 'x-battle');
+$autoload['config'] = array('enviroment', 'space-settler');
 
 
 /*

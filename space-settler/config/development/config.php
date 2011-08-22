@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://127.0.0.1/xbattle_ci';
+$config['base_url']	= 'http://127.0.0.1/space_settler';
 
 /*
 |--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ $config['enable_hooks'] = TRUE;
 | http://codeigniter.com/user_guide/general/creating_libraries.html
 |
 */
-$config['subclass_prefix'] = 'XB_';
+$config['subclass_prefix'] = 'SPS_';
 
 
 /*
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = 'mMSJ2r5nKCJPa4I72g6WSIu8i85XIxYK';
+$config['encryption_key'] = 't992y4xaegUT28Bs0U40XR5XRcS48k4p';
 
 /*
 |--------------------------------------------------------------------------
@@ -244,7 +244,7 @@ $config['encryption_key'] = 'mMSJ2r5nKCJPa4I72g6WSIu8i85XIxYK';
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'xb_session';
+$config['sess_cookie_name']		= 'sps_session';
 $config['sess_expiration']		= 604800; //60*60*24*7
 $config['sess_expire_on_close']	= FALSE;
 $config['sess_encrypt_cookie']	= TRUE;
@@ -267,7 +267,7 @@ $config['sess_time_to_update']	= 900; //60*15
 */
 $config['cookie_prefix']	= "";
 $config['cookie_domain']	= "127.0.0.1";
-$config['cookie_path']		= "/xbattle_ci";
+$config['cookie_path']		= "/space_settler";
 $config['cookie_secure']	= FALSE;
 
 /*
@@ -294,8 +294,8 @@ $config['global_xss_filtering'] = TRUE;
 | 'csrf_expire' = The number in seconds the token should expire.
 */
 $config['csrf_protection']	= TRUE;
-$config['csrf_token_name']	= 'XB_csrf';
-$config['csrf_cookie_name']	= 'XB_csrf';
+$config['csrf_token_name']	= 'SPS_csrf';
+$config['csrf_cookie_name']	= 'SPS_csrf';
 $config['csrf_expire']		= 7200; //60*60*2
 
 /*

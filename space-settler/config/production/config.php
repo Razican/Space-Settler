@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://xbattle.razican.com/';
+$config['base_url']	= 'http://sps.razican.com/';
 
 /*
 |--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ $config['enable_hooks'] = TRUE;
 | http://codeigniter.com/user_guide/general/creating_libraries.html
 |
 */
-$config['subclass_prefix'] = 'XB_';
+$config['subclass_prefix'] = 'SPS_';
 
 
 /*
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = 'nIYVXxs71v9d5q5hvJ1f5fy1z02tEPR7';
+$config['encryption_key'] = 'pBijja75CV4rhx3Z0vbmFG5GEkGqFFBg';
 
 /*
 |--------------------------------------------------------------------------
@@ -244,7 +244,7 @@ $config['encryption_key'] = 'nIYVXxs71v9d5q5hvJ1f5fy1z02tEPR7';
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'xb_session';
+$config['sess_cookie_name']		= 'sps_session';
 $config['sess_expiration']		= 604800; //60*60*24*7
 $config['sess_expire_on_close']	= FALSE;
 $config['sess_encrypt_cookie']	= TRUE;
@@ -266,7 +266,7 @@ $config['sess_time_to_update']	= 900; //60*15
 |
 */
 $config['cookie_prefix']	= "";
-$config['cookie_domain']	= "xbattle.razican.com";
+$config['cookie_domain']	= "sps.razican.com";
 $config['cookie_path']		= "/";
 $config['cookie_secure']	= FALSE;
 
@@ -294,8 +294,8 @@ $config['global_xss_filtering'] = TRUE;
 | 'csrf_expire' = The number in seconds the token should expire.
 */
 $config['csrf_protection']	= TRUE;
-$config['csrf_token_name']	= 'XB_csrf';
-$config['csrf_cookie_name']	= 'XB_csrf';
+$config['csrf_token_name']	= 'SPS_csrf';
+$config['csrf_cookie_name']	= 'SPS_csrf';
 $config['csrf_expire']		= 7200; //60*60*2
 
 /*

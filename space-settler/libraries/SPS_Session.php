@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * XB_Session Class
+ * SPS_Session Class
  *
  * @subpackage	Libraries
  * @author		Razican
@@ -9,7 +9,7 @@
  * @link		http://www.razican.com/
  */
 
-class XB_Session extends CI_Session {
+class SPS_Session extends CI_Session {
 
   function __construct()
   {
@@ -58,5 +58,5 @@ class XB_Session extends CI_Session {
 }
 
 
-/* End of file XB_Session.php */
-/* Location: ./application/libraries/XB_Session.php */
+/* End of file SPS_Session.php */
+/* Location: ./application/libraries/SPS_Session.php */
