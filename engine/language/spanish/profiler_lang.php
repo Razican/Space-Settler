@@ -9,6 +9,7 @@ $lang['profiler_post_data']		= 'DATOS POST';
 $lang['profiler_uri_string']	= 'CADENA URI';
 $lang['profiler_memory_usage']	= 'USO DE MEMORIA';
 $lang['profiler_config']		= 'VARIABLES DE CONFIGURACIÓN';
+$lang['profiler_session_data']	= 'DATOS DE SESIÓN';
 $lang['profiler_headers']		= 'CABECERAS HTTP';
 $lang['profiler_no_db']			= 'El driver para la base de datos no ha sido cargado';
 $lang['profiler_no_queries']	= 'No se han ejecutado consultas';
@@ -17,10 +18,8 @@ $lang['profiler_no_get']		= 'No existen datos de tipo GET';
 $lang['profiler_no_uri']		= 'No existen datos URI';
 $lang['profiler_no_memory']		= 'Uso de memoria no disponible';
 $lang['profiler_no_profiles']	= 'No hay datos del perfil - todas las secciones del Profiler han sido desactivadas.';
-
-$lang['profiler_loading_time']	= 'Tiempo de Carga: Classes del Core';
-$lang['profiler_controller_time'] = 'Tiempo de Ejecución del Controlador';
-$lang['profiler_total_time']	= 'Tiempo Total de Ejecución';
+$lang['profiler_section_hide']	= 'Ocultar';
+$lang['profiler_section_show']	= 'Mostrar';
 
 
 /* End of file profiler_lang.php */

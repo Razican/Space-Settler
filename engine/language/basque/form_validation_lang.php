@@ -17,6 +17,7 @@ $lang['is_numeric']			= "%s eremuak karaktere zenbakizkoak bakarrik onartzen dit
 $lang['integer']			= "%s eremuak zenbaki osoak bakarrik onartzen ditu.";
 $lang['regex_match']		= "%s eremuak ez dauka formatu egokia.";
 $lang['matches']			= "%s eremua ez dator bat %s eremuarekin.";
+$lang['is_unique'] 			= "%s eremuaren balioak bakarra izan behar du.";
 $lang['is_natural']			= "%s eremuak zenbaki arruntak bakarrik onartzen ditu.";
 $lang['is_natural_no_zero']	= "%s eremuak zero ez diren zenbaki arruntak onartzen ditu.";
 $lang['decimal']			= "%s eremua zenbaki dezimala izan behar da.";

@@ -17,6 +17,7 @@ $lang['is_numeric']			= "El campo %s debe contener sólo caracteres numéricos."
 $lang['integer']			= "El campo %s debe contener un número entero.";
 $lang['regex_match']		= "El campo %s no tiene el formato correcto.";
 $lang['matches']			= "El campo %s no coincide con el campo %s.";
+$lang['is_unique'] 			= "El campo %s debe contener un valor único.";
 $lang['is_natural']			= "El campo %s debe contener sólo múmeros positivos.";
 $lang['is_natural_no_zero']	= "El campo %s debe contener un número mayor que cero.";
 $lang['decimal']			= "El campo %s debe contener un número decimal.";
