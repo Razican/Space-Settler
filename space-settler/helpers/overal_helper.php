@@ -6,28 +6,25 @@ function update_config( $config_name, $config_value )
 	doquery("UPDATE {{table}} SET `config_value` = '".$config_value."' WHERE `config_name` = '".$config_name."';",'config');*/
 }
 
-function message ($mes, $dest = "", $time = "3", $topnav = false, $menu = true)
+function message ($message, $dest = '/', $topnav = FALSE, $menu = FALSE)
 {
-/*	$parse['mes']   = $mes;
+	$CI					=& get_instance();
 
-	$page .= parsetemplate(gettemplate('message_body'), $parse);
+	$data['head']		= $CI->load->view('head', '', TRUE);
+	$data['footer']		= $CI->load->view('footer', '', TRUE);
+	$data['message']	= $message;
+	$data['dest']		= anchor($dest, lang('overal.go_back'), 'title="'.lang('overal.go_back').'"');
 
-	if (!defined('IN_ADMIN'))
-	{
-		display ($page, $topnav, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ""), false, $menu);
-	}
-	else
-	{
-		display ($page, $topnav, (($dest != "") ? "<meta http-equiv=\"refresh\" content=\"$time;URL=$dest\">" : ""), true, false);
-	}*/
+	$CI->load->view('message', $data);
 }
 
 function skin()
 {
-	global $CI;
+	$CI		=& get_instance();
 
 	$skin	=  $CI->config->item('skin');
 	$skin	= ( ! empty($skin)) ? $skin : 'default';
+
 	return $skin;
 }
 

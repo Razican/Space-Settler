@@ -8,14 +8,14 @@
 	<meta http-equiv="content-style-type" content="text/css" />
 	<!-- <meta name="description" content="<?php echo lang('overal.description'); ?>" />
 	<meta name="keywords" content="" /> -->
+	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/overal.css"); ?>" />
 	<?php if (defined('ADMIN')) : ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/admin.css"); ?>" />
 	<?php elseif (defined('LOGIN')) : ?>
-	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/styles.css"); ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/login.css"); ?>" />
 	<?php else : ?>
-	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/default.css"); ?>" />
-	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/format.css"); ?>" />
-	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/".skin()."/format.css"); ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/ingame.css"); ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/".skin()."/style.css"); ?>" />
 	<?php endif; ?>
 	<?php if ($this->config->item('debug')) : ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/profiler.css"); ?>" />

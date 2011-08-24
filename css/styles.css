@@ -88,7 +88,7 @@ a:hover {
 	width: 400px;
 }
 
-#content {
+/*#content {
     position: absolute;
     left: 25px;
     top: 50px;
@@ -98,7 +98,7 @@ a:hover {
     color:#b1daf2;
     text-align: left;
     width: 400px;
-}
+}*/
 
 #contentscroll {
      overflow: auto;
@@ -511,7 +511,6 @@ td.v, td.s, .style td, p td
   background-color     : #000000;
   opacity              : 0.7;
   border-radius		   : 5px;
-  cursor			   : pointer;
 }
 
 td.f, input, select, textarea
@@ -520,5 +519,4 @@ td.f, input, select, textarea
   background-color     : #1c1c1c;
   opacity              : 0.7;
   border-radius		   : 5px;
-  cursor			   : pointer;
 }

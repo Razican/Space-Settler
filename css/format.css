@@ -279,7 +279,7 @@ a:hover
 .style td
 {
   color                : #E6EBFB;
-  border-top           : 0px; 
+  border-top           : 0px;
   font-size            : 14px;
   font-family          : Tahoma,sans-serif;
 }
@@ -338,13 +338,13 @@ h1
 
 #darkmatter{
 	font-family: verdana;
-	color:#FF8900; 
+	color:#FF8900;
 	filter: glow(color=#000000, strength=6);
 }
-	
+
 #darkmatter2{
 	font-family: verdana;
-	color:#FF8900; 
+	color:#FF8900;
 	filter: glow(color=#000000, strength=6);
 }
 
@@ -413,7 +413,7 @@ td {
 	background-color	 :#344566;
 border-top           : 0px solid #415680 ;
 font-size            : 11px;
-font-family          : Tahoma,sans-serif; 
+font-family          : Tahoma,sans-serif;
 padding				 : 1px;
 vertical-align		 : middle;
 }

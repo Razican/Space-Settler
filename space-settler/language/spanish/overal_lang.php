@@ -3,6 +3,7 @@
 $lang['overal.index']				= 'Inicio';
 $lang['overal.register']			= 'Registrarse';
 $lang['overal.forum']				= 'Foro';
+$lang['overal.go_back']				= 'Volver';
 
 
 /* End of file overal_lang.php */

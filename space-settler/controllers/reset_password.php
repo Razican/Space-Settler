@@ -14,16 +14,27 @@ class Reset_password extends CI_Controller {
 		if( ! $this->session->userdata('logged_in'))
 		{
 			define('LOGIN', TRUE);
+			$this->lang->load('login');
 
 			if ($this->input->server('REQUEST_METHOD') === 'POST')
 			{
-				$this->db->where('');
-				$query	= $this->db->get('users');
+				$this->load->helper('email');
+
+				if(valid_email($this->input->post('email')))
+				{
+
+				}
+				else
+				{
+					message(lang('login.mail_not_valid'), 'reset_password');
+				}
+
+				//echo "POST";
+				/*$this->db->where('');
+				$query	= $this->db->get('users');*/
 			}
 			else
 			{
-				$this->lang->load('login');
-
 				$data['version']	= $this->config->item('version');
 				$data['forum_url']	= $this->config->item('forum_url');
 				$data['head']		= $this->load->view('head', '', TRUE);

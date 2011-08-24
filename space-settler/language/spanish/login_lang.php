@@ -1,6 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 $lang['login.mail_not_exist'] 		= '¡La dirección de correo eléctronico no existe!';
+$lang['login.mail_not_valid'] 		= '¡El email introducido no es válido!';
 $lang['login.mail_title']			= 'Nueva contraseña';
 $lang['login.mail_text']			= 'Esta es tu nueva contraseña: ';
 $lang['login.mail_sended']			= '¡La nueva contraseña ha sido enviado con éxito!';
