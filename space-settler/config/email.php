@@ -29,7 +29,7 @@ $config['smtp_host']	= 'ssl://smtp.googlemail.com';
 | The username for the SMTP host for sending email.
 |
 */
-$config['smtp_user']	= 'x-battle@razican.com';
+$config['smtp_user']	= 'space-settler@razican.com';
 
 /*
 |--------------------------------------------------------------------------
@@ -85,7 +85,7 @@ $config['newline']		= "\r\n";
 | The user agent the mail class will use when sending the email.
 |
 */
-$config['useragent']		= 'X-Battle';
+$config['useragent']		= 'Space Settler';
 
 
 /* End of file email.php */

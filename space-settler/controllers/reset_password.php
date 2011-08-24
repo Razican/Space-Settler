@@ -20,18 +20,40 @@ class Reset_password extends CI_Controller {
 			{
 				$this->load->helper('email');
 
-				if(valid_email($this->input->post('email')))
+				$email	= $this->input->post('email');
+				if(valid_email($email))
 				{
+					$this->db->where('email', $email);
+					$this->db->limit(1);
+					if($this->db->count_all_results('users') === 0)
+					{
+						message(lang('login.mail_not_exist'), 'reset_password');
+					}
+					else
+					{
+						$this->load->helper('string');
+						$this->load->library('email');
 
+						$password	= random_string('alnum', 8);
+						$sha1_pass	= sha1($password);
+
+						$this->email->from('space-settler@razican.com', 'Space Settler');
+						$this->email->reply_to('noreply@razican.com', 'Space Settler');
+						$this->email->to($email);
+						$this->email->subject(lang('login.email_title'));
+						$this->email->message(lang('login.email_text').$password);
+						$this->email->send();
+
+						$this->db->where('email', $email);
+						$this->db->update('users', array('password' => $sha1_pass));
+
+						message(lang('login.mail_sended'));
+					}
 				}
 				else
 				{
 					message(lang('login.mail_not_valid'), 'reset_password');
 				}
-
-				//echo "POST";
-				/*$this->db->where('');
-				$query	= $this->db->get('users');*/
 			}
 			else
 			{

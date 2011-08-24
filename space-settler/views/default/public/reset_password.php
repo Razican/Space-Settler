@@ -1,7 +1,7 @@
 <?php echo $head; ?>
-<!-- TO DO: Create submit Button -->
-<?php echo form_open('reset_password'); ?>
-	<div id="main">
+
+<div id="main">
+	<?php echo form_open('reset_password'); ?>
 		<div id="mainmenu" style="margin-top: 20px;">
 			<?php echo anchor('/', lang('overal.index')); ?>
 			<?php echo anchor('register', lang('overal.register')); ?>
@@ -32,6 +32,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</form>
+	</form>
+</div>
+
 <?php echo $footer; ?>

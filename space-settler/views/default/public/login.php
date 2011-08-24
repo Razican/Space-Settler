@@ -29,7 +29,7 @@
 		<div id="title"><?php echo lang('login.welcome_to').' '.$game_name; ?></div>
 		<div id="content">
 			<div id="text1">
-				<div style="text-align: left;"><strong><?php echo $game_name.'</strong> '.lang('login.game_description'); ?></div>
+				<div style="text-align: justify;"><strong><?php echo $game_name.'</strong> '.lang('login.game_description'); ?></div>
 			</div>
 			<div id="register" class="bigbutton" onclick="document.location.href='<?php echo site_url('register'); ?>';"><?php echo lang('login.server_register'); ?></div>
 			<div id="text2">
