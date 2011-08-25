@@ -5,7 +5,7 @@ $lang['login.mail_not_valid'] 		= '¡El email introducido no es válido!';
 $lang['login.mail_title']			= 'Nueva contraseña';
 $lang['login.mail_text']			= 'Esta es tu nueva contraseña: ';
 $lang['login.mail_sended']			= '¡La nueva contraseña ha sido enviada con éxito!';
-$lang['login.error']				= '¡Datos ingresados incorrectos! <br /><a href="index.php" target="_top">Volver al inicio</a>';
+$lang['login.error']				= '¡Datos ingresados incorrectos!>';
 $lang['login.lost_pass_title']		= 'Recuperar clave perdida';
 $lang['login.lost_pass_text'] 		= 'Para recuperar tu contraseña, introduce el email utilizado en el registro. Recibirás una nueva clave en unos minutos.';
 $lang['login.retrieve_pass']		= 'Recuperar clave';

@@ -1,8 +1,9 @@
 <?php echo $head; ?>
+
 <div id="main">
 	<div id="login">
 		<div id="login_input">
-			<form action="" method="post">
+			<?php echo form_open('/'); ?>
 			<table width="100%" border="0" cellpadding="0" cellspacing="0">
 				<tr style="vertical-align: top;">
 					<td style="padding-right: 4px;">
@@ -49,4 +50,5 @@
 		</div>
 	</div>
 </div>
+
 <?php echo $footer; ?>

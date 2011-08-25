@@ -14,15 +14,17 @@ class Main extends CI_Controller {
 		if( ! $this->session->userdata('logged_in'))
 		{
 			define('LOGIN', TRUE);
+			$this->lang->load('login');
 
 			if ($this->input->server('REQUEST_METHOD') === 'POST')
 			{
-				//Log In
+				if($this->user->login($this->input->post('username'), $this->input->post('password'), $this->input->post('rememberme')))
+					redirect('/');
+				else
+					message(lang('login.error'));
 			}
 			else
 			{
-				$this->lang->load('login');
-
 				$data['version']	= $this->config->item('version');
 				$data['forum_url']	= $this->config->item('forum_url');
 				$data['game_name']	= $this->config->item('game_name');

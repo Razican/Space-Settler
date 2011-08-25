@@ -53,8 +53,10 @@ Tabla sps_rw:
 Queda pendiente, ya que no sabemos su uso.
 
 Tabla sps_users:
-Queda pendiente el campo spio_anz, ya que no sabemos su uso.
+Se borran los campos current_planet, user_agent y current_page. Se usarán sesiones para su control.
 Queda pendiente dpath, ya que no tiene un nombre significativo.
+id_planet -- planet_id
+spio_anz -- espionage_probes
 current_luna -- current_moon
 rpg_geologue -- rpg_geologist
 rpg_amiral -- rpg_admiral
@@ -69,8 +71,8 @@ rpg_defenseur -- rpg_defender
 rpg_destructeur -- rpg_destroyer
 rpg_raideur -- rpg_raider
 rpg_empereur -- rpg_emperor
-bana -- ban
-banaday -- banday
+bana -- banned --> Pendiente de borrado: O de crear la tabla banned dentro de este campo, ya que parece innecesaria.
+banaday -- ban_finish
 - Quedan pendientes, también los siguientes campos:
 db_deaktjava
 urlaubs_until
