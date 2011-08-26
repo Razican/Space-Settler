@@ -57,7 +57,7 @@
 #login {
     position: absolute;
     left: 400px;
-    top: 457px;
+    top: 450px;
     width: 450px;
     height: 85px;
     z-index:10;
@@ -66,11 +66,10 @@
 #login_input {
 	position: absolute;
 	left: 25px;
-	top: 21px;
 	font-family:Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	color:#b1daf2;
-	text-align: left;
+	text-align: center;
 	width: 400px;
 	right: 25px;
 	height: 70px;
@@ -87,6 +86,14 @@
 
 #login_input a:hover {
     color:#ffffff;
+}
+
+#login_input div, #login_input span {
+	margin: 5px;
+}
+
+#login_input span p {
+	margin: -10px 0px 0px;
 }
 
 #login_text_1 {

@@ -145,6 +145,12 @@ Cambios en el Juego
 * Todos los nombres de usuario/alianza/planeta tendrán una máxima longitud de 20 caracteres. Los emails de 50, las webs de 100 y las imágenes externas de 150.
 * Se implanta el uso de Sha-1 en vez de Md5.
 
+Más Datos
+---------
+
+Es muy probable la supresión de la tabla config, y puede que la de plugins, ya que se pueden usar archivos para gestionar dichas opciones.
+Aún así, queda mucho por ver. El sistema de plugins será adaptado a CodeIgniter, de manera que se usen librerías. Pero se debe avanzar más en el desarrollo.
+
 Nota:
 -----
 
