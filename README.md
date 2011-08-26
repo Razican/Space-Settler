@@ -4,6 +4,7 @@ Información de cambios:
 El proyecto, a falta de un instalador, se entrega con un usuario predefinido:
 
 **Usuario**: admin
+
 **Contraseña**: 12345
 
 * * *
@@ -14,15 +15,16 @@ Cambios en la base de datos:
 ----------------------------
 
 Tabla **sps_aks**:
-*teilnehmer -- participant
-*flotten -- fleet
-*ankunft -- arrival
-*eingeladen -- invited
+* teilnehmer -- participant
+* flotten -- fleet
+* ankunft -- arrival
+* eingeladen -- invited
 
 * * *
 
 Tabla **sps_banned**:
-*theme -- reason
+
+* theme -- reason
 
 * * *
 
@@ -31,89 +33,99 @@ Tabla **sps_buddy**: --> **sps_firends*:
 * * *
 
 Tabla **sps_galaxy**:
-*id_planet -- planet_id
-*id_luna -- moon_id
-*luna -- moon
+
+* id_planet -- planet_id
+* id_luna -- moon_id
+* luna -- moon
 
 * * *
 
 Tabla **sps_planets**:
-*destruyed -- destroyed
-*misil_launcher -- missile_launcher
-*interceptor_misil -- interceptor_missile
-*interplanetary_misil -- interplanetary_missile
-*metal_mine_porcent -- metal_mine_percent
-*crystal_mine_porcent -- crystal_mine_percent
-*deuterium_sintetizer_porcent -- deuterium_sintetizer_percent
-*solar_plant_porcent -- solar_plant_percent
-*fusion_plant_porcent -- fusion_plant_percent
-*solar_satelit_porcent -- solar_satelit_percent
-*mondbasis -- lunar_base
-*sprungtor -- jumpgate
+
+* destruyed -- destroyed
+* misil_launcher -- missile_launcher
+* interceptor_misil -- interceptor_missile
+* interplanetary_misil -- interplanetary_missile
+* metal_mine_porcent -- metal_mine_percent
+* crystal_mine_porcent -- crystal_mine_percent
+* deuterium_sintetizer_porcent -- deuterium_sintetizer_percent
+* solar_plant_porcent -- solar_plant_percent
+* fusion_plant_porcent -- fusion_plant_percent
+* solar_satelit_porcent -- solar_satelit_percent
+* mondbasis -- lunar_base
+* sprungtor -- jumpgate
 
 * * *
 
 Tabla **sps_errors**:
-*Se quitan los prefijos error_
+
+* Se quitan los prefijos error_
 
 * * *
 
 Tabla **sps_alliance**: --> **sps_alliances**:
-*Se quitan los prefijos ally_
+
+* Se quitan los prefijos ally_
 
 * * *
 
 Tabla **sps_fleets**:
-*Se quitan los prefijos fleet_
+
+* Se quitan los prefijos fleet_
 
 * * *
 
 Tabla **sps_message**:
-*Se quitan los prefijos message_
+
+* Se quitan los prefijos message_
 
 * * *
 
 Tabla **sps_rw**:
-*Queda pendiente, ya que no sabemos su uso.
+
+* Queda pendiente, ya que no sabemos su uso.
 
 * * *
 
 Tabla **sps_users**:
-*Se borran los campos current_planet, user_agent y current_page. Se usarán sesiones para su control.
-*Queda pendiente dpath, ya que no tiene un nombre significativo.
-*id_planet -- planet_id
-*spio_anz -- espionage_probes
-*current_luna -- current_moon
-*rpg_geologue -- rpg_geologist
-*rpg_amiral -- rpg_admiral
-*rpg_ingenieur -- rpg_engineer
-*rpg_technocrate -- rpg_technocrat
-*rpg_espion -- rpg_spy
-*rpg_constructeur -- rpg_constructor
-*rpg_scientifique -- rpg_scientific
-*rpg_commandant -- rpg_commander
-*rpg_stockeur -- rpg_storekeeper
-*rpg_defenseur -- rpg_defender
-*rpg_destructeur -- rpg_destroyer
-*rpg_raideur -- rpg_raider
-*rpg_empereur -- rpg_emperor
-*bana -- banned --> Pendiente de borrado: O de crear la tabla banned dentro de este campo, ya que parece innecesaria.
-*banaday -- ban_finish
+
+* Se borran los campos current_planet, user_agent y current_page. Se usarán sesiones para su control.
+* Queda pendiente dpath, ya que no tiene un nombre significativo.
+* id_planet -- planet_id
+* spio_anz -- espionage_probes
+* current_luna -- current_moon
+* rpg_geologue -- rpg_geologist
+* rpg_amiral -- rpg_admiral
+* rpg_ingenieur -- rpg_engineer
+* rpg_technocrate -- rpg_technocrat
+* rpg_espion -- rpg_spy
+* rpg_constructeur -- rpg_constructor
+* rpg_scientifique -- rpg_scientific
+* rpg_commandant -- rpg_commander
+* rpg_stockeur -- rpg_storekeeper
+* rpg_defenseur -- rpg_defender
+* rpg_destructeur -- rpg_destroyer
+* rpg_raideur -- rpg_raider
+* rpg_empereur -- rpg_emperor
+* bana -- banned --> Pendiente de borrado: O de crear la tabla banned dentro de este campo, ya que parece innecesaria.
+* banaday -- ban_finish
 
 *Quedan pendientes, también los siguientes campos*:
-*db_deaktjava
-*urlaubs_until
-*urlaubs_modus
-*settings_rep
-*settings_mis
-*settings_bud
-*settings_wri
-*settings_esp
-*spio_anz
+
+* db_deaktjava
+* urlaubs_until
+* urlaubs_modus
+* settings_rep
+* settings_mis
+* settings_bud
+* settings_wri
+* settings_esp
+* spio_anz
 
 * * *
 
 **Cambios Generales**
+
 *Se cambian las ID's a bigint(20) unsigned, para permitir 18446744073709551615 ID's.
 *Se ajustan los valires numéricos, ya que no tiene sentido un int(32).
 *Se cambia la codificación a UTF-8, con la variante "general_ci".
