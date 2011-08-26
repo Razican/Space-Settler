@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 22-08-2011 a las 20:16:02
+-- Tiempo de generación: 26-08-2011 a las 14:58:20
 -- Versión del servidor: 5.1.54
 -- Versión de PHP: 5.3.5-1ubuntu7.2
 
@@ -24,13 +24,13 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Estructura de tabla para la tabla `sps_aks`
 --
--- Creación: 22-08-2011 a las 21:41:11
+-- Creación: 26-08-2011 a las 16:57:34
 --
 
 DROP TABLE IF EXISTS `sps_aks`;
 CREATE TABLE IF NOT EXISTS `sps_aks` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) DEFAULT NULL,
+  `name` varchar(20) DEFAULT NULL,
   `participant` text,
   `fleet` text,
   `arrival` int(11) DEFAULT NULL,
@@ -52,13 +52,13 @@ CREATE TABLE IF NOT EXISTS `sps_aks` (
 --
 -- Estructura de tabla para la tabla `sps_alliances`
 --
--- Creación: 22-08-2011 a las 21:40:49
+-- Creación: 26-08-2011 a las 16:54:29
 --
 
 DROP TABLE IF EXISTS `sps_alliances`;
 CREATE TABLE IF NOT EXISTS `sps_alliances` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) DEFAULT NULL,
+  `name` varchar(20) DEFAULT NULL,
   `tag` varchar(8) DEFAULT NULL,
   `owner` int(11) NOT NULL DEFAULT '0',
   `register_time` int(10) unsigned NOT NULL DEFAULT '0',
@@ -337,13 +337,13 @@ CREATE TABLE IF NOT EXISTS `sps_notes` (
 --
 -- Estructura de tabla para la tabla `sps_planets`
 --
--- Creación: 22-08-2011 a las 21:36:41
+-- Creación: 26-08-2011 a las 16:53:50
 --
 
 DROP TABLE IF EXISTS `sps_planets`;
 CREATE TABLE IF NOT EXISTS `sps_planets` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) DEFAULT 'Planeta Principal',
+  `name` varchar(20) DEFAULT 'Planeta Principal',
   `id_owner` int(11) DEFAULT NULL,
   `id_level` int(11) DEFAULT NULL,
   `galaxy` tinyint(1) NOT NULL DEFAULT '0',
@@ -491,7 +491,7 @@ CREATE TABLE IF NOT EXISTS `sps_rw` (
 --
 -- Estructura de tabla para la tabla `sps_sessions`
 --
--- Creación: 22-08-2011 a las 18:00:17
+-- Creación: 22-08-2011 a las 22:27:32
 --
 
 DROP TABLE IF EXISTS `sps_sessions`;
@@ -500,7 +500,7 @@ CREATE TABLE IF NOT EXISTS `sps_sessions` (
   `ip_address` varchar(16) NOT NULL DEFAULT '0',
   `user_agent` varchar(120) DEFAULT NULL,
   `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_data` text NOT NULL,
+  `user_data` text,
   PRIMARY KEY (`session_id`),
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -509,6 +509,13 @@ CREATE TABLE IF NOT EXISTS `sps_sessions` (
 -- Volcar la base de datos para la tabla `sps_sessions`
 --
 
+INSERT INTO `sps_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
+('25bfa9517988f17f29b2705a5a14d712', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314308876, 'a:3:{s:7:"user_id";s:1:"1";s:14:"current_planet";s:1:"1";s:9:"logged_in";b:1;}'),
+('3492e8f5f02e14a29ef5525c56b6b3eb', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314305866, 'a:2:{s:8:"username";s:5:"admin";s:9:"logged_in";b:1;}'),
+('55d131bdb6b07c5d62ae635468a1bf3d', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314308334, 'a:3:{s:7:"user_id";s:1:"1";s:14:"current_planet";s:1:"1";s:9:"logged_in";b:1;}'),
+('ba1bb1c23f42174c903b9a00e9af7ce2', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.', 1314185083, NULL),
+('c9fcdeb750f313ca5b265b3daea5113b', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314308938, 'a:3:{s:7:"user_id";s:1:"1";s:14:"current_planet";s:1:"1";s:9:"logged_in";b:1;}'),
+('d0c79a864d0355baef271991d248485a', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314370120, NULL);
 
 -- --------------------------------------------------------
 
@@ -564,26 +571,24 @@ INSERT INTO `sps_statpoints` (`id_owner`, `id_ally`, `stat_type`, `stat_code`, `
 --
 -- Estructura de tabla para la tabla `sps_users`
 --
--- Creación: 22-08-2011 a las 22:07:14
+-- Creación: 26-08-2011 a las 16:56:37
 --
 
 DROP TABLE IF EXISTS `sps_users`;
 CREATE TABLE IF NOT EXISTS `sps_users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(32) NOT NULL DEFAULT '',
+  `username` varchar(20) NOT NULL DEFAULT '',
   `password` char(40) NOT NULL DEFAULT '',
-  `email` varchar(64) NOT NULL DEFAULT '',
-  `email_2` varchar(64) NOT NULL DEFAULT '',
+  `email` varchar(50) NOT NULL DEFAULT '',
+  `email_2` varchar(50) NOT NULL DEFAULT '',
+  `name` varchar(20) NOT NULL,
   `authlevel` tinyint(4) NOT NULL DEFAULT '0',
-  `id_planet` int(11) NOT NULL DEFAULT '0',
+  `planet_id` int(11) NOT NULL DEFAULT '0',
   `galaxy` tinyint(1) NOT NULL DEFAULT '0',
   `system` smallint(3) NOT NULL DEFAULT '0',
   `planet` tinyint(2) NOT NULL DEFAULT '0',
-  `current_planet` int(11) NOT NULL DEFAULT '0',
   `user_lastip` varchar(16) NOT NULL DEFAULT '',
   `ip_at_reg` varchar(16) NOT NULL DEFAULT '',
-  `user_agent` varchar(120) NOT NULL,
-  `current_page` varchar(100) NOT NULL,
   `register_time` int(10) unsigned NOT NULL DEFAULT '0',
   `onlinetime` int(10) unsigned NOT NULL DEFAULT '0',
   `dpath` varchar(255) NOT NULL DEFAULT '',
@@ -591,7 +596,7 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
   `noipcheck` tinyint(4) NOT NULL DEFAULT '1',
   `planet_sort` tinyint(1) NOT NULL DEFAULT '0',
   `planet_sort_order` tinyint(1) NOT NULL DEFAULT '0',
-  `spio_anz` tinyint(4) NOT NULL DEFAULT '1',
+  `espionage_probes` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `settings_tooltiptime` tinyint(4) NOT NULL DEFAULT '5',
   `settings_fleetactions` tinyint(4) NOT NULL DEFAULT '0',
   `settings_allylogo` tinyint(4) NOT NULL DEFAULT '0',
@@ -606,22 +611,22 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
   `new_message` int(11) NOT NULL DEFAULT '0',
   `fleet_shortcut` text,
   `b_tech_planet` int(11) NOT NULL DEFAULT '0',
-  `spy_tech` int(11) NOT NULL DEFAULT '0',
-  `computer_tech` int(11) NOT NULL DEFAULT '0',
-  `military_tech` int(11) NOT NULL DEFAULT '0',
-  `defence_tech` int(11) NOT NULL DEFAULT '0',
-  `shield_tech` int(11) NOT NULL DEFAULT '0',
-  `energy_tech` int(11) NOT NULL DEFAULT '0',
-  `hyperspace_tech` int(11) NOT NULL DEFAULT '0',
-  `combustion_tech` int(11) NOT NULL DEFAULT '0',
-  `impulse_motor_tech` int(11) NOT NULL DEFAULT '0',
-  `hyperspace_motor_tech` int(11) NOT NULL DEFAULT '0',
-  `laser_tech` int(11) NOT NULL DEFAULT '0',
-  `ionic_tech` int(11) NOT NULL DEFAULT '0',
-  `buster_tech` int(11) NOT NULL DEFAULT '0',
-  `intergalactic_tech` int(11) NOT NULL DEFAULT '0',
-  `expedition_tech` int(11) NOT NULL DEFAULT '0',
-  `graviton_tech` int(11) NOT NULL DEFAULT '0',
+  `spy_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `computer_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `military_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `defence_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `shield_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `energy_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `hyperspace_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `combustion_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `impulse_motor_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `hyperspace_motor_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `laser_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `ionic_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `buster_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `intergalactic_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `expedition_tech` int(10) unsigned NOT NULL DEFAULT '0',
+  `graviton_tech` int(10) unsigned NOT NULL DEFAULT '0',
   `ally_id` int(11) NOT NULL DEFAULT '0',
   `ally_name` varchar(32) DEFAULT NULL,
   `ally_request` int(11) NOT NULL DEFAULT '0',
@@ -629,24 +634,24 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
   `ally_register_time` int(11) NOT NULL DEFAULT '0',
   `ally_rank_id` int(11) NOT NULL DEFAULT '0',
   `current_moon` int(11) NOT NULL DEFAULT '0',
-  `rpg_geologist` int(11) NOT NULL DEFAULT '0',
-  `rpg_admiral` int(11) NOT NULL DEFAULT '0',
-  `rpg_engineer` int(11) NOT NULL DEFAULT '0',
-  `rpg_technocrat` int(11) NOT NULL DEFAULT '0',
-  `rpg_spy` int(11) NOT NULL DEFAULT '0',
-  `rpg_constructor` int(11) NOT NULL DEFAULT '0',
-  `rpg_scientific` int(11) NOT NULL DEFAULT '0',
-  `rpg_commander` int(11) NOT NULL DEFAULT '0',
-  `rpg_storekeeper` int(11) NOT NULL DEFAULT '0',
-  `darkmatter` int(11) NOT NULL DEFAULT '0',
-  `rpg_defender` int(11) NOT NULL DEFAULT '0',
-  `rpg_destroyer` int(11) NOT NULL DEFAULT '0',
-  `rpg_general` int(11) NOT NULL DEFAULT '0',
-  `rpg_bunker` int(11) NOT NULL DEFAULT '0',
-  `rpg_raider` int(11) NOT NULL DEFAULT '0',
-  `rpg_emperor` int(11) NOT NULL DEFAULT '0',
-  `ban` int(11) DEFAULT NULL,
-  `banday` int(11) NOT NULL DEFAULT '0',
+  `rpg_geologist` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_admiral` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_engineer` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_technocrat` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_spy` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_constructor` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_scientific` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_commander` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_storekeeper` int(10) unsigned NOT NULL DEFAULT '0',
+  `darkmatter` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_defender` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_destroyer` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_general` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_bunker` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_raider` int(10) unsigned NOT NULL DEFAULT '0',
+  `rpg_emperor` int(10) unsigned NOT NULL DEFAULT '0',
+  `banned` int(11) DEFAULT NULL,
+  `ban_finish` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
@@ -654,5 +659,5 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
 -- Volcar la base de datos para la tabla `sps_users`
 --
 
-INSERT INTO `sps_users` (`id`, `username`, `password`, `email`, `email_2`, `authlevel`, `id_planet`, `galaxy`, `system`, `planet`, `current_planet`, `user_lastip`, `ip_at_reg`, `user_agent`, `current_page`, `register_time`, `onlinetime`, `dpath`, `design`, `noipcheck`, `planet_sort`, `planet_sort_order`, `spio_anz`, `settings_tooltiptime`, `settings_fleetactions`, `settings_allylogo`, `settings_esp`, `settings_wri`, `settings_bud`, `settings_mis`, `settings_rep`, `urlaubs_modus`, `urlaubs_until`, `db_deaktjava`, `new_message`, `fleet_shortcut`, `b_tech_planet`, `spy_tech`, `computer_tech`, `military_tech`, `defence_tech`, `shield_tech`, `energy_tech`, `hyperspace_tech`, `combustion_tech`, `impulse_motor_tech`, `hyperspace_motor_tech`, `laser_tech`, `ionic_tech`, `buster_tech`, `intergalactic_tech`, `expedition_tech`, `graviton_tech`, `ally_id`, `ally_name`, `ally_request`, `ally_request_text`, `ally_register_time`, `ally_rank_id`, `current_moon`, `rpg_geologist`, `rpg_admiral`, `rpg_engineer`, `rpg_technocrat`, `rpg_spy`, `rpg_constructor`, `rpg_scientific`, `rpg_commander`, `rpg_storekeeper`, `darkmatter`, `rpg_defender`, `rpg_destroyer`, `rpg_general`, `rpg_bunker`, `rpg_raider`, `rpg_emperor`, `ban`, `banday`) VALUES
-(1, 'admin', '8cb2237d0679ca88db6464eac60da96345513964', 'admin@example.com', 'admin@example.com', 3, 1, 1, 1, 1, 1, '127.0.0.1', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', '/x-battle/game.php?page=buildings', 1313067961, 1313777105, '', 1, 1, 0, 0, 1, 5, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0);
+INSERT INTO `sps_users` (`id`, `username`, `password`, `email`, `email_2`, `name`, `authlevel`, `planet_id`, `galaxy`, `system`, `planet`, `user_lastip`, `ip_at_reg`, `register_time`, `onlinetime`, `dpath`, `design`, `noipcheck`, `planet_sort`, `planet_sort_order`, `espionage_probes`, `settings_tooltiptime`, `settings_fleetactions`, `settings_allylogo`, `settings_esp`, `settings_wri`, `settings_bud`, `settings_mis`, `settings_rep`, `urlaubs_modus`, `urlaubs_until`, `db_deaktjava`, `new_message`, `fleet_shortcut`, `b_tech_planet`, `spy_tech`, `computer_tech`, `military_tech`, `defence_tech`, `shield_tech`, `energy_tech`, `hyperspace_tech`, `combustion_tech`, `impulse_motor_tech`, `hyperspace_motor_tech`, `laser_tech`, `ionic_tech`, `buster_tech`, `intergalactic_tech`, `expedition_tech`, `graviton_tech`, `ally_id`, `ally_name`, `ally_request`, `ally_request_text`, `ally_register_time`, `ally_rank_id`, `current_moon`, `rpg_geologist`, `rpg_admiral`, `rpg_engineer`, `rpg_technocrat`, `rpg_spy`, `rpg_constructor`, `rpg_scientific`, `rpg_commander`, `rpg_storekeeper`, `darkmatter`, `rpg_defender`, `rpg_destroyer`, `rpg_general`, `rpg_bunker`, `rpg_raider`, `rpg_emperor`, `banned`, `ban_finish`) VALUES
+(1, 'admin', '8cb2237d0679ca88db6464eac60da96345513964', 'admin@example.com', 'admin@example.com', '', 3, 1, 1, 1, 1, '127.0.0.1', '127.0.0.1', 1313067961, 1313777105, '', 1, 1, 0, 0, 1, 5, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0);

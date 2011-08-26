@@ -19,6 +19,8 @@ $lang['login.welcome_to']			= 'Bienvenido a';
 $lang['login.remember_pass']		= 'Recordar Contraseña';
 $lang['login.server_register']		= '¡Registrate!';
 $lang['login.server_message']		= '¡Únete ya y forma parte del fantástico mundo de';
+$lang['login.reg_message']			= 'Registro en';
+$lang['login.accept_TaC']			= 'Aceptar terminos y condiciones de uso';
 
 
 /* End of file login_lang.php */

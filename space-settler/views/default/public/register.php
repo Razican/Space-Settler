@@ -1,24 +1,27 @@
 <?php echo $head; ?>
 
 <div id="main">
-	<?php echo form_open('reset_password'); ?>
+	<?php echo form_open('register'); ?>
 		<div id="mainmenu" style="margin-top: 20px;">
 			<?php echo anchor('/', lang('overal.index')); ?>
 			<?php echo anchor('register', lang('overal.register')); ?>
 			<?php echo anchor($forum_url, lang('overal.forum'), 'target="_blank"'); ?>
 		</div>
+		<div id="login">
+			<div id="login_input" style="text-align: center;">
+				<?php echo lang('login.user'); ?>: <input name="character" size="20" maxlength="20" type="text" /><br />
+				<?php echo lang('login.pass'); ?>: <input name="passwrd" size="20" maxlength="20" type="password" /><br />
+				<?php echo lang('login.email'); ?>: <input name="email" size="20" maxlength="50" type="text" /><br />
+				<b><?php echo lang('login.accept_TaC'); ?><input name="TaC" type="checkbox" /></b>
+			</div>
+		</div>
 		<div id="rightmenu" class="rightmenu">
-		<div id="title"><?php echo lang('login.lost_pass_title'); ?></div>
+		<div id="title"><?php echo lang('login.reg_message').' '.$game_name; ?></div>
 			<div id="content">
-				<div id="text1">
-					<div style="text-align: justify;">
-						<?php echo lang('login.lost_pass_text'); ?>
-					</div>
-				</div>
-				<input type="submit" value="<?php echo lang('login.retrieve_pass'); ?>" name="submit" id="register_input" class="bigbutton" />
+				<input type="submit" value="<?php echo lang('login.server_register'); ?>" name="submit" id="register_input" class="bigbutton" />
 				<div id="text2">
-					<div id="text3" style="text-align: center;">
-						<strong><?php echo lang('login.email'); ?>: <input title="<?php echo lang('login.email'); ?>" size="20" maxlength="50" type="text" name="email" /></strong>
+					<div id="text3">
+						<strong><?php echo lang('login.server_message').' '.$game_name; ?>!</strong>
 					</div>
 					<!-- PLEASE DO NOT REMOVE THE COPYRGHT LINE // POR FAVOR NO BORRES LA LINEA DE COPYRIGHTS -->
 					<div id="copyright">

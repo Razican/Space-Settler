@@ -13,8 +13,22 @@ class Register extends CI_Controller {
 
 		if( ! $this->session->userdata('logged_in'))
 		{
-			echo "Registro";
-			//ShowRegistrationPage
+			define('LOGIN', TRUE);
+			$this->lang->load('login');
+
+			if ($this->input->server('REQUEST_METHOD') === 'POST')
+			{
+				echo "No se que camarada";
+			}
+			else
+			{
+				$data['game_name']	= $this->config->item('game_name');
+				$data['forum_url']	= $this->config->item('forum_url');
+				$data['head']		= $this->load->view('head', '', TRUE);
+				$data['footer']		= $this->load->view('footer', '', TRUE);
+
+				$this->load->view('public/register', $data);
+			}
 		}
 		else
 		{

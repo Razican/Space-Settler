@@ -7,8 +7,8 @@
 			<table width="100%" border="0" cellpadding="0" cellspacing="0">
 				<tr style="vertical-align: top;">
 					<td style="padding-right: 4px;">
-						<?php echo lang('login.user'); ?> <input title="<?php echo lang('login.user'); ?>" name="username" value="" type="text" />
-						<?php echo lang('login.pass'); ?> <input title="<?php echo lang('login.pass'); ?>" name="password" value="" type="password" />
+						<?php echo lang('login.user'); ?> <input title="<?php echo lang('login.user'); ?>" name="username" size="20" maxlength="20" value="" type="text" />
+						<?php echo lang('login.pass'); ?> <input title="<?php echo lang('login.pass'); ?>" name="password" size="20" maxlength="20" value="" type="password" />
 					</td>
 				</tr><tr>
 					<td style="padding-right: 4px;">

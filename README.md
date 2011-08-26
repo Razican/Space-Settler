@@ -9,12 +9,12 @@ El proyecto, a falta de un instalador, se entrega con un usuario predefinido:
 
 * * *
 Se recomienda siempre usar UTF-8 en su variante *general_ci* en la base de datos y en la codificación de todos los archivos del juego.
-* * *
 
 Cambios en la base de datos:
 ----------------------------
 
 Tabla **sps_aks**:
+
 * teilnehmer -- participant
 * flotten -- fleet
 * ankunft -- arrival
@@ -28,7 +28,7 @@ Tabla **sps_banned**:
 
 * * *
 
-Tabla **sps_buddy**: --> **sps_firends*:
+Tabla **sps_buddy**: --> **sps_firends**:
 
 * * *
 
@@ -126,27 +126,24 @@ Tabla **sps_users**:
 
 **Cambios Generales**
 
-*Se cambian las ID's a bigint(20) unsigned, para permitir 18446744073709551615 ID's.
-*Se ajustan los valires numéricos, ya que no tiene sentido un int(32).
-*Se cambia la codificación a UTF-8, con la variante "general_ci".
-*Se usarán los int's más pequeños posibles para almacenar datos: int(2) --> tinyint(2).
-*Recursos: bigint(20) unsigned.
-*Naves: bigint(20) unsigned.
-*Niveles: int(10) unsigned.
-*Tiempo: int(10) unsigned.
-*Misiles: int(10) unsigned.
-*Campos tipo galaxy: tinyint(1)
-*Campos tipo system: smallint(3)
-*Campos tipo planet: tinyint(2)
-
-* * *
+* Se cambian las ID's a bigint(20) unsigned, para permitir 18446744073709551615 ID's.
+* Se ajustan los valires numéricos, ya que no tiene sentido un int(32).
+* Se cambia la codificación a UTF-8, con la variante "general_ci".
+* Se usarán los int's más pequeños posibles para almacenar datos: int(2) --> tinyint(2).
+* Recursos: bigint(20) unsigned.
+* Naves: bigint(20) unsigned.
+* Niveles: int(10) unsigned.
+* Tiempo: int(10) unsigned.
+* Misiles: int(10) unsigned.
+* Campos tipo galaxy: tinyint(1)
+* Campos tipo system: smallint(3)
+* Campos tipo planet: tinyint(2)
 
 Cambios en el Juego
 -------------------
 
-*Todos los nombres de usuario/alianza/planeta tendrán una máxima longitud de 32 caracteres. Los emails de 64, las webs de 100 y las imágenes externas de 150.
-
-*Se implanta el uso de Sha-1 en vez de Md5.
+* Todos los nombres de usuario/alianza/planeta tendrán una máxima longitud de 20 caracteres. Los emails de 50, las webs de 100 y las imágenes externas de 150.
+* Se implanta el uso de Sha-1 en vez de Md5.
 
 Nota:
 -----

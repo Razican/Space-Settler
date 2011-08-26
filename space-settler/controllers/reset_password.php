@@ -50,7 +50,6 @@ class Reset_password extends CI_Controller {
 			}
 			else
 			{
-				$data['version']	= $this->config->item('version');
 				$data['forum_url']	= $this->config->item('forum_url');
 				$data['head']		= $this->load->view('head', '', TRUE);
 				$data['footer']		= $this->load->view('footer', '', TRUE);
