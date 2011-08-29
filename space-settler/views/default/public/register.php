@@ -1,16 +1,15 @@
 <?php echo $head; ?>
 
 <div id="main">
-	<?php echo form_open('register'); ?>
 		<div id="mainmenu" style="margin-top: 20px;">
 			<?php echo anchor('/', lang('overal.index')); ?>
 			<?php echo anchor('register', lang('overal.register')); ?>
 			<?php echo anchor($forum_url, lang('overal.forum'), 'target="_blank"'); ?>
 		</div>
+		<?php echo form_open('register'); ?>
 		<div id="login">
 			<div id="login_input" style="text-align: center;">
-				<div><?php echo lang('login.user'); ?>: <input name="character" size="20" maxlength="20" type="text" /></div>
-				<div><?php echo lang('login.pass'); ?>: <input name="passwrd" size="20" maxlength="20" type="password" /></div>
+				<div><?php echo lang('login.user'); ?>: <input name="username" size="20" maxlength="20" type="text" /></div>
 				<div><?php echo lang('login.email'); ?>: <input name="email" size="20" maxlength="50" type="text" /></div>
 				<div><b><?php echo lang('login.accept_TaC'); ?><input name="TaC" type="checkbox" /></b></div>
 			</div>

@@ -48,14 +48,24 @@ $config['forum_url']	= 'http://www.razican.com/';
 
 /*
 |--------------------------------------------------------------------------
-| Forum URL
+| Game Name
 |--------------------------------------------------------------------------
 |
-| This is the URL of the forum.
+| This will be the name used when referring to the game.
 |
 */
 $config['game_name']	= 'Space Settler';
 
+/*
+|--------------------------------------------------------------------------
+| Minimum password lenght
+|--------------------------------------------------------------------------
+|
+| This will be the minimum lenght for a password
+|
+*/
+$config['min_pass_lenght']	= 6;
 
-/* End of file x-battle.php */
-/* Location: ./x-battle/config/x-battle.php */
+
+/* End of file space-settler.php */
+/* Location: ./application/config/space-settler.php */

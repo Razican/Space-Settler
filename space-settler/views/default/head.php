@@ -8,6 +8,9 @@
 	<meta http-equiv="content-style-type" content="text/css" />
 	<!-- <meta name="description" content="<?php echo lang('overal.description'); ?>" />
 	<meta name="keywords" content="" /> -->
+	<?php if ($this->config->item('debug')) : ?>
+	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/profiler.css"); ?>" />
+	<?php endif; ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/overal.css"); ?>" />
 	<?php if (defined('ADMIN')) : ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/admin.css"); ?>" />
@@ -16,9 +19,6 @@
 	<?php else : ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/ingame.css"); ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/".skin()."/style.css"); ?>" />
-	<?php endif; ?>
-	<?php if ($this->config->item('debug')) : ?>
-	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/profiler.css"); ?>" />
 	<?php endif; ?>
 	<!-- <link href="http://x-batle.razican.com/" title="<?php echo lang('overal.title'); ?>" rel="index" />
 	<link rel="canonical" href="<?php echo base_url(); ?>" /> -->

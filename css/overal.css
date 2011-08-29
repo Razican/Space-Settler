@@ -32,25 +32,20 @@ a:hover {
     top: 50px;
     font-family:Arial, Helvetica, sans-serif;
     font-size: 12px;
-
     color:#b1daf2;
     text-align: left;
     width: 400px;
 }
 
-.message_background {
+.message {
+	text-align: center;
+	min-height: 125px;
+	background-color: #576c73;
 	margin: 20px auto auto;
-	background-color: #add8e6;
-	opacity: 0.5;
+	padding: 25px;
+	border: 1px solid #00f;
 	border-radius: 10px;
 	width: 90%;
-	height: 150px;
-	border: 1px solid #00f;
-}
-
-.message {
-	position: relative;
-	bottom: 125px;
 }
 
 input, select, textarea

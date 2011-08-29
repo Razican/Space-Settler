@@ -91,6 +91,9 @@ Tabla **sps_users**:
 
 * Se borran los campos current_planet, user_agent y current_page. Se usarán sesiones para su control.
 * Queda pendiente dpath, ya que no tiene un nombre significativo.
+* email_2 -- reg_email
+* ip_at_reg -- reg_ip
+* user_lastip -- last_ip
 * id_planet -- planet_id
 * spio_anz -- espionage_probes
 * current_luna -- current_moon
@@ -126,7 +129,8 @@ Tabla **sps_users**:
 
 **Cambios Generales**
 
-* Se cambian las ID's a bigint(20) unsigned, para permitir 18446744073709551615 ID's.
+* Se cambian las ID's a int(10) unsigned, para permitir Ya que no tiene sentido tener mucísimas veces más ID's que personas en el mundo.
+Solo aplicado a usuarios, alianzas y planetas. Las demás serán bigint(20) unsigned.
 * Se ajustan los valires numéricos, ya que no tiene sentido un int(32).
 * Se cambia la codificación a UTF-8, con la variante "general_ci".
 * Se usarán los int's más pequeños posibles para almacenar datos: int(2) --> tinyint(2).
@@ -138,12 +142,20 @@ Tabla **sps_users**:
 * Campos tipo galaxy: tinyint(1)
 * Campos tipo system: smallint(3)
 * Campos tipo planet: tinyint(2)
+* Campos IP: int(10) unsigned (menos los de sesiones).
+
+Nota:
+-----
+
+Esta no es ni mucho menos la base de datos definitiva, ya que vamos a quitar las variables de configuración y ir modificándola según avancemos.
+Es probable que decidamos unir todas las tecnologías en un array, y que hagamos lo mismo con los edificios. Además, es posible que no necesitemos usar campos como ally_members etc.
 
 Cambios en el Juego
 -------------------
 
 * Todos los nombres de usuario/alianza/planeta tendrán una máxima longitud de 20 caracteres. Los emails de 50, las webs de 100 y las imágenes externas de 150.
 * Se implanta el uso de Sha-1 en vez de Md5.
+* Las contraseñas deberán tener un mínimo de 6 carateres, configurable en el futuro desde el panel de administración.
 
 Más Datos
 ---------
@@ -151,8 +163,7 @@ Más Datos
 Es muy probable la supresión de la tabla config, y puede que la de plugins, ya que se pueden usar archivos para gestionar dichas opciones.
 Aún así, queda mucho por ver. El sistema de plugins será adaptado a CodeIgniter, de manera que se usen librerías. Pero se debe avanzar más en el desarrollo.
 
-Nota:
------
+Cosas por hacer
+---------------
 
-Esta no es ni mucho menos la base de datos definitiva, ya que vamos a quitar las variables de configuración y ir modificándola según avancemos.
-Es probable que decidamos unir todas las tecnologías en un array, y que hagamos lo mismo con los edificios. Además, es posible que no necesitemos usar campos como ally_members etc.
+Crear una función reset_password más completa, para que el controlador haga algo como *if reset_password message else message*.

@@ -152,6 +152,58 @@ class User
 	}
 
 	/**
+	 * Register user
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	string
+	 * @param	string
+	 * @param	string
+	 * @return	bool
+	 */
+	public function register($username, $email, $referrer)
+	{
+		$this->register_errors	= '';
+		$CI						=& get_instance();
+
+		$CI->load->helper('email');
+
+		if( ! valid_email($email))
+			$this->register_errors	.= lang('login.mail_not_valid').'<br />';
+
+		if($this->exists_email($email))
+			$this->register_errors	.= lang('login.mail_exists').'<br />';
+
+		if( ! is_alnum($username))
+			$this->register_errors	.= lang('login.user_not_alnum').'<br />';
+
+		if($this->exists_user($username))
+			$this->register_errors	.= lang('login.user_exists').'<br />';
+
+		if($this->register_errors)
+			return FALSE;
+
+		$CI->load->helper('string');
+
+		$username	= strtolower($username);
+		$password	= random_string('alnum', 8);
+		$IP			= ip2int($CI->input->ip_address());
+
+		$data		= array(
+					'username'	=> $username,
+					'password'	=> sha1($password),
+					'email'		=> $email,
+					'reg_email'	=> $email,
+					'name'		=> $username,
+					'last_ip'	=> $IP,
+					'reg_ip'	=> $IP
+					);
+					/* NO ESTA ACABADA!!!*/
+
+		return TRUE;
+	}
+
+	/**
 	 * Check if it's banned
 	 *
 	 * @access	public
@@ -171,12 +223,36 @@ class User
 	 */
 	public function exists_email($email)
 	{
+		return $this->_exists($email, 'email', 'users');
+	}
+
+	/**
+	 * Check if an username exists
+	 *
+	 * @access	public
+	 * @param	string
+	 * @return	bool
+	 */
+	public function exists_user($username)
+	{
+		return $this->_exists($username, 'username', 'users');
+	}
+
+	/**
+	 * Check the given data exists
+	 *
+	 * @access	private
+	 * @param	string
+	 * @return	bool
+	 */
+	private function _exists($string, $field, $table)
+	{
 		$CI	=& get_instance();
 
-		$CI->db->where('email', $email);
+		$CI->db->where($field, $string);
 		$CI->db->limit(1);
 
-		return $CI->db->count_all_results('users') ? TRUE : FALSE;
+		return $CI->db->count_all_results($table) ? TRUE : FALSE;
 	}
 
 	/**

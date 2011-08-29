@@ -21,6 +21,11 @@ $lang['login.server_register']		= '¡Registrate!';
 $lang['login.server_message']		= '¡Únete ya y forma parte del fantástico mundo de';
 $lang['login.reg_message']			= 'Registro en';
 $lang['login.accept_TaC']			= 'Aceptar terminos y condiciones de uso';
+$lang['login.register_incomplete']	= '¡Debes introducir todos los campos!';
+$lang['login.mail_exists']			= '¡El email ingresado ya existe!';
+$lang['login.user_not_alnum']		= '¡El campo de usuario sólo puede contener caracteres alfanuméricos!';
+$lang['login.user_exists']			= '¡El nombre de usuario elegido ya existe!<br />';
+$lang['login.register_correct']		= '¡Registro completo!<br />Se te ha enviado un email con tu nueva contraseña. Por motivos de seguridad, por favor, cámbiala.';
 
 
 /* End of file login_lang.php */

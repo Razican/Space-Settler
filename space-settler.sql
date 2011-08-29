@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 26-08-2011 a las 14:58:20
+-- Tiempo de generación: 29-08-2011 a las 15:09:53
 -- Versión del servidor: 5.1.54
 -- Versión de PHP: 5.3.5-1ubuntu7.2
 
@@ -52,12 +52,12 @@ CREATE TABLE IF NOT EXISTS `sps_aks` (
 --
 -- Estructura de tabla para la tabla `sps_alliances`
 --
--- Creación: 26-08-2011 a las 16:54:29
+-- Creación: 29-08-2011 a las 15:57:02
 --
 
 DROP TABLE IF EXISTS `sps_alliances`;
 CREATE TABLE IF NOT EXISTS `sps_alliances` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   `tag` varchar(8) DEFAULT NULL,
   `owner` int(11) NOT NULL DEFAULT '0',
@@ -85,12 +85,12 @@ CREATE TABLE IF NOT EXISTS `sps_alliances` (
 --
 -- Estructura de tabla para la tabla `sps_banned`
 --
--- Creación: 22-08-2011 a las 21:40:07
+-- Creación: 29-08-2011 a las 16:00:57
 --
 
 DROP TABLE IF EXISTS `sps_banned`;
 CREATE TABLE IF NOT EXISTS `sps_banned` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `who` varchar(32) NOT NULL DEFAULT '',
   `reason` text NOT NULL,
   `who2` varchar(32) NOT NULL DEFAULT '',
@@ -337,12 +337,12 @@ CREATE TABLE IF NOT EXISTS `sps_notes` (
 --
 -- Estructura de tabla para la tabla `sps_planets`
 --
--- Creación: 26-08-2011 a las 16:53:50
+-- Creación: 29-08-2011 a las 15:44:13
 --
 
 DROP TABLE IF EXISTS `sps_planets`;
 CREATE TABLE IF NOT EXISTS `sps_planets` (
-  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT 'Planeta Principal',
   `id_owner` int(11) DEFAULT NULL,
   `id_level` int(11) DEFAULT NULL,
@@ -491,15 +491,15 @@ CREATE TABLE IF NOT EXISTS `sps_rw` (
 --
 -- Estructura de tabla para la tabla `sps_sessions`
 --
--- Creación: 22-08-2011 a las 22:27:32
+-- Creación: 29-08-2011 a las 12:43:45
 --
 
 DROP TABLE IF EXISTS `sps_sessions`;
 CREATE TABLE IF NOT EXISTS `sps_sessions` (
-  `session_id` varchar(40) NOT NULL DEFAULT '0',
-  `ip_address` varchar(16) NOT NULL DEFAULT '0',
-  `user_agent` varchar(120) DEFAULT NULL,
-  `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
+  `session_id` char(32) NOT NULL,
+  `ip_address` varchar(15) NOT NULL,
+  `user_agent` varchar(120) NOT NULL,
+  `last_activity` int(10) unsigned NOT NULL,
   `user_data` text,
   PRIMARY KEY (`session_id`),
   KEY `last_activity_idx` (`last_activity`)
@@ -510,12 +510,14 @@ CREATE TABLE IF NOT EXISTS `sps_sessions` (
 --
 
 INSERT INTO `sps_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('25bfa9517988f17f29b2705a5a14d712', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314308876, 'a:3:{s:7:"user_id";s:1:"1";s:14:"current_planet";s:1:"1";s:9:"logged_in";b:1;}'),
-('3492e8f5f02e14a29ef5525c56b6b3eb', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314305866, 'a:2:{s:8:"username";s:5:"admin";s:9:"logged_in";b:1;}'),
-('55d131bdb6b07c5d62ae635468a1bf3d', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314308334, 'a:3:{s:7:"user_id";s:1:"1";s:14:"current_planet";s:1:"1";s:9:"logged_in";b:1;}'),
-('ba1bb1c23f42174c903b9a00e9af7ce2', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.', 1314185083, NULL),
-('c9fcdeb750f313ca5b265b3daea5113b', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314308938, 'a:3:{s:7:"user_id";s:1:"1";s:14:"current_planet";s:1:"1";s:9:"logged_in";b:1;}'),
-('d0c79a864d0355baef271991d248485a', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314370120, NULL);
+('123b6971e7d2606492ae9be9bd4954d7', '1270', 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/534.30 (KHTML, like Gecko) Ubuntu/11.04 Chromium/12.0.742.112 Chrome/12.0.742.', 1314394985, NULL),
+('25bfa9517988f17f29b2705a5a14d712', '1270', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314308876, 'a:3:{s:7:"user_id";s:1:"1";s:14:"current_planet";s:1:"1";s:9:"logged_in";b:1;}'),
+('3492e8f5f02e14a29ef5525c56b6b3eb', '1270', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314305866, 'a:2:{s:8:"username";s:5:"admin";s:9:"logged_in";b:1;}'),
+('55d131bdb6b07c5d62ae635468a1bf3d', '1270', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314308334, 'a:3:{s:7:"user_id";s:1:"1";s:14:"current_planet";s:1:"1";s:9:"logged_in";b:1;}'),
+('64a4e468fff2e04bd9df9724d1ae7775', '1270', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314442338, NULL),
+('8c7dc3f3e2f56aab46cb5c811bcb2a32', '1270', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314373328, NULL),
+('c67a4ac05042a8e2d849a904af720a26', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314627487, 'a:2:{s:18:"flash:old:referrer";N;s:18:"flash:new:referrer";N;}'),
+('c9fcdeb750f313ca5b265b3daea5113b', '1270', 'Mozilla/5.0 (X11; Linux i686; rv:6.0) Gecko/20100101 Firefox/6.0', 1314308938, 'a:3:{s:7:"user_id";s:1:"1";s:14:"current_planet";s:1:"1";s:9:"logged_in";b:1;}');
 
 -- --------------------------------------------------------
 
@@ -571,26 +573,26 @@ INSERT INTO `sps_statpoints` (`id_owner`, `id_ally`, `stat_type`, `stat_code`, `
 --
 -- Estructura de tabla para la tabla `sps_users`
 --
--- Creación: 26-08-2011 a las 16:56:37
+-- Creación: 29-08-2011 a las 17:03:43
 --
 
 DROP TABLE IF EXISTS `sps_users`;
 CREATE TABLE IF NOT EXISTS `sps_users` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) NOT NULL DEFAULT '',
-  `password` char(40) NOT NULL DEFAULT '',
-  `email` varchar(50) NOT NULL DEFAULT '',
-  `email_2` varchar(50) NOT NULL DEFAULT '',
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL,
+  `password` char(40) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `reg_email` varchar(50) NOT NULL,
   `name` varchar(20) NOT NULL,
   `authlevel` tinyint(4) NOT NULL DEFAULT '0',
   `planet_id` int(11) NOT NULL DEFAULT '0',
   `galaxy` tinyint(1) NOT NULL DEFAULT '0',
   `system` smallint(3) NOT NULL DEFAULT '0',
   `planet` tinyint(2) NOT NULL DEFAULT '0',
-  `user_lastip` varchar(16) NOT NULL DEFAULT '',
-  `ip_at_reg` varchar(16) NOT NULL DEFAULT '',
-  `register_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `onlinetime` int(10) unsigned NOT NULL DEFAULT '0',
+  `last_ip` int(10) unsigned NOT NULL,
+  `reg_ip` int(10) unsigned NOT NULL,
+  `register_time` int(10) unsigned NOT NULL,
+  `onlinetime` int(10) unsigned NOT NULL,
   `dpath` varchar(255) NOT NULL DEFAULT '',
   `design` tinyint(4) NOT NULL DEFAULT '1',
   `noipcheck` tinyint(4) NOT NULL DEFAULT '1',
@@ -659,5 +661,5 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
 -- Volcar la base de datos para la tabla `sps_users`
 --
 
-INSERT INTO `sps_users` (`id`, `username`, `password`, `email`, `email_2`, `name`, `authlevel`, `planet_id`, `galaxy`, `system`, `planet`, `user_lastip`, `ip_at_reg`, `register_time`, `onlinetime`, `dpath`, `design`, `noipcheck`, `planet_sort`, `planet_sort_order`, `espionage_probes`, `settings_tooltiptime`, `settings_fleetactions`, `settings_allylogo`, `settings_esp`, `settings_wri`, `settings_bud`, `settings_mis`, `settings_rep`, `urlaubs_modus`, `urlaubs_until`, `db_deaktjava`, `new_message`, `fleet_shortcut`, `b_tech_planet`, `spy_tech`, `computer_tech`, `military_tech`, `defence_tech`, `shield_tech`, `energy_tech`, `hyperspace_tech`, `combustion_tech`, `impulse_motor_tech`, `hyperspace_motor_tech`, `laser_tech`, `ionic_tech`, `buster_tech`, `intergalactic_tech`, `expedition_tech`, `graviton_tech`, `ally_id`, `ally_name`, `ally_request`, `ally_request_text`, `ally_register_time`, `ally_rank_id`, `current_moon`, `rpg_geologist`, `rpg_admiral`, `rpg_engineer`, `rpg_technocrat`, `rpg_spy`, `rpg_constructor`, `rpg_scientific`, `rpg_commander`, `rpg_storekeeper`, `darkmatter`, `rpg_defender`, `rpg_destroyer`, `rpg_general`, `rpg_bunker`, `rpg_raider`, `rpg_emperor`, `banned`, `ban_finish`) VALUES
-(1, 'admin', '8cb2237d0679ca88db6464eac60da96345513964', 'admin@example.com', 'admin@example.com', '', 3, 1, 1, 1, 1, '127.0.0.1', '127.0.0.1', 1313067961, 1313777105, '', 1, 1, 0, 0, 1, 5, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0);
+INSERT INTO `sps_users` (`id`, `username`, `password`, `email`, `reg_email`, `name`, `authlevel`, `planet_id`, `galaxy`, `system`, `planet`, `last_ip`, `reg_ip`, `register_time`, `onlinetime`, `dpath`, `design`, `noipcheck`, `planet_sort`, `planet_sort_order`, `espionage_probes`, `settings_tooltiptime`, `settings_fleetactions`, `settings_allylogo`, `settings_esp`, `settings_wri`, `settings_bud`, `settings_mis`, `settings_rep`, `urlaubs_modus`, `urlaubs_until`, `db_deaktjava`, `new_message`, `fleet_shortcut`, `b_tech_planet`, `spy_tech`, `computer_tech`, `military_tech`, `defence_tech`, `shield_tech`, `energy_tech`, `hyperspace_tech`, `combustion_tech`, `impulse_motor_tech`, `hyperspace_motor_tech`, `laser_tech`, `ionic_tech`, `buster_tech`, `intergalactic_tech`, `expedition_tech`, `graviton_tech`, `ally_id`, `ally_name`, `ally_request`, `ally_request_text`, `ally_register_time`, `ally_rank_id`, `current_moon`, `rpg_geologist`, `rpg_admiral`, `rpg_engineer`, `rpg_technocrat`, `rpg_spy`, `rpg_constructor`, `rpg_scientific`, `rpg_commander`, `rpg_storekeeper`, `darkmatter`, `rpg_defender`, `rpg_destroyer`, `rpg_general`, `rpg_bunker`, `rpg_raider`, `rpg_emperor`, `banned`, `ban_finish`) VALUES
+(1, 'admin', '8cb2237d0679ca88db6464eac60da96345513964', 'admin@example.com', 'admin@example.com', '', 3, 1, 1, 1, 1, 2130706433, 2130706433, 1313067961, 1313777105, '', 1, 1, 0, 0, 1, 5, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0);

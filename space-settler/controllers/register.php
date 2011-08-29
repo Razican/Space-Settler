@@ -2,14 +2,15 @@
 
 class Register extends CI_Controller {
 
-	public function index($referrer = NULL)
+	public function _remap($referrer)
 	{
 		$this->output->enable_profiler($this->config->item('debug'));
 
-		if($this->uri->segment(2))
-		{
-			redirect('/');
-		}
+		$referrer	= $referrer === 'index' ? NULL : $referrer;
+		$this->session->set_flashdata('referrer', $referrer);
+
+		if($this->uri->segment(3))
+			redirect('register/'.$referrer);
 
 		if( ! $this->session->userdata('logged_in'))
 		{
@@ -18,7 +19,13 @@ class Register extends CI_Controller {
 
 			if ($this->input->server('REQUEST_METHOD') === 'POST')
 			{
-				echo "No se que camarada";
+				$referrer	= $this->session->flashdata('referrer');
+				if(( ! $this->input->post('username')) OR ( ! $this->input->post('email')))
+					message(lang('login.register_incomplete'), 'register'. ($referrer ? '/'.$referrer : ''));
+				elseif($this->user->register($this->input->post('username'), $this->input->post('email'), $referrer))
+					message(lang('login.register_correct'));
+				else
+					message($this->user->register_errors, 'register'. ($referrer ? '/'.$referrer : ''));
 			}
 			else
 			{

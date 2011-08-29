@@ -7,9 +7,7 @@ class Main extends CI_Controller {
 		$this->output->enable_profiler($this->config->item('debug'));
 
 		if($this->uri->segment(1))
-		{
 			redirect('/');
-		}
 
 		if( ! $this->session->userdata('logged_in'))
 		{
@@ -18,7 +16,7 @@ class Main extends CI_Controller {
 
 			if ($this->input->server('REQUEST_METHOD') === 'POST')
 			{
-				if($this->user->login($this->input->post('username'), $this->input->post('password'), $this->input->post('rememberme')))
+				if($this->user->login($this->input->post('username'), $this->input->post('password'), $this->input->post('pass_conf'), $this->input->post('email')))
 					redirect('/');
 				else
 					message(lang('login.error'));
