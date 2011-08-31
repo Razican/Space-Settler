@@ -188,15 +188,20 @@ class User
 		$username	= strtolower($username);
 		$password	= random_string('alnum', 8);
 		$IP			= ip2int($CI->input->ip_address());
+		$time		= now();
+
 
 		$data		= array(
-					'username'	=> $username,
-					'password'	=> sha1($password),
-					'email'		=> $email,
-					'reg_email'	=> $email,
-					'name'		=> $username,
-					'last_ip'	=> $IP,
-					'reg_ip'	=> $IP
+					'username'		=> $username,
+					'password'		=> sha1($password),
+					'email'			=> $email,
+					'reg_email'		=> $email,
+					'name'			=> $username,
+					'last_ip'		=> $IP,
+					'reg_ip'		=> $IP,
+					'register_time'	=> $time,
+					'online_time'	=> $time,
+					'planet_id'		=> $planet->id
 					);
 					/* NO ESTA ACABADA!!!*/
 

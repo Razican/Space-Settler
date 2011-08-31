@@ -95,6 +95,7 @@ Tabla **sps_users**:
 * ip_at_reg -- reg_ip
 * user_lastip -- last_ip
 * id_planet -- planet_id
+* onlinetime -- online_time
 * spio_anz -- espionage_probes
 * current_luna -- current_moon
 * rpg_geologue -- rpg_geologist
