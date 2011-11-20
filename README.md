@@ -164,6 +164,8 @@ Más Datos
 Es muy probable la supresión de la tabla config, y puede que la de plugins, ya que se pueden usar archivos para gestionar dichas opciones.
 Aún así, queda mucho por ver. El sistema de plugins será adaptado a CodeIgniter, de manera que se usen librerías. Pero se debe avanzar más en el desarrollo.
 
+Como detalle, para agilizar el desarrollo y acabar el registro de una vez por todas se va a copiar cuasiliteralmente la creación de planetas de XG Proyect.
+
 Cosas por hacer
 ---------------
 

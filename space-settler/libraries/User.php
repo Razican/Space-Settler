@@ -189,6 +189,7 @@ class User
 		$password	= random_string('alnum', 8);
 		$IP			= ip2int($CI->input->ip_address());
 		$time		= now();
+		$planet		= create_planet();
 
 
 		$data		= array(
@@ -220,6 +221,23 @@ class User
 	}
 
 	/**
+	 * Create a planet
+	 *
+	 * @access	public
+	 * @param	array
+	 * @return	object
+	 */
+	public function create_planet($position = NULL)
+	{
+		$CI	=& get_instance();
+
+		$position	= $position ? $position : _low_density_position();
+		$size		= $position ? _planet_size($position['planet']) : $CI->config->item('start_field_max');
+
+		return FALSE;
+	}
+
+	/**
 	 * Check if an email exists
 	 *
 	 * @access	public
@@ -240,7 +258,7 @@ class User
 	 */
 	public function exists_user($username)
 	{
-		return $this->_exists($username, 'username', 'users');
+		return $this->_exists(strtolower($username), 'username', 'users');
 	}
 
 	/**
@@ -258,6 +276,29 @@ class User
 		$CI->db->limit(1);
 
 		return $CI->db->count_all_results($table) ? TRUE : FALSE;
+	}
+
+	/**
+	 * Return the perfect planet for a new user
+	 *
+	 * @access	private
+	 * @return	array
+	 */
+	private function _low_density_position()
+	{
+		return FALSE;
+	}
+
+	/**
+	 * Return the size of a future planet based on its position
+	 *
+	 * @access	private
+	 * @param	int
+	 * @return	array
+	 */
+	private function _planet_size($position)
+	{
+		return FALSE;
 	}
 
 	/**
