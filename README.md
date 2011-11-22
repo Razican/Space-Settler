@@ -157,6 +157,7 @@ Cambios en el Juego
 * Todos los nombres de usuario/alianza/planeta tendrán una máxima longitud de 20 caracteres. Los emails de 50, las webs de 100 y las imágenes externas de 150.
 * Se implanta el uso de Sha-1 en vez de Md5.
 * Las contraseñas deberán tener un mínimo de 6 carateres, configurable en el futuro desde el panel de administración.
+* Se ha añadido un nuevo campo en la tabla planets: distance
 
 Más Datos
 ---------
@@ -164,9 +165,221 @@ Más Datos
 Es muy probable la supresión de la tabla config, y puede que la de plugins, ya que se pueden usar archivos para gestionar dichas opciones.
 Aún así, queda mucho por ver. El sistema de plugins será adaptado a CodeIgniter, de manera que se usen librerías. Pero se debe avanzar más en el desarrollo.
 
-Como detalle, para agilizar el desarrollo y acabar el registro de una vez por todas se va a copiar cuasiliteralmente la creación de planetas de XG Proyect.
-
 Cosas por hacer
 ---------------
 
 Crear una función reset_password más completa, para que el controlador haga algo como *if reset_password message else message*.
+
+Selección de Planetas en el Registro
+------------------------------------
+
+* Se seleccionan todos los planetas: única query
+* Entre las galaxias, se selecciona la galaxia en tres pasos (es obligatorio que haya un planeta habitable disponible [2 - 6]):
+	* Primero: se seleccionan las galaxias con media de planetas por debajo del 33,33% y que no estén vacías.
+	* Segundo: si no se ha seleccionado nada, se selecciona la galaxia vacía de ID mínima.
+	* Tercero: si seguimos sin haber seleccionado nada, se selecciona la de menor densidad.
+	* En el caso en el que todos los planetas centrales estén ocupados, se mostrará una alerta en la administración, y no se podrán registrar nuevos usuarios.
+		En caso contrario, se seleccionará aleatóriamente entre las seleccionadas.
+* Entre los sistemas de la galaxia, primero se eligen todos los sistemas de la galaxia en cuestión:
+	* Se selecciona uno aleatóriamente entre los que tengan una densidad de planetas por debajo del 33,33% y al menos un planeta central deshabitado.
+
+
+* Los planetas en el registro tendrán una aleatoriedad de campos del +/-10% del tamaño predefinido, con variaciones del 1%, siempre con redondeo.
+
+Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no podrá ser cambiado)
+--------------------------------------------------------------------------------------------------
+
+Distancias al sol:
+
+Posición 1: 0.05 - 0.40 UA
+-+-+-+-+-+-+-+-+
+Posición 2: 0.20 - 0.65 UA
+Posición 3: 0.50 - 1.25 UA
+Posición 4: 1.20 - 2.50 UA
+Posición 5: 2.25 - 6.00 UA
+Posición 6: 5.00 - 15.00 UA
++-+-+-+-+-+-+-+-
+Posición 7: 13.50 - 25.00 UA
+Posición 8: 22.50 - 35.00 UA
+Posición 9: 27.50 - 50.00 UA
+Posición 10: 40.00 - 65.00 UA
+Posición 11: 60.00 - 80.00 UA
+Posición 12: 75.00 - 100.00 UA
+Posición 13: 90.00 - 125.00 UA
+Posición 14: 110.00 - 150.00 UA
+Posición 15: 130.00 - 175.00 UA
+Posición 16: 165.00 - 200.00 UA
+Posición 17: 190.00 - 250.00 UA
+Posición 18: 225.00 - 300.00 UA
+Posición 19: 275.00 - 400.00 UA
+Posición 20: 350.00 - 650.00 UA
+
+***Habitabilidad:*** 0.50 - 3.50 UA (Según estrella)
+Entre 100 y 200 campos: habitable
+Más de 300 campos: Gigante de gas (puede ser usado para mejorar la carrera científica)
+Menos de 30 campos: Planeta enano (puede ser usado para mejorar la carrera científica)
+El resto: conquistable
+
+* Si en la tabla planets, en id_owner es 0, es un planeta no habitado.
+
+Planetas por sistema: 15 - 25
+Sistemas por galaxia: 100 - 100
+Galaxias por Universo: 1 - 25
+
+1 Campo +/- 75 km de diametro. [10 - 3250] (diametro = mt_rand(campos-1, campos+1))
+
+Probabilidades: mt_rand(1,100) if (<=x && >y), siendo x el mínimo de porcentaje e y el máximo.
+
+***El Primer Planeta:***
+10% de probabilidades de tener menos de 50 campos.
+15% de probabilidades de tener entre 50 y 100 campos.
+3% de probabilidades de entre 100 y 150 campos.
+2% de probabilidades de tener entre 150 y 300 campos.
+70% de probabilidades de tener entre 300 y 3250 campos.
+
+En el último caso no habrá planetas en las posiciones 2, 3, y 4.
+
+***El Segundo Planeta:***
+5% de probabilidades de tener menos de 50 campos.
+25% de probabilidades de tener entre 50 y 100 campos.
+10% de probabilidades de entre 100 y 150 campos.
+15% de probabilidades de tener entre 150 y 300 campos.
+50% de probabilidades de tener entre 300 y 2100 campos.
+
+En el último caso no habrá planetas en las posiciones 1, 3, 4 y 5.
+
+***El Tercer Planeta:***
+1% de probabilidades de tener entre 10 y 50 campos.
+30% de probabilidades de tener entre 50 y 100 campos.
+19% de probabilidades de entre 100 y 150 campos.
+15% de probabilidades de tener entre 150 y 300 campos.
+35% de probabilidades de tener entre 300 y 2000 campos.
+
+En el último caso no habrá planetas en las posiciones 1, 2, 4 y 5.
+
+***El Cuarto Planeta:***
+10% de probabilidades de tener menos de 50 campos.
+25% de probabilidades de tener entre 50 y 100 campos.
+30% de probabilidades de entre 100 y 150 campos.
+10% de probabilidades de tener entre 150 y 300 campos.
+35% de probabilidades de tener entre 300 y 2250 campos.
+
+En el último caso no habrá planetas en las posiciones 2, 3 y 5.
+
+***El Quinto Planeta:***
+2% de probabilidades de tener menos de 50 campos.
+3% de probabilidades de tener entre 50 y 100 campos.
+20% de probabilidades de entre 100 y 150 campos.
+25% de probabilidades de tener entre 150 y 300 campos.
+50% de probabilidades de tener entre 300 y 1750 campos.
+
+En el último caso no habrá planetas en las posiciones 4 y 6.
+
+***El Sexto Planeta:***
+5% de probabilidades de tener menos de 50 campos.
+10% de probabilidades de tener entre 50 y 100 campos.
+10% de probabilidades de entre 100 y 150 campos.
+20% de probabilidades de tener entre 150 y 300 campos.
+55% de probabilidades de tener entre 300 y 2000 campos.
+
+En el último caso no habrá planetas en las posiciones 5 y 7.
+
+***El Séptimo Planeta:***
+10% de probabilidades de tener menos de 50 campos.
+20% de probabilidades de tener entre 50 y 100 campos.
+10% de probabilidades de entre 100 y 150 campos.
+20% de probabilidades de tener entre 150 y 300 campos.
+40% de probabilidades de tener entre 300 y 1500 campos.
+
+En el último caso no habrá planeta en la posición 6.
+
+***El Octavo Planeta:***
+20% de probabilidades de tener menos de 50 campos.
+25% de probabilidades de tener entre 50 y 100 campos.
+10% de probabilidades de entre 100 y 150 campos.
+15% de probabilidades de tener entre 150 y 300 campos.
+30% de probabilidades de tener entre 300 y 1000 campos.
+
+***El Noveno Planeta:***
+30% de probabilidades de tener menos de 50 campos.
+25% de probabilidades de tener entre 50 y 100 campos.
+15% de probabilidades de entre 100 y 150 campos.
+10% de probabilidades de tener entre 150 y 300 campos.
+20% de probabilidades de tener entre 300 y 600 campos.
+
+***El Décimo Planeta:***
+40% de probabilidades de tener menos de 50 campos.
+30% de probabilidades de tener entre 50 y 100 campos.
+10% de probabilidades de entre 100 y 150 campos.
+5% de probabilidades de tener entre 150 y 300 campos.
+15% de probabilidades de tener entre 300 y 500 campos.
+
+***El Undécimo Planeta:***
+50% de probabilidades de tener menos de 50 campos.
+33% de probabilidades de tener entre 50 y 100 campos.
+5% de probabilidades de entre 100 y 150 campos.
+2% de probabilidades de tener entre 150 y 300 campos.
+10% de probabilidades de tener entre 300 y 500 campos.
+
+***El Duodécimo Planeta:***
+60% de probabilidades de tener menos de 50 campos.
+30% de probabilidades de tener entre 50 y 100 campos.
+3% de probabilidades de entre 100 y 150 campos.
+2% de probabilidades de tener entre 150 y 300 campos.
+5% de probabilidades de tener entre 300 y 400 campos.
+
+***El Decimotercer Planeta:***
+65% de probabilidades de tener menos de 50 campos.
+30% de probabilidades de tener entre 50 y 100 campos.
+2% de probabilidades de entre 100 y 150 campos.
+1% de probabilidades de tener entre 150 y 300 campos.
+2% de probabilidades de tener entre 300 y 500 campos.
+
+***El Decimocuarto Planeta:***
+70% de probabilidades de tener menos de 50 campos.
+27% de probabilidades de tener entre 50 y 100 campos.
+1% de probabilidades de entre 100 y 150 campos.
+1% de probabilidades de tener entre 150 y 300 campos.
+1% de probabilidades de tener entre 300 y 400 campos.
+
+***El Decimoquínto Planeta:***
+75% de probabilidades de tener menos de 50 campos.
+20% de probabilidades de tener entre 50 y 100 campos.
+1% de probabilidades de entre 100 y 150 campos.
+1% de probabilidades de tener entre 150 y 300 campos.
+3% de probabilidades de tener entre 300 y 400 campos.
+
+***El Decimosexto Planeta:***
+80% de probabilidades de tener menos de 50 campos.
+13% de probabilidades de tener entre 50 y 100 campos.
+1% de probabilidades de entre 100 y 150 campos.
+1% de probabilidades de tener entre 150 y 300 campos.
+5% de probabilidades de tener entre 300 y 400 campos.
+
+***El Decimoséptimo Planeta:***
+83% de probabilidades de tener menos de 50 campos.
+10% de probabilidades de tener entre 50 y 100 campos.
+1% de probabilidades de entre 100 y 150 campos.
+1% de probabilidades de tener entre 150 y 300 campos.
+5% de probabilidades de tener entre 300 y 500 campos.
+
+***El Decimoctavo Planeta:***
+90% de probabilidades de tener menos de 50 campos.
+4% de probabilidades de tener entre 50 y 100 campos.
+1% de probabilidades de entre 100 y 150 campos.
+1% de probabilidades de tener entre 150 y 300 campos.
+4% de probabilidades de tener entre 300 y 1500 campos.
+
+***El Decimonoveno Planeta:***
+90% de probabilidades de tener menos de 50 campos.
+8% de probabilidades de tener entre 50 y 100 campos.
+1% de probabilidades de entre 100 y 150 campos.
+1% de probabilidades de tener entre 150 y 300 campos.
+5% de probabilidades de tener entre 300 y 750 campos.
+
+***El Vigésimo Planeta:***
+90% de probabilidades de tener menos de 50 campos.
+8% de probabilidades de tener entre 50 y 100 campos.
+1% de probabilidades de entre 100 y 150 campos.
+1% de probabilidades de tener entre 150 y 300 campos.
+5% de probabilidades de tener entre 300 y 750 campos.

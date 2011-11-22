@@ -232,7 +232,7 @@ class User
 		$CI	=& get_instance();
 
 		$position	= $position ? $position : _low_density_position();
-		$size		= $position ? _planet_size($position['planet']) : $CI->config->item('start_field_max');
+		$size		= $position ? _planet_size($position['planet']) : round((mt_rand(90, 110) * $CI->config->item('start_field_max'))/100);
 
 		return FALSE;
 	}
