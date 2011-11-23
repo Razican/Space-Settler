@@ -184,12 +184,13 @@ class User
 			return FALSE;
 
 		$CI->load->helper('string');
+		$CI->load->library('planet');
 
 		$username	= strtolower($username);
 		$password	= random_string('alnum', 8);
 		$IP			= ip2int($CI->input->ip_address());
 		$time		= now();
-		$planet		= create_planet();
+		$planet		= $CI->planet->create();
 
 
 		$data		= array(
@@ -206,7 +207,7 @@ class User
 					);
 					/* NO ESTA ACABADA!!!*/
 
-		return TRUE;
+		return FALSE;
 	}
 
 	/**
@@ -217,24 +218,7 @@ class User
 	 */
 	public function is_banned()
 	{
-		return ($this->ban_finish != 0) && ($this->ban_finish > now()) ? TRUE : FALSE;
-	}
-
-	/**
-	 * Create a planet
-	 *
-	 * @access	public
-	 * @param	array
-	 * @return	object
-	 */
-	public function create_planet($position = NULL)
-	{
-		$CI	=& get_instance();
-
-		$position	= $position ? $position : _low_density_position();
-		$size		= $position ? _planet_size($position['planet']) : round((mt_rand(90, 110) * $CI->config->item('start_field_max'))/100);
-
-		return FALSE;
+		return (($this->ban_finish != 0) && ($this->ban_finish > now()));
 	}
 
 	/**
@@ -276,29 +260,6 @@ class User
 		$CI->db->limit(1);
 
 		return $CI->db->count_all_results($table) ? TRUE : FALSE;
-	}
-
-	/**
-	 * Return the perfect planet for a new user
-	 *
-	 * @access	private
-	 * @return	array
-	 */
-	private function _low_density_position()
-	{
-		return FALSE;
-	}
-
-	/**
-	 * Return the size of a future planet based on its position
-	 *
-	 * @access	private
-	 * @param	int
-	 * @return	array
-	 */
-	private function _planet_size($position)
-	{
-		return FALSE;
 	}
 
 	/**
