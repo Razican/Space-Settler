@@ -183,7 +183,7 @@ Selección de Planetas en el Registro
 ------------------------------------
 
 * Se seleccionan todos los planetas: única query
-* Entre las galaxias, se selecciona la galaxia en tres pasos (es obligatorio que haya un planeta habitable disponible [2 - 6]):
+* Entre las galaxias, se selecciona la galaxia en tres pasos (es obligatorio que haya un planeta habitable disponible [1 - 7, según estrella]):
 	* Primero: se seleccionan las galaxias con media de planetas por debajo del 33,33% y que no estén vacías.
 	* Segundo: si no se ha seleccionado nada, se selecciona la galaxia vacía de ID mínima.
 	* Tercero: si seguimos sin haber seleccionado nada, se selecciona la de menor densidad.
@@ -211,10 +211,10 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * Posición 4: 1.20 - 2.50 UA
 * Posición 5: 2.25 - 6.00 UA
 * Posición 6: 5.00 - 15.00 UA
+* Posición 7: 13.50 - 25.00 UA
 
 * * *
 
-* Posición 7: 13.50 - 25.00 UA
 * Posición 8: 22.50 - 35.00 UA
 * Posición 9: 27.50 - 50.00 UA
 * Posición 10: 40.00 - 65.00 UA
