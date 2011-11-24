@@ -24,5 +24,5 @@ if ( ! function_exists('now'))
 }
 
 
-/* End of file XB_date_helper.php */
-/* Location: ./megapublik/helpers/XB_date_helper.php */
+/* End of file SPS_date_helper.php */
+/* Location: ./megapublik/helpers/SPS_date_helper.php */
