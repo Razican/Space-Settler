@@ -34,7 +34,7 @@ Tabla **sps_banned**:
 
 * * *
 
-Tabla **sps_buddy**: --> **sps_firends**:
+Tabla **sps_buddy**: --> **sps_friends**:
 
 * * *
 
@@ -136,8 +136,8 @@ Tabla **sps_users**:
 
 **Cambios Generales**
 
-* Se cambian las ID's a int(10) unsigned, para permitir Ya que no tiene sentido tener mucísimas veces más ID's que personas en el mundo.
-Solo aplicado a usuarios, alianzas y planetas. Las demás serán bigint(20) unsigned.
+* Se cambian las ID's a int(10) unsigned, para permitir 4.294.967.295 ID's, ya que no tiene sentido tener mucísimas veces más ID's que personas en el mundo.
+Solo aplicado a usuarios, alianzas y planetas. Las demás serán bigint(20) unsigned, así tendrán 18.446.744.073.709.551.615 de ID's.
 * Se ajustan los valires numéricos, ya que no tiene sentido un int(32).
 * Se cambia la codificación a UTF-8, con la variante "general_ci".
 * Se usarán los int's más pequeños posibles para almacenar datos: int(2) --> tinyint(2).
@@ -146,8 +146,8 @@ Solo aplicado a usuarios, alianzas y planetas. Las demás serán bigint(20) unsi
 * Niveles: int(10) unsigned.
 * Tiempo: int(10) unsigned.
 * Misiles: int(10) unsigned.
-* Campos tipo galaxy: tinyint(1)
-* Campos tipo system: smallint(3)
+* Campos tipo galaxy: tinyint(2)
+* Campos tipo system: smallint(4)
 * Campos tipo planet: tinyint(2)
 * Campos IP: int(10) unsigned (menos los de sesiones).
 
