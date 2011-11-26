@@ -163,9 +163,9 @@ Cambios en el Juego
 * Todos los nombres de usuario/alianza/planeta tendrán una máxima longitud de 20 caracteres. Los emails de 50, las webs de 100 y las imágenes externas de 150.
 * Se implanta el uso de Sha-1 en vez de Md5.
 * Las contraseñas deberán tener un mínimo de 6 carateres, configurable en el futuro desde el panel de administración.
-* Se ha añadido un nuevo campo en la tabla planets: distance, ahora, si el planeta es 0, será el sol. Con una nueva variable, luminosidad, todavía **por implantar**.
+* Se ha añadido un nuevo campo en la tabla planets: distance, ahora, si el planeta es 0, será el sol. Con una nueva variable, luminosidad, todavía por implantar.
 * Si en la tabla planets, en id_owner es 0, es un planeta no habitado.
-* 1 Campo +/- 75 km de diametro. [10 - 3250] (diametro -> mt_rand((campos-1)*75, (campos+1)*75))
+* 1 Campo +/- 75 km de diametro. [10 - 3250] ( diametro -> mt_rand((campos-1)*75, (campos+1)*75) )
 * Probabilidades: mt_rand(1,100) if (<=x && >y), siendo x el mínimo de porcentaje e y el máximo.
 
 Más Datos
@@ -230,17 +230,20 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * Posición 20: 350.00 - 650.00 UA
 
 **Habitabilidad:**
+
 * Entre 100 y 200 campos: habitable
 * Más de 300 campos: Gigante de gas (puede ser usado para mejorar la carrera científica)
 * Menos de 30 campos: Planeta enano (puede ser usado para mejorar la carrera científica)
 * El resto: conquistable
 
 **Luminosidad:**
+
 * Sol = 3.827E26 W
 * Max = 10.000.000*Sol (por facilidad, y para que haya más planetas habitables pondremos un máximo de 100.000*Sol)
 * Min = 0,00125*Sol (por facilidad, y para que haya más planetas habitables se usará un mínimo de Sol/100)
 
 **Cantidades:**
+
 * Planetas por sistema: 15 - 20
 * Sistemas por galaxia: 100 - 1.000
 * Galaxias por Universo: 1 - 20
