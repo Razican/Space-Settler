@@ -251,6 +251,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 **Campos de una luna:** ((Entre 300 y 300.000)/1.000.000)*(campos del planeta origen)
 
 **El Primer Planeta:**
+
 * 10% de probabilidades de tener menos de 50 campos.
 * 15% de probabilidades de tener entre 50 y 100 campos.
 * 3% de probabilidades de entre 100 y 150 campos.
@@ -259,6 +260,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 	* En el último caso no habrá planetas en las posiciones 2, 3, y 4.
 
 **El Segundo Planeta:**
+
 * 5% de probabilidades de tener menos de 50 campos.
 * 25% de probabilidades de tener entre 50 y 100 campos.
 * 10% de probabilidades de entre 100 y 150 campos.
@@ -267,6 +269,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 	* En el último caso no habrá planetas en las posiciones 1, 3, 4 y 5.
 
 **El Tercer Planeta:**
+
 * 1% de probabilidades de tener entre 10 y 50 campos.
 * 30% de probabilidades de tener entre 50 y 100 campos.
 * 19% de probabilidades de entre 100 y 150 campos.
@@ -283,6 +286,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 	* En el último caso no habrá planetas en las posiciones 2, 3 y 5.
 
 **El Quinto Planeta:**
+
 * 2% de probabilidades de tener menos de 50 campos.
 * 3% de probabilidades de tener entre 50 y 100 campos.
 * 20% de probabilidades de entre 100 y 150 campos.
@@ -291,6 +295,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 	* En el último caso no habrá planetas en las posiciones 4 y 6.
 
 **El Sexto Planeta:**
+
 * 5% de probabilidades de tener menos de 50 campos.
 * 10% de probabilidades de tener entre 50 y 100 campos.
 * 10% de probabilidades de entre 100 y 150 campos.
@@ -307,6 +312,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 	* En el último caso no habrá planeta en la posición 6.
 
 **El Octavo Planeta:**
+
 * 20% de probabilidades de tener menos de 50 campos.
 * 25% de probabilidades de tener entre 50 y 100 campos.
 * 10% de probabilidades de entre 100 y 150 campos.
@@ -314,6 +320,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * 30% de probabilidades de tener entre 300 y 1000 campos.
 
 **El Noveno Planeta:**
+
 * 30% de probabilidades de tener menos de 50 campos.
 * 25% de probabilidades de tener entre 50 y 100 campos.
 * 15% de probabilidades de entre 100 y 150 campos.
@@ -321,6 +328,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * 20% de probabilidades de tener entre 300 y 600 campos.
 
 **El Décimo Planeta:**
+
 * 40% de probabilidades de tener menos de 50 campos.
 * 30% de probabilidades de tener entre 50 y 100 campos.
 * 10% de probabilidades de entre 100 y 150 campos.
@@ -328,6 +336,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * 15% de probabilidades de tener entre 300 y 500 campos.
 
 **El Undécimo Planeta:**
+
 * 50% de probabilidades de tener menos de 50 campos.
 * 33% de probabilidades de tener entre 50 y 100 campos.
 * 5% de probabilidades de entre 100 y 150 campos.
@@ -335,6 +344,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * 10% de probabilidades de tener entre 300 y 500 campos.
 
 **El Duodécimo Planeta:**
+
 * 60% de probabilidades de tener menos de 50 campos.
 * 30% de probabilidades de tener entre 50 y 100 campos.
 * 3% de probabilidades de entre 100 y 150 campos.
@@ -342,6 +352,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * 5% de probabilidades de tener entre 250 y 400 campos.
 
 **El Decimotercer Planeta:**
+
 * 65% de probabilidades de tener menos de 50 campos.
 * 30% de probabilidades de tener entre 50 y 100 campos.
 * 2% de probabilidades de entre 100 y 150 campos.
@@ -349,6 +360,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * 2% de probabilidades de tener entre 300 y 500 campos.
 
 **El Decimocuarto Planeta:**
+
 * 70% de probabilidades de tener menos de 50 campos.
 * 27% de probabilidades de tener entre 50 y 100 campos.
 * 1% de probabilidades de entre 100 y 150 campos.
@@ -356,6 +368,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * 1% de probabilidades de tener entre 250 y 400 campos.
 
 **El Decimoquínto Planeta:**
+
 * 75% de probabilidades de tener menos de 50 campos.
 * 20% de probabilidades de tener entre 50 y 100 campos.
 * 1% de probabilidades de entre 100 y 150 campos.
@@ -363,6 +376,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * 3% de probabilidades de tener entre 250 y 400 campos.
 
 **El Decimosexto Planeta:**
+
 * 80% de probabilidades de tener menos de 50 campos.
 * 13% de probabilidades de tener entre 50 y 100 campos.
 * 1% de probabilidades de entre 100 y 150 campos.
@@ -370,6 +384,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * 5% de probabilidades de tener entre 250 y 400 campos.
 
 **El Decimoséptimo Planeta:**
+
 * 83% de probabilidades de tener menos de 40 campos.
 * 10% de probabilidades de tener entre 40 y 100 campos.
 * 1% de probabilidades de entre 100 y 150 campos.
@@ -377,6 +392,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * 5% de probabilidades de tener entre 300 y 500 campos.
 
 **El Decimoctavo Planeta:**
+
 * 90% de probabilidades de tener menos de 40 campos.
 * 4% de probabilidades de tener entre 40 y 100 campos.
 * 1% de probabilidades de entre 100 y 150 campos.
@@ -384,6 +400,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * 4% de probabilidades de tener entre 300 y 1500 campos.
 
 **El Decimonoveno Planeta:**
+
 * 92% de probabilidades de tener menos de 30 campos.
 * 3% de probabilidades de tener entre 30 y 90 campos.
 * 1% de probabilidades de entre 90 y 150 campos.
@@ -391,6 +408,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * 3% de probabilidades de tener entre 300 y 750 campos.
 
 **El Vigésimo Planeta:**
+
 * 94% de probabilidades de tener menos de 30 campos.
 * 2% de probabilidades de tener entre 30 y 90 campos.
 * 1% de probabilidades de entre 90 y 150 campos.
@@ -404,16 +422,19 @@ Para calcular las distancias entre estrellas, planetas y galaxias, se usarán la
 Hay que tener en cuenta que con el mínimo de tecnología para viajar se considera que se viaja a la velocidad de la luz: 1UA-> 499s reales
 
 **Distancias entre dos planetas del mismo sistema:**
+
 * Para calcular la distancia entre planeta_origen y planeta_destino se usará la siguiente fórmula:
 |(distancia del planeta_origen a la estrella)-(distancia del planeta_destino a la estrella)|
 * El tiempo que se tarda en recorrer la distancia (en UA) será el siguiente: distancia*499s +/- 1%, redondeado hacia arriba.
 
 **Distancias entre estrellas cercanas**
+
 * La fórmula que se usará a la hora de crear un sistema cercano será la siguiente: distancia = raiz_quinta{(ID_sistema_origen-ID_sistema_destino)^2}*aleatorio(40,45)/10 (en años luz)
 * la velocidad será la misma, de manera que para viajar de un planeta de un sistema a otro, se tardará
 distancia*63.200 +/- (distancia del planeta origen a su estrella) +/- (distancia del planeta destino a su estrella) +/- 1%, redondeado hacia arriba, en segundos.
 
 **Distancias entre galaxias cercanas**
+
 * La fórmula que se usará a la hora de crear una galaxia cercana será la siguiente: distancia = raiz_cuarta{|(ID_galaxia_origen-ID_galaxia_destino)^3|}*aleatorio(225,250)/100 (en millones de años luz)
 * la velocidad será la misma, de manera que para viajar de un planeta de un sistema a otro, se tardará
 distancia*63.200.000.000 +/- (distancia de la estrella a la estrella 1 de la galaxia)*63200 +/- (distancia del planeta origen a su estrella) +/- (distancia del planeta destino a su estrella), redondeado hacia arriba, en segundos.
