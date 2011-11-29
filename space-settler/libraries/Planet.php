@@ -22,7 +22,7 @@ class Planet
 		$CI	=& get_instance();
 
 		$position	= $position ? $position : _select_position();
-		$size		= $position ? _size($position) : round((mt_rand(90, 110) * $CI->config->item('start_field_max'))/100);
+		$size		= $position ? _size($position) : round((mt_rand(95, 105) * $CI->config->item('start_field_max'))/100);
 
 		return FALSE;
 	}

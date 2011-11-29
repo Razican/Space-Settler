@@ -8,7 +8,7 @@ class Logout extends CI_Controller {
 			redirect('reset_password');
 
 		if($this->session->userdata('logged_in'))
-			$this->user->logout()
+			$this->user->logout();
 		else
 			log_message('error', 'User with IP '.$this->input->ip_address().' has tried to enter /logout without loggin in.');
 

@@ -8,19 +8,35 @@
  * @access	public
  * @return	integer
  */
-if ( ! function_exists('now'))
+function now()
 {
-	function now()
-	{
-		$CI			=& get_instance();
+	$CI			=& get_instance();
 
-		$timezone	= new DateTimeZone($CI->config->item('timezone'));
-		$now		= new DateTime('now', $timezone);
-		$offset		= $timezone->getOffset($now);
-		$time		= time() + $offset;
+	$timezone	= new DateTimeZone($CI->config->item('timezone'));
+	$now		= new DateTime('now', $timezone);
+	$offset		= $timezone->getOffset($now);
+	$time		= time() + $offset;
 
-		return $time;
-	}
+	return $time;
+}
+
+/**
+ * Show date
+ *
+ * Shows date based on the format parameter
+ *
+ * @access	public
+ * @param	string
+ * @return	integer
+ */
+function show_date($format = NULL)
+{
+	$CI			=& get_instance();
+
+	$format		= $format ? $format : $CI->config->item('date_format');
+	$CI->lang->load('time');
+
+	//return $date;
 }
 
 

@@ -74,13 +74,23 @@ $config['min_pass_lenght']	= 6;
 | These options will decide which will be the resources of each new user
 |
 */
-$config['start_field_max']	= 163;
+$config['start_fields']		= 170;
 $config['start_metal_h']	= 20;
 $config['start_crystal_h']	= 10;
 $config['start_deuter_h']	= 0;
 $config['start_metal']		= 500;
 $config['start_crystal']	= 250;
 $config['start_deuterium']	= 0;
+
+/*
+|--------------------------------------------------------------------------
+| Default date format
+|--------------------------------------------------------------------------
+|
+| This will be the default format when showing date
+|
+*/
+$config['date_format']	= '';
 
 
 /* End of file space-settler.php */

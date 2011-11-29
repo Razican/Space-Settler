@@ -165,7 +165,7 @@ Cambios en el Juego
 * Las contraseñas deberán tener un mínimo de 6 carateres, configurable en el futuro desde el panel de administración.
 * Se ha añadido un nuevo campo en la tabla planets: distance, ahora, si el planeta es 0, será el sol. Con una nueva variable, luminosidad, todavía por implantar.
 * Si en la tabla planets, en id_owner es 0, es un planeta no habitado.
-* 1 Campo +/- 75 km de diametro. [10 - 3250] ( diametro -> mt_rand((campos-1)*75, (campos+1)*75) )
+* 1 Campo +/- 75 km de diametro. {10 - 3250} (diametro-> mt_rand((campos-1)*75, (campos+1)*75))
 * Probabilidades: mt_rand(1,100) if (<=x && >y), siendo x el mínimo de porcentaje e y el máximo.
 
 Más Datos
@@ -198,7 +198,7 @@ Selección de Planetas en el Registro
 	* (1/75 - 1/5) Sol -> pos 1(90%) 2(10%) (distancia entre 0.10 y 0.50 UA)
 	* (5 - 75) Sol -> pos 6 +- 1 (distancia entre 5.00 y 20 UA)
 	* Fuera de ese rango no puede existir planeta -> se añade como requisito.
-* Los planetas en el registro tendrán una aleatoriedad de campos del +/-10% del tamaño predefinido, con variaciones de 1 campo, siempre con redondeo.
+* Los planetas en el registro tendrán una aleatoriedad de campos del +/-5% del tamaño predefinido, con variaciones de 1 campo, siempre con redondeo.
 
 Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no podrá ser cambiado)
 --------------------------------------------------------------------------------------------------
@@ -307,6 +307,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 	* En el último caso no habrá planetas en las posiciones 5 y 7.
 
 **El Séptimo Planeta:**
+
 * 10% de probabilidades de tener menos de 50 campos.
 * 20% de probabilidades de tener entre 50 y 100 campos.
 * 10% de probabilidades de entre 100 y 150 campos.
