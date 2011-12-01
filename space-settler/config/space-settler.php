@@ -90,7 +90,7 @@ $config['start_deuterium']	= 0;
 | This will be the default format when showing date
 |
 */
-$config['date_format']	= '';
+$config['date_format']	= '%WEEKDAY% %DAY-0% %OF% %MONTHNAME% %OF% %YEAR% - %HOUR%:%MINUTE%'; //Jueves 1 de Diciembre de 2011 - 18:50
 
 
 /* End of file space-settler.php */

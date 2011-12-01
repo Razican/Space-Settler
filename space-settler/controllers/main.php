@@ -34,7 +34,7 @@ class Main extends CI_Controller {
 		}
 		else
 		{
-			echo "Overview";
+			echo show_date();
 			//ShowOverviewPage
 		}
 	}
