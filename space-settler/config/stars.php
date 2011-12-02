@@ -9,8 +9,8 @@
 |
 */
 $config['stars']	= array(
-1=>	array('galaxy' => 1, 'system' => 1, 'diameter' => 1, 'luminosity' => 1),
-2=>	array('galaxy' => 1, 'system' => 2, 'diameter' => 0.26, 'luminosity' => 0.34)
+array('galaxy' => 1, 'system' => 1, 'diameter' => 1, 'luminosity' => 1),
+array('galaxy' => 1, 'system' => 2, 'diameter' => 0.26, 'luminosity' => 0.34)
 );
 
 /* End of file stars.php */

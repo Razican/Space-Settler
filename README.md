@@ -16,6 +16,10 @@ El proyecto, a falta de un instalador, se entrega con un usuario predefinido:
 * Necesario **MySQL >= 4.1**
 * También soporta MySQLi, MS SQL, Postgres, Oracle, SQLite y ODBC.
 
+* * *
+
+* Se decide que se borran los campos galaxy y los de system serán **star**, ahora, se mirará en la tabla stars por ID.
+
 Cambios en la base de datos:
 ----------------------------
 
@@ -195,8 +199,8 @@ Selección de Planetas en el Registro
 	* Si no se ha elegido ninguno, se elije el de menor media.
 * A la hora de elegir la posición, se toma como probabilidad la siguiente, para ser habitable:
 	* (1/5 - 5) Sol -> pos 3 +- 1(90%) +- 2 (10%) (distancia entre 0.40 y 5.50 UA)
-	* (1/75 - 1/5) Sol -> pos 1(90%) 2(10%) (distancia entre 0.10 y 0.50 UA)
-	* (5 - 75) Sol -> pos 6 +- 1 (distancia entre 5.00 y 20 UA)
+	* (1/50 - 1/5) Sol -> pos 1(90%) 2(10%) (distancia entre 0.10 y 0.50 UA)
+	* (5 - 50) Sol -> pos 6 +- 1 (distancia entre 5.00 y 20 UA)
 	* Fuera de ese rango no puede existir planeta -> se añade como requisito.
 * Los planetas en el registro tendrán una aleatoriedad de campos del +/-5% del tamaño predefinido, con variaciones de 1 campo, siempre con redondeo.
 
@@ -212,14 +216,14 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * Posición 5: 2.25 - 6.00 UA
 * Posición 6: 5.00 - 15.00 UA
 * Posición 7: 13.50 - 25.00 UA
-
-* * *
-
 * Posición 8: 22.50 - 35.00 UA
 * Posición 9: 27.50 - 50.00 UA
 * Posición 10: 40.00 - 65.00 UA
 * Posición 11: 60.00 - 80.00 UA
 * Posición 12: 75.00 - 100.00 UA
+
+* * *
+
 * Posición 13: 90.00 - 125.00 UA
 * Posición 14: 110.00 - 150.00 UA
 * Posición 15: 130.00 - 175.00 UA
@@ -235,11 +239,14 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * Más de 300 campos: Gigante de gas (puede ser usado para mejorar la carrera científica)
 * Menos de 30 campos: Planeta enano (puede ser usado para mejorar la carrera científica)
 * El resto: conquistable
+* Para que una estrella sea habitable, su luminosidad y diámetro deberán estar entre 0.02 y 50, y la relación entre ellos
+no puede ser mayor de 500.
+* Posición mínima habitable:
 
 **Luminosidad:**
 
 * Sol = 3.827E26 W
-* Max = 10.000.000*Sol (por facilidad, y para que haya más planetas habitables pondremos un máximo de 100.000*Sol)
+* Max = 10.000.000*Sol (por facilidad, y para que haya más planetas habitables pondremos un máximo de 100*Sol)
 * Min = 0,00125*Sol (por facilidad, y para que haya más planetas habitables se usará un mínimo de Sol/100)
 
 **Cantidades:**

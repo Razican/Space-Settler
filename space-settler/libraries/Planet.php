@@ -201,6 +201,65 @@ class Planet
 	}
 
 	/**
+	 * Returns if a star is valid
+	 *
+	 * @access	private
+	 * @param	array
+	 * @return	boolean
+	 */
+	private function _habitable_stars($star)
+	{
+		$relation		= $star['luminosity'] / $star['diameter'];
+
+		$is_habitable	= (($star['diameter'] >= 0.02) &&
+							($star['diameter'] <= 50) &&
+							($star['luminosity'] >= 0.02) &&
+							($star['luminosity'] <= 50) &&
+							($relation <= 500) && ($relation >= 0.002);
+		return  $is_habitable;
+	}
+
+	/**
+	 * Returns if a galaxy is habitable
+	 *
+	 * @access	private
+	 * @param	array
+	 * @return	boolean
+	 */
+	private function _is_good_galaxy($galaxy)
+	{
+		$CI			=& get_instance();
+		$average	= $galaxy['planets'] / ($CI->config->item('max_systems') * $CI->config->item('max_planets'));
+		return  (($average <= 1/3) && ($average > 0);
+	}
+
+	/**
+	 * Returns if a galaxy is good for a new user
+	 *
+	 * @access	private
+	 * @param	array
+	 * @return	boolean
+	 */
+	private function _is_good_galaxy($galaxy)
+	{
+		$CI			=& get_instance();
+		$average	= $galaxy['planets'] / ($CI->config->item('max_systems') * $CI->config->item('max_planets'));
+		return  (($average <= 1/3) && ($average > 0);
+	}
+
+	/**
+	 * Returns if a galaxy is empty
+	 *
+	 * @access	private
+	 * @param	array
+	 * @return	boolean
+	 */
+	private function _is_empty_galaxy($galaxy)
+	{
+		return  ($galaxy['planets'] === 0);
+	}
+
+	/**
 	 * Return the perfect planet for a new user
 	 *
 	 * @access	private
@@ -208,6 +267,35 @@ class Planet
 	 */
 	private function _select_position()
 	{
+		$CI			=& get_instance();
+
+		$CI->config->load('stars');
+
+		$CI->db->select('galaxy, system, planet');
+		$CI->db->where_in('system', array_keys(array_filter($CI->config->item('stars'), '_habitable_stars'))); //Meter el sistema, no el ID
+		//$CI->db->where('id_owner !=', 0); No es necesario, ya que el planeta se deberá crear nuevo.
+		$query	= $CI->db->get('planets');
+
+		for($i=1; $i <= $CI->config->item('max_galaxies'); $i++)
+		{
+			for($f=1; $f <= $CI->config->item('max_systems'); $f++)
+			{
+				$galaxy[$i]['planets']					= 0;
+				$galaxy[$i]['system'][$f]['planets']	= $CI->config->item('stars')[];//Sin acabar
+			}
+		}
+
+		foreach($query->result() as $planet)
+		{
+			$galaxy[$planet->galaxy]['planets']++;
+			$system[$planet->galaxy]['system'][$planet->system]['planets']++;
+		}
+
+		$galaxies			= array_filter($galaxy, '_is_good_galaxy');
+		$position['galaxy']	= empty($galaxies) ? array_rand(array_keys(array_filter($galaxy, '_is_empty_galaxy'))) : array_rand(array_keys($galaxies));
+
+
+
 		return FALSE;
 	}
 
