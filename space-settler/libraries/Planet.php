@@ -215,49 +215,66 @@ class Planet
 							($star['diameter'] <= 50) &&
 							($star['luminosity'] >= 0.02) &&
 							($star['luminosity'] <= 50) &&
-							($relation <= 500) && ($relation >= 0.002);
+							($relation <= 10) && ($relation >= 0.1);
 		return  $is_habitable;
 	}
 
 	/**
-	 * Returns if a galaxy is habitable
+	 * Returns the minimum position for an habitable planet
 	 *
 	 * @access	private
-	 * @param	array
-	 * @return	boolean
+	 * @param	integer
+	 * @return	integer
 	 */
-	private function _is_good_galaxy($galaxy)
+	private function _minimum_habitable_position($magnitude)
 	{
-		$CI			=& get_instance();
-		$average	= $galaxy['planets'] / ($CI->config->item('max_systems') * $CI->config->item('max_planets'));
-		return  (($average <= 1/3) && ($average > 0);
+		if($magnitude <= 0.2) return 1;
+		elseif($magnitude <= 10) return 2;
+		elseif($magnitude <= 50) return 3;
+		elseif($magnitude <= 250) return 4;
+		elseif($magnitude <= 500) return 5;
+		elseif($magnitude <= 750) return 6;
+		elseif($magnitude <= 1000) return 7;
+		elseif($magnitude <= 1500) return 8;
+		elseif($magnitude <= 2000) return 9;
+		else return 10;
 	}
 
 	/**
-	 * Returns if a galaxy is good for a new user
+	 * Returns the maximum position for an habitable planet
 	 *
 	 * @access	private
-	 * @param	array
-	 * @return	boolean
+	 * @param	integer
+	 * @return	integer
 	 */
-	private function _is_good_galaxy($galaxy)
+	private function _maximum_habitable_position($magnitude)
 	{
-		$CI			=& get_instance();
-		$average	= $galaxy['planets'] / ($CI->config->item('max_systems') * $CI->config->item('max_planets'));
-		return  (($average <= 1/3) && ($average > 0);
+		if($magnitude <= 0.01) return 1;
+		elseif($magnitude <= 0.1) return 2;
+		elseif($magnitude <= 0.25) return 3;
+		elseif($magnitude <= 2) return 4;
+		elseif($magnitude <= 25) return 5;
+		elseif($magnitude <= 100) return 6;
+		elseif($magnitude <= 250) return 7;
+		elseif($magnitude <= 500) return 8;
+		elseif($magnitude <= 1000) return 9;
+		elseif($magnitude <= 1500) return 10;
+		elseif($magnitude <= 2000) return 11;
+		else return 12;
 	}
 
 	/**
-	 * Returns if a galaxy is empty
+	 * Returns wether a planet is gaseous or not
 	 *
 	 * @access	private
 	 * @param	array
 	 * @return	boolean
 	 */
-	private function _is_empty_galaxy($galaxy)
+	private function _is_gaseous_planet($planet)
 	{
-		return  ($galaxy['planets'] === 0);
+		return ($planet['fields'] > 500);
 	}
+
 
 	/**
 	 * Return the perfect planet for a new user
@@ -270,26 +287,34 @@ class Planet
 		$CI			=& get_instance();
 
 		$CI->config->load('stars');
+		$stars		= array_filter($CI->config->item('stars'), '_habitable_stars');
 
-		$CI->db->select('galaxy, system, planet');
-		$CI->db->where_in('system', array_keys(array_filter($CI->config->item('stars'), '_habitable_stars'))); //Meter el sistema, no el ID
-		//$CI->db->where('id_owner !=', 0); No es necesario, ya que el planeta se deberá crear nuevo.
+		$CI->db->select('id, galaxy, system, planet, distance, diameter');
+		$CI->db->where_in('star', array_keys($stars));
 		$query	= $CI->db->get('planets');
-
-		for($i=1; $i <= $CI->config->item('max_galaxies'); $i++)
-		{
-			for($f=1; $f <= $CI->config->item('max_systems'); $f++)
-			{
-				$galaxy[$i]['planets']					= 0;
-				$galaxy[$i]['system'][$f]['planets']	= $CI->config->item('stars')[];//Sin acabar
-			}
-		}
 
 		foreach($query->result() as $planet)
 		{
-			$galaxy[$planet->galaxy]['planets']++;
-			$system[$planet->galaxy]['system'][$planet->system]['planets']++;
+			$stars[$planet->star]['planets'][$planet->id]	= $planet;
 		}
+
+		foreach($stars as $id => $star)
+		{
+			$magnitude				= $star['diameter'] * $star['luminosity'];
+
+			$min_position			= _min_habitable_position($magnitude);
+			$max_position			= _max_habitable_position($magnitude);
+
+			$total_habit_planets	= 1 + $max_position - $min_position;
+
+			$habitable_planets		= array();
+			for($i = $min_position; $i<= $max_position; $i++){ $habitable_planets[$i] = $i; }
+
+			$habitable_planets		= array_filter($habitable_planets, '_is_position_habitable');
+
+			$star['density']		= ($total_habit_planets - count($habitable_planets)) / $total_habit_planets;
+		}
+
 
 		$galaxies			= array_filter($galaxy, '_is_good_galaxy');
 		$position['galaxy']	= empty($galaxies) ? array_rand(array_keys(array_filter($galaxy, '_is_empty_galaxy'))) : array_rand(array_keys($galaxies));

@@ -235,12 +235,12 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 
 **Habitabilidad:**
 
-* Entre 100 y 200 campos: habitable
-* Más de 300 campos: Gigante de gas (puede ser usado para mejorar la carrera científica)
+* Entre 75 y 300 campos: habitable
+* Más de 500 campos: Gigante de gas (puede ser usado para mejorar la carrera científica)
 * Menos de 30 campos: Planeta enano (puede ser usado para mejorar la carrera científica)
 * El resto: conquistable
 * Para que una estrella sea habitable, su luminosidad y diámetro deberán estar entre 0.02 y 50, y la relación entre ellos
-no puede ser mayor de 500.
+no puede ser mayor de 10.
 * Posición mínima habitable:
 
 **Luminosidad:**
@@ -257,7 +257,7 @@ no puede ser mayor de 500.
 
 **Mínimo de campos para un planeta:** 10
 **Máximo de campos para un planeta:** raiz_sexta(diametro_estrella(soles))*2.000, en campos.
-**Máximo de campos para una luna:** 70
+**Máximo de campos para una luna:** 100
 **Campos de una luna:** ((Entre 300 y 300.000)/1.000.000)*(campos del planeta origen)
 
 **El Primer Planeta:**

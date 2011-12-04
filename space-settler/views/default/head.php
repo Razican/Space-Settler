@@ -24,4 +24,4 @@
 	<link rel="canonical" href="<?php echo base_url(); ?>" /> -->
 	<script charset="utf-8" type="text/javascript" src="<?php echo site_url("javascript/overlib.js"); ?>"></script>
 </head>
-<body <?php if ( ! $this->config->item('debug')) : ?>style="overflow: hidden;" <?php endif; ?>onload="onBodyLoad();" onunload="" >
+<body <?php if ( ! $this->config->item('debug')) : ?>style="overflow: hidden;" <?php endif; ?>>
