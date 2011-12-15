@@ -20,6 +20,11 @@ El proyecto, a falta de un instalador, se entrega con un usuario predefinido:
 
 * Se decide que se borran los campos galaxy y los de system serán **star**, ahora, se mirará en la tabla stars por ID.
 
+* * *
+
+* Hay que incluír la masa como parte de todo ente (planeta, estrella, satélite u objeto como nave, orbitador, telescopio etc.
+* Los planetas los creará el instalador, y se habrán creado todos cuando el universo se inicie.
+
 Cambios en la base de datos:
 ----------------------------
 
@@ -208,30 +213,7 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 --------------------------------------------------------------------------------------------------
 
 **Distancias al sol:**
-
-* Posición 1: 0.05 - 0.40 UA
-* Posición 2: 0.20 - 0.65 UA
-* Posición 3: 0.50 - 1.25 UA
-* Posición 4: 1.20 - 2.50 UA
-* Posición 5: 2.25 - 6.00 UA
-* Posición 6: 5.00 - 15.00 UA
-* Posición 7: 13.50 - 25.00 UA
-* Posición 8: 22.50 - 35.00 UA
-* Posición 9: 27.50 - 50.00 UA
-* Posición 10: 40.00 - 65.00 UA
-* Posición 11: 60.00 - 80.00 UA
-* Posición 12: 75.00 - 100.00 UA
-
-* * *
-
-* Posición 13: 90.00 - 125.00 UA
-* Posición 14: 110.00 - 150.00 UA
-* Posición 15: 130.00 - 175.00 UA
-* Posición 16: 165.00 - 200.00 UA
-* Posición 17: 190.00 - 250.00 UA
-* Posición 18: 225.00 - 300.00 UA
-* Posición 19: 275.00 - 400.00 UA
-* Posición 20: 350.00 - 650.00 UA
+* Se usará la ley de Titius-Bode que se adjunta en un PDF.
 
 **Habitabilidad:**
 
@@ -241,7 +223,6 @@ Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no
 * El resto: conquistable
 * Para que una estrella sea habitable, su luminosidad y diámetro deberán estar entre 0.02 y 50, y la relación entre ellos
 no puede ser mayor de 10.
-* Posición mínima habitable:
 
 **Luminosidad:**
 
@@ -468,3 +449,9 @@ Estrellas:
 * Las estrellas de cada universo se encuentran en el archivo de configuración stars.php. El formato es el siguiente:
 ID->(galaxy->ID_galaxia, id->Posición_en_galaxia, diameter->diametro(en soles), luminosity->luminosidad(en soles))
 * Las posiciones serán de la siguiente manera: ['galaxy'], ['system'], ['planet'].
+
+Tamaños, masas...:
+-----
+* Masa de un planeta: entre Mt/100000 y Mt*3.500.
+* Masa de una estrella:
+* Diámetro de un planeta:

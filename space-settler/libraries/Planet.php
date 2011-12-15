@@ -325,17 +325,18 @@ class Planet
 	}
 
 	/**
-	 * Return maximum planet size based on its star
+	 * Return maximum planet mass based on its star
 	 *
 	 * @access	private
-	 * @param	array
+	 * @param	int
 	 * @return	int
 	 */
-	private function _max_size($position)
+	private function _max_size($star)
 	{
 		$CI		=& get_instance();
 
-		$CI->config->load('stars');
+		$CI->db->where('id', $star);//SIN ACABAR
+		$CI->db->select('mass');
 
 		foreach($CI->config->item('stars') as $star)
 			if(($star['galaxy'] == $position['galaxy']) && ($star['system'] == $position['system'])) break;
