@@ -232,7 +232,7 @@ no puede ser mayor de 10.
 
 **Cantidades:**
 
-* Planetas por sistema: 15 - 20
+* Planetas por sistema: 15
 * Sistemas por galaxia: 100 - 1.000
 * Galaxias por Universo: 1 - 20
 
@@ -367,46 +367,6 @@ no puede ser mayor de 10.
 * 1% de probabilidades de tener entre 150 y 250 campos.
 * 3% de probabilidades de tener entre 250 y 400 campos.
 
-**El Decimosexto Planeta:**
-
-* 80% de probabilidades de tener menos de 50 campos.
-* 13% de probabilidades de tener entre 50 y 100 campos.
-* 1% de probabilidades de entre 100 y 150 campos.
-* 1% de probabilidades de tener entre 150 y 250 campos.
-* 5% de probabilidades de tener entre 250 y 400 campos.
-
-**El Decimoséptimo Planeta:**
-
-* 83% de probabilidades de tener menos de 40 campos.
-* 10% de probabilidades de tener entre 40 y 100 campos.
-* 1% de probabilidades de entre 100 y 150 campos.
-* 1% de probabilidades de tener entre 150 y 300 campos.
-* 5% de probabilidades de tener entre 300 y 500 campos.
-
-**El Decimoctavo Planeta:**
-
-* 90% de probabilidades de tener menos de 40 campos.
-* 4% de probabilidades de tener entre 40 y 100 campos.
-* 1% de probabilidades de entre 100 y 150 campos.
-* 1% de probabilidades de tener entre 150 y 300 campos.
-* 4% de probabilidades de tener entre 300 y 1500 campos.
-
-**El Decimonoveno Planeta:**
-
-* 92% de probabilidades de tener menos de 30 campos.
-* 3% de probabilidades de tener entre 30 y 90 campos.
-* 1% de probabilidades de entre 90 y 150 campos.
-* 1% de probabilidades de tener entre 150 y 300 campos.
-* 3% de probabilidades de tener entre 300 y 750 campos.
-
-**El Vigésimo Planeta:**
-
-* 94% de probabilidades de tener menos de 30 campos.
-* 2% de probabilidades de tener entre 30 y 90 campos.
-* 1% de probabilidades de entre 90 y 150 campos.
-* 1% de probabilidades de tener entre 150 y 300 campos.
-* 2% de probabilidades de tener entre 300 y 750 campos.
-
 Distancias y velocidades:
 -------------------------
 
@@ -448,7 +408,7 @@ Estrellas:
 
 * Las estrellas de cada universo se encuentran en el archivo de configuración stars.php. El formato es el siguiente:
 ID->(galaxy->ID_galaxia, id->Posición_en_galaxia, diameter->diametro(en soles), luminosity->luminosidad(en soles))
-* Las posiciones serán de la siguiente manera: ['galaxy'], ['system'], ['planet'].
+* Las posiciones serán de la siguiente manera: ['galaxy'], ['system'], ['position'].
 
 Tamaños, masas...:
 -----

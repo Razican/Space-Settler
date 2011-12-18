@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-11-2011 a las 23:30:18
+-- Tiempo de generación: 18-12-2011 a las 19:13:25
 -- Versión del servidor: 5.1.58
--- Versión de PHP: 5.3.6-13ubuntu3.2
+-- Versión de PHP: 5.3.6-13ubuntu3.3
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -25,17 +25,17 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `sps_aks`
 --
--- Creación: 25-11-2011 a las 17:37:35
+-- Creación: 03-12-2011 a las 15:47:22
 --
 
+DROP TABLE IF EXISTS `sps_aks`;
 CREATE TABLE IF NOT EXISTS `sps_aks` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   `participant` text,
   `fleet` text,
   `arrival` int(11) DEFAULT NULL,
-  `galaxy` tinyint(2) DEFAULT NULL,
-  `system` smallint(4) DEFAULT NULL,
+  `star` smallint(5) unsigned DEFAULT NULL,
   `planet` tinyint(2) DEFAULT NULL,
   `planet_type` tinyint(1) DEFAULT NULL,
   `invited` text,
@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `sps_aks` (
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_alliances`;
 CREATE TABLE IF NOT EXISTS `sps_alliances` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
@@ -77,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `sps_alliances` (
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_banned`;
 CREATE TABLE IF NOT EXISTS `sps_banned` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `who` varchar(32) NOT NULL DEFAULT '',
@@ -92,12 +94,36 @@ CREATE TABLE IF NOT EXISTS `sps_banned` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `sps_bodies`
+--
+-- Creación: 18-12-2011 a las 15:05:10
+-- Última actualización: 18-12-2011 a las 15:05:10
+--
+
+DROP TABLE IF EXISTS `sps_bodies`;
+CREATE TABLE IF NOT EXISTS `sps_bodies` (
+  `id` mediumint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `system` smallint(5) unsigned NOT NULL,
+  `position` tinyint(2) unsigned DEFAULT NULL,
+  `type` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `mass` smallint(5) unsigned NOT NULL,
+  `radius` smallint(5) unsigned NOT NULL,
+  `distance` smallint(3) unsigned NOT NULL,
+  `planet` mediumint(6) unsigned DEFAULT NULL,
+  `habitable` tinyint(1) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `sps_config`
 --
 -- Creación: 22-08-2011 a las 16:04:47
 -- Última actualización: 22-08-2011 a las 16:04:47
 --
 
+DROP TABLE IF EXISTS `sps_config`;
 CREATE TABLE IF NOT EXISTS `sps_config` (
   `config_name` varchar(32) NOT NULL DEFAULT '',
   `config_value` text NOT NULL,
@@ -153,6 +179,7 @@ INSERT INTO `sps_config` (`config_name`, `config_value`) VALUES
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_errors`;
 CREATE TABLE IF NOT EXISTS `sps_errors` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `sender` varchar(32) NOT NULL DEFAULT '0',
@@ -167,9 +194,10 @@ CREATE TABLE IF NOT EXISTS `sps_errors` (
 --
 -- Estructura de tabla para la tabla `sps_fleets`
 --
--- Creación: 25-11-2011 a las 17:38:42
+-- Creación: 03-12-2011 a las 15:47:59
 --
 
+DROP TABLE IF EXISTS `sps_fleets`;
 CREATE TABLE IF NOT EXISTS `sps_fleets` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `owner` int(11) NOT NULL DEFAULT '0',
@@ -177,14 +205,12 @@ CREATE TABLE IF NOT EXISTS `sps_fleets` (
   `amount` bigint(21) NOT NULL DEFAULT '0',
   `array` text,
   `start_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `start_galaxy` tinyint(2) NOT NULL DEFAULT '0',
-  `start_system` smallint(4) NOT NULL DEFAULT '0',
+  `start_star` smallint(5) unsigned NOT NULL DEFAULT '0',
   `start_planet` tinyint(2) NOT NULL DEFAULT '0',
   `start_type` int(11) NOT NULL DEFAULT '0',
   `end_time` int(11) NOT NULL DEFAULT '0',
   `end_stay` int(11) NOT NULL DEFAULT '0',
-  `end_galaxy` tinyint(2) NOT NULL DEFAULT '0',
-  `end_system` smallint(4) NOT NULL DEFAULT '0',
+  `end_star` smallint(5) unsigned NOT NULL DEFAULT '0',
   `end_planet` tinyint(2) NOT NULL DEFAULT '0',
   `end_type` int(10) NOT NULL DEFAULT '0',
   `target_obj` tinyint(2) NOT NULL DEFAULT '0',
@@ -207,6 +233,7 @@ CREATE TABLE IF NOT EXISTS `sps_fleets` (
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_friends`;
 CREATE TABLE IF NOT EXISTS `sps_friends` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `sender` int(11) NOT NULL DEFAULT '0',
@@ -219,41 +246,12 @@ CREATE TABLE IF NOT EXISTS `sps_friends` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `sps_galaxy`
---
--- Creación: 25-11-2011 a las 17:40:37
---
-
-CREATE TABLE IF NOT EXISTS `sps_galaxy` (
-  `galaxy` tinyint(2) NOT NULL DEFAULT '0',
-  `system` smallint(4) NOT NULL DEFAULT '0',
-  `planet` tinyint(2) NOT NULL DEFAULT '0',
-  `planet_id` int(10) NOT NULL DEFAULT '0',
-  `metal` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `crystal` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `moon_id` int(10) NOT NULL DEFAULT '0',
-  `moon` tinyint(2) NOT NULL DEFAULT '0',
-  `habitable` tinyint(1) NOT NULL,
-  KEY `galaxy` (`galaxy`),
-  KEY `system` (`system`),
-  KEY `planet` (`planet`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `sps_galaxy`
---
-
-INSERT INTO `sps_galaxy` (`galaxy`, `system`, `planet`, `planet_id`, `metal`, `crystal`, `moon_id`, `moon`, `habitable`) VALUES
-(1, 1, 1, 1, 0, 0, 0, 0, 1);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `sps_messages`
 --
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_messages`;
 CREATE TABLE IF NOT EXISTS `sps_messages` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `owner` int(11) NOT NULL DEFAULT '0',
@@ -274,6 +272,7 @@ CREATE TABLE IF NOT EXISTS `sps_messages` (
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_notes`;
 CREATE TABLE IF NOT EXISTS `sps_notes` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `owner` int(11) DEFAULT NULL,
@@ -289,21 +288,16 @@ CREATE TABLE IF NOT EXISTS `sps_notes` (
 --
 -- Estructura de tabla para la tabla `sps_planets`
 --
--- Creación: 25-11-2011 a las 17:43:45
+-- Creación: 05-12-2011 a las 10:27:23
 --
 
+DROP TABLE IF EXISTS `sps_planets`;
 CREATE TABLE IF NOT EXISTS `sps_planets` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL,
   `name` varchar(20) DEFAULT 'Planeta Principal',
-  `id_owner` int(10) DEFAULT NULL,
+  `id_owner` int(10) unsigned NOT NULL DEFAULT '0',
   `id_level` int(10) DEFAULT NULL,
-  `galaxy` tinyint(2) NOT NULL DEFAULT '0',
-  `system` smallint(4) NOT NULL DEFAULT '0',
-  `planet` tinyint(2) NOT NULL DEFAULT '0',
-  `distance` smallint(5) unsigned NOT NULL,
   `last_update` int(10) DEFAULT NULL,
-  `planet_type` int(10) NOT NULL DEFAULT '1',
-  `destroyed` int(10) NOT NULL DEFAULT '0',
   `b_building` int(10) NOT NULL DEFAULT '0',
   `b_building_id` text NOT NULL,
   `b_tech` int(10) NOT NULL DEFAULT '0',
@@ -311,14 +305,8 @@ CREATE TABLE IF NOT EXISTS `sps_planets` (
   `b_hangar` int(10) NOT NULL DEFAULT '0',
   `b_hangar_id` text NOT NULL,
   `b_hangar_plus` int(10) NOT NULL DEFAULT '0',
-  `image` varchar(32) NOT NULL DEFAULT 'normaltempplanet01',
-  `diameter` int(10) NOT NULL DEFAULT '12800',
   `points` bigint(20) DEFAULT '0',
   `ranks` bigint(20) DEFAULT '0',
-  `field_current` int(10) NOT NULL DEFAULT '0',
-  `field_max` int(10) NOT NULL DEFAULT '163',
-  `temp_min` int(3) NOT NULL DEFAULT '-17',
-  `temp_max` int(3) NOT NULL DEFAULT '23',
   `metal` double(132,8) NOT NULL DEFAULT '0.00000000',
   `metal_perhour` int(10) NOT NULL DEFAULT '0',
   `metal_max` bigint(20) DEFAULT '100000',
@@ -382,14 +370,14 @@ CREATE TABLE IF NOT EXISTS `sps_planets` (
   `jumpgate` bigint(20) NOT NULL DEFAULT '0',
   `last_jump_time` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `sps_planets`
 --
 
-INSERT INTO `sps_planets` (`id`, `name`, `id_owner`, `id_level`, `galaxy`, `system`, `planet`, `distance`, `last_update`, `planet_type`, `destroyed`, `b_building`, `b_building_id`, `b_tech`, `b_tech_id`, `b_hangar`, `b_hangar_id`, `b_hangar_plus`, `image`, `diameter`, `points`, `ranks`, `field_current`, `field_max`, `temp_min`, `temp_max`, `metal`, `metal_perhour`, `metal_max`, `crystal`, `crystal_perhour`, `crystal_max`, `deuterium`, `deuterium_perhour`, `deuterium_max`, `energy_used`, `energy_max`, `metal_mine`, `crystal_mine`, `deuterium_sintetizer`, `solar_plant`, `fusion_plant`, `robot_factory`, `nano_factory`, `hangar`, `metal_store`, `crystal_store`, `deuterium_store`, `laboratory`, `terraformer`, `ally_deposit`, `silo`, `small_ship_cargo`, `big_ship_cargo`, `light_hunter`, `heavy_hunter`, `crusher`, `battle_ship`, `colonizer`, `recycler`, `spy_sonde`, `bomber_ship`, `solar_satelit`, `destructor`, `dearth_star`, `battleship`, `supernova`, `missile_launcher`, `small_laser`, `big_laser`, `gauss_canyon`, `ionic_canyon`, `buster_canyon`, `small_protection_shield`, `planet_protector`, `big_protection_shield`, `interceptor_missile`, `interplanetary_missile`, `metal_mine_percent`, `crystal_mine_percent`, `deuterium_sintetizer_percent`, `solar_plant_percent`, `fusion_plant_percent`, `solar_satelit_percent`, `lunar_base`, `phalanx`, `jumpgate`, `last_jump_time`) VALUES
-(1, 'Planeta Principal', 1, NULL, 1, 1, 1, 0, 1313777105, 1, 0, 0, '0', 0, 0, 0, '', 0, 'normaltempplanet02', 12750, 0, 0, 0, 163, 47, 87, 8379.37777778, 20, 1000000, 4439.68888891, 10, 1000000, 500.00000000, 0, 1000000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10, 10, 10, 10, 10, 0, 0, 0, 0);
+INSERT INTO `sps_planets` (`id`, `name`, `id_owner`, `id_level`, `last_update`, `b_building`, `b_building_id`, `b_tech`, `b_tech_id`, `b_hangar`, `b_hangar_id`, `b_hangar_plus`, `points`, `ranks`, `metal`, `metal_perhour`, `metal_max`, `crystal`, `crystal_perhour`, `crystal_max`, `deuterium`, `deuterium_perhour`, `deuterium_max`, `energy_used`, `energy_max`, `metal_mine`, `crystal_mine`, `deuterium_sintetizer`, `solar_plant`, `fusion_plant`, `robot_factory`, `nano_factory`, `hangar`, `metal_store`, `crystal_store`, `deuterium_store`, `laboratory`, `terraformer`, `ally_deposit`, `silo`, `small_ship_cargo`, `big_ship_cargo`, `light_hunter`, `heavy_hunter`, `crusher`, `battle_ship`, `colonizer`, `recycler`, `spy_sonde`, `bomber_ship`, `solar_satelit`, `destructor`, `dearth_star`, `battleship`, `supernova`, `missile_launcher`, `small_laser`, `big_laser`, `gauss_canyon`, `ionic_canyon`, `buster_canyon`, `small_protection_shield`, `planet_protector`, `big_protection_shield`, `interceptor_missile`, `interplanetary_missile`, `metal_mine_percent`, `crystal_mine_percent`, `deuterium_sintetizer_percent`, `solar_plant_percent`, `fusion_plant_percent`, `solar_satelit_percent`, `lunar_base`, `phalanx`, `jumpgate`, `last_jump_time`) VALUES
+(1, 'Planeta Principal', 1, NULL, 1313777105, 0, '0', 0, 0, 0, '', 0, 0, 0, 8379.37777778, 20, 1000000, 4439.68888891, 10, 1000000, 500.00000000, 0, 1000000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10, 10, 10, 10, 10, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -400,6 +388,7 @@ INSERT INTO `sps_planets` (`id`, `name`, `id_owner`, `id_level`, `galaxy`, `syst
 -- Última actualización: 22-08-2011 a las 18:56:06
 --
 
+DROP TABLE IF EXISTS `sps_plugins`;
 CREATE TABLE IF NOT EXISTS `sps_plugins` (
   `plugin` varchar(32) NOT NULL,
   `status` tinyint(3) NOT NULL DEFAULT '0',
@@ -416,6 +405,7 @@ CREATE TABLE IF NOT EXISTS `sps_plugins` (
 -- Última revisión: 22-08-2011 a las 16:00:36
 --
 
+DROP TABLE IF EXISTS `sps_rw`;
 CREATE TABLE IF NOT EXISTS `sps_rw` (
   `owners` varchar(255) NOT NULL,
   `rid` varchar(72) NOT NULL,
@@ -434,6 +424,7 @@ CREATE TABLE IF NOT EXISTS `sps_rw` (
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_sessions`;
 CREATE TABLE IF NOT EXISTS `sps_sessions` (
   `session_id` char(32) NOT NULL,
   `ip_address` varchar(15) NOT NULL,
@@ -449,8 +440,30 @@ CREATE TABLE IF NOT EXISTS `sps_sessions` (
 --
 
 INSERT INTO `sps_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('1e1be2c66fb736f24b96c66df452ce37', '127.0.0.1', 'Mozilla/5.0 (X11; Linux i686; rv:7.0.1) Gecko/20100101 Firefox/7.0.1', 1321806664, 'a:1:{s:18:"flash:old:referrer";N;}'),
-('5d1ba54ad3dffc4917df38ac7c336f70', '127.0.0.1', 'Mozilla/5.0 (Ubuntu; X11; Linux i686; rv:8.0) Gecko/20100101 Firefox/8.0', 1322238359, '');
+('154a31b772677e5556ababc29c4d4ac7', '127.0.0.1', 'Mozilla/5.0 (Ubuntu; X11; Linux i686; rv:8.0) Gecko/20100101 Firefox/8.0', 1322925659, ''),
+('b8f6d26076ab29573da6bd61a92d0cec', '127.0.0.1', 'Mozilla/5.0 (Ubuntu; X11; Linux i686; rv:8.0) Gecko/20100101 Firefox/8.0', 1323959542, '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `sps_stars`
+--
+-- Creación: 18-12-2011 a las 14:17:10
+-- Última actualización: 18-12-2011 a las 14:17:10
+--
+
+DROP TABLE IF EXISTS `sps_stars`;
+CREATE TABLE IF NOT EXISTS `sps_stars` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `galaxy` smallint(5) unsigned NOT NULL,
+  `system` smallint(5) unsigned NOT NULL,
+  `mass` tinyint(3) unsigned NOT NULL,
+  `radius` tinyint(3) unsigned NOT NULL,
+  `luminosity` tinyint(3) unsigned NOT NULL,
+  `temperature` mediumint(7) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `system` (`system`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -460,6 +473,7 @@ INSERT INTO `sps_sessions` (`session_id`, `ip_address`, `user_agent`, `last_acti
 -- Creación: 25-11-2011 a las 17:46:09
 --
 
+DROP TABLE IF EXISTS `sps_statpoints`;
 CREATE TABLE IF NOT EXISTS `sps_statpoints` (
   `id_owner` int(10) unsigned NOT NULL DEFAULT '0',
   `id_ally` int(10) unsigned NOT NULL DEFAULT '0',
@@ -505,9 +519,10 @@ INSERT INTO `sps_statpoints` (`id_owner`, `id_ally`, `stat_type`, `stat_code`, `
 --
 -- Estructura de tabla para la tabla `sps_users`
 --
--- Creación: 25-11-2011 a las 17:48:03
+-- Creación: 02-12-2011 a las 20:14:32
 --
 
+DROP TABLE IF EXISTS `sps_users`;
 CREATE TABLE IF NOT EXISTS `sps_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
@@ -516,10 +531,6 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
   `reg_email` varchar(50) NOT NULL,
   `name` varchar(20) NOT NULL,
   `authlevel` tinyint(4) NOT NULL DEFAULT '0',
-  `planet_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `galaxy` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `system` smallint(4) unsigned NOT NULL DEFAULT '0',
-  `planet` tinyint(2) NOT NULL DEFAULT '0',
   `last_ip` int(10) unsigned NOT NULL,
   `reg_ip` int(10) unsigned NOT NULL,
   `register_time` int(10) unsigned NOT NULL,
@@ -592,8 +603,8 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
 -- Volcado de datos para la tabla `sps_users`
 --
 
-INSERT INTO `sps_users` (`id`, `username`, `password`, `email`, `reg_email`, `name`, `authlevel`, `planet_id`, `galaxy`, `system`, `planet`, `last_ip`, `reg_ip`, `register_time`, `online_time`, `dpath`, `design`, `noipcheck`, `planet_sort`, `planet_sort_order`, `espionage_probes`, `settings_tooltiptime`, `settings_fleetactions`, `settings_allylogo`, `settings_esp`, `settings_wri`, `settings_bud`, `settings_mis`, `settings_rep`, `urlaubs_modus`, `urlaubs_until`, `db_deaktjava`, `new_message`, `fleet_shortcut`, `b_tech_planet`, `spy_tech`, `computer_tech`, `military_tech`, `defence_tech`, `shield_tech`, `energy_tech`, `hyperspace_tech`, `combustion_tech`, `impulse_motor_tech`, `hyperspace_motor_tech`, `laser_tech`, `ionic_tech`, `buster_tech`, `intergalactic_tech`, `expedition_tech`, `graviton_tech`, `ally_id`, `ally_name`, `ally_request`, `ally_request_text`, `ally_register_time`, `ally_rank_id`, `current_moon`, `rpg_geologist`, `rpg_admiral`, `rpg_engineer`, `rpg_technocrat`, `rpg_spy`, `rpg_constructor`, `rpg_scientific`, `rpg_commander`, `rpg_storekeeper`, `darkmatter`, `rpg_defender`, `rpg_destroyer`, `rpg_general`, `rpg_bunker`, `rpg_raider`, `rpg_emperor`, `banned`, `ban_finish`) VALUES
-(1, 'admin', '8cb2237d0679ca88db6464eac60da96345513964', 'admin@example.com', 'admin@example.com', '', 3, 1, 1, 1, 1, 2130706433, 2130706433, 1313067961, 1313777105, '', 1, 1, 0, 0, 1, 5, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0);
+INSERT INTO `sps_users` (`id`, `username`, `password`, `email`, `reg_email`, `name`, `authlevel`, `last_ip`, `reg_ip`, `register_time`, `online_time`, `dpath`, `design`, `noipcheck`, `planet_sort`, `planet_sort_order`, `espionage_probes`, `settings_tooltiptime`, `settings_fleetactions`, `settings_allylogo`, `settings_esp`, `settings_wri`, `settings_bud`, `settings_mis`, `settings_rep`, `urlaubs_modus`, `urlaubs_until`, `db_deaktjava`, `new_message`, `fleet_shortcut`, `b_tech_planet`, `spy_tech`, `computer_tech`, `military_tech`, `defence_tech`, `shield_tech`, `energy_tech`, `hyperspace_tech`, `combustion_tech`, `impulse_motor_tech`, `hyperspace_motor_tech`, `laser_tech`, `ionic_tech`, `buster_tech`, `intergalactic_tech`, `expedition_tech`, `graviton_tech`, `ally_id`, `ally_name`, `ally_request`, `ally_request_text`, `ally_register_time`, `ally_rank_id`, `current_moon`, `rpg_geologist`, `rpg_admiral`, `rpg_engineer`, `rpg_technocrat`, `rpg_spy`, `rpg_constructor`, `rpg_scientific`, `rpg_commander`, `rpg_storekeeper`, `darkmatter`, `rpg_defender`, `rpg_destroyer`, `rpg_general`, `rpg_bunker`, `rpg_raider`, `rpg_emperor`, `banned`, `ban_finish`) VALUES
+(1, 'admin', '8cb2237d0679ca88db6464eac60da96345513964', 'admin@example.com', 'admin@example.com', '', 3, 2130706433, 2130706433, 1313067961, 1313777105, '', 1, 1, 0, 0, 1, 5, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

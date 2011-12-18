@@ -1,7 +1,7 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Planet Class
+ * Bigbang Class
  *
  * @subpackage	Libraries
  * @author		Razican
@@ -9,37 +9,124 @@
  * @link		http://www.razican.com/
  */
 
-class Planet
+class Bigbang
 {
+	var $stars		= array();
+	var $planets	= array();
+
 	/**
 	 * Create a planet
 	 *
 	 * @access	public
-	 * @param	array
+	 * @param	int
+	 * @param	int
 	 */
-	public function create($position = NULL)
+	public function create_planet($position, $star_id)
 	{
-		$CI	=& get_instance();
+		$CI			=& get_instance();
 
-		$position	= $position ? $position : _select_position();
-		$size		= $position ? _size($position) : round((mt_rand(95, 105) * $CI->config->item('start_field_max'))/100);
+		$distance	= _distance($position, $star_id);
+		$radius		= _radius($position, $star_id);
+		$mass		= _mass($radius, $position, $star_id);
+		$habitable	= _is_habitable($distance, $radius, $mass, $star_id);
 
+		if($diameter && $mass && $distance)
+		{
+			$planet	= array('system' => $star_id, 'position' => $position, 'mass' => $mass, 'radius' => $radius, 'distance' => $distance, 'habitable' => $habitable);
+			$this->planets[] = $planet;
+			return $CI->db->insert('bodies', $planet);
+		}
 		return FALSE;
 	}
 
 	/**
-	 * Create a moon
+	 * Create a star
 	 *
 	 * @access	public
-	 * @param
+	 * @param	int
+	 * @param	int
 	 */
-	public function create_moon()
+	public function create_star($galaxy, $system)
 	{
+		$CI		=& get_instance();
+		$CI->load->config('phisics');
+
+		$type	= substr($CI->config->item('star_types'), mt_rand(0, 6), 1);
+
+		switch($type)
+		{
+			case 'O':
+				$mass			= mt_rand(3600, 10000);
+				$temperature	= mt_rand(2800000, 5000000);
+				$radius			= mt_rand(900, 2500);
+			break;
+			case 'B':
+				$mass			= mt_rand(650, 3600);
+				$temperature	= mt_rand(960000, 2800000);
+				$radius			= mt_rand(490, 1000);
+			break;
+			case 'A':
+				$mass			= mt_rand(240, 650);
+				$temperature	= mt_rand(710000, 960000);
+				$diameter		= mt_rand(150, 490);
+			break;
+			case 'F':
+				$mass			= mt_rand(140, 240);
+				$temperature	= mt_rand(570000, 710000);
+				$radius			= mt_rand(120, 150);
+			break;
+			case 'G':
+				$mass			= mt_rand(95, 140);
+				$temperature	= mt_rand(460000, 570000);
+				$radius			= mt_rand(100, 120);
+			break;
+			case 'K':
+				$mass			= mt_rand(55, 95);
+				$temperature	= mt_rand(320000, 460000);
+				$radius			= mt_rand(65, 100);
+			break;
+			case 'M':
+				$mass			= mt_rand(16, 55);
+				$temperature	= mt_rand(1700, 3200);
+				$radius			= mt_rand(24, 65);
+		}
+
+		$luminosity		= round(($radius/100, 2)*$CI->config->item('Stephan-Boltzman')*pow($temperature/100, 4)*100);
+
+		if($mass && $radius && $temperature && $luminosity)
+		{
+			$star			= array('galaxy' => $galaxy, 'system' => $system, 'mass' => $mass, 'radius' => $radius, 'luminosity' => $luminosity, 'temperature' => $temperature);
+			$this->stars[]	= $star;
+			return $CI->db->insert('stars', $star);
+		}
 		return FALSE;
 	}
 
 	/**
-	 * Return the size of a future planet based on its position
+	 * Calculate a planet's distance to sun based on its position,
+	 * using Titius-Bode Law.
+	 *
+	 * @access	public
+	 * @param	int
+	 * @param	int
+	 */
+	private function _distance($position, $star_id)
+	{
+		if( ! isset($this->stars[$star_id]['m']))
+		{
+			$this->stars[$star_id]['m']	= mt_rand(35000, 650000)/1000000;
+			$n = 13.9-25.25*log($this->stars[$star_id]['m']+1)
+			$this->stars[$star_id]['n']	= mt_rand(round($n*999000), round(n)*1001000)/1000000;
+		}
+		$m	= $this->stars[$star_id]['m'];
+		$n	= $this->stars[$star_id]['n'];
+
+		$dist_value	= exp(($m*$position - $n))*100;
+		$distance	= mt_rand(round($dist_value*0.9), round($dist_value*1.1));
+	}
+
+	/**
+	 * Return the size of a future planet based on its position and star
 	 *
 	 * @access	private
 	 * @param	array
@@ -198,149 +285,5 @@ class Planet
 		$size['diameter']	= mt_rand(($size['fields']-1)*75, ($size['fields']+1)*75);
 
 		return $size;
-	}
-
-	/**
-	 * Returns if a star is valid
-	 *
-	 * @access	private
-	 * @param	array
-	 * @return	boolean
-	 */
-	private function _habitable_stars($star)
-	{
-		$relation		= $star['luminosity'] / $star['diameter'];
-
-		$is_habitable	= (($star['diameter'] >= 0.02) &&
-							($star['diameter'] <= 50) &&
-							($star['luminosity'] >= 0.02) &&
-							($star['luminosity'] <= 50) &&
-							($relation <= 10) && ($relation >= 0.1);
-		return  $is_habitable;
-	}
-
-	/**
-	 * Returns the minimum position for an habitable planet
-	 *
-	 * @access	private
-	 * @param	integer
-	 * @return	integer
-	 */
-	private function _minimum_habitable_position($magnitude)
-	{
-		if($magnitude <= 0.2) return 1;
-		elseif($magnitude <= 10) return 2;
-		elseif($magnitude <= 50) return 3;
-		elseif($magnitude <= 250) return 4;
-		elseif($magnitude <= 500) return 5;
-		elseif($magnitude <= 750) return 6;
-		elseif($magnitude <= 1000) return 7;
-		elseif($magnitude <= 1500) return 8;
-		elseif($magnitude <= 2000) return 9;
-		else return 10;
-	}
-
-	/**
-	 * Returns the maximum position for an habitable planet
-	 *
-	 * @access	private
-	 * @param	integer
-	 * @return	integer
-	 */
-	private function _maximum_habitable_position($magnitude)
-	{
-		if($magnitude <= 0.01) return 1;
-		elseif($magnitude <= 0.1) return 2;
-		elseif($magnitude <= 0.25) return 3;
-		elseif($magnitude <= 2) return 4;
-		elseif($magnitude <= 25) return 5;
-		elseif($magnitude <= 100) return 6;
-		elseif($magnitude <= 250) return 7;
-		elseif($magnitude <= 500) return 8;
-		elseif($magnitude <= 1000) return 9;
-		elseif($magnitude <= 1500) return 10;
-		elseif($magnitude <= 2000) return 11;
-		else return 12;
-	}
-
-	/**
-	 * Returns wether a planet is gaseous or not
-	 *
-	 * @access	private
-	 * @param	array
-	 * @return	boolean
-	 */
-	private function _is_gaseous_planet($planet)
-	{
-		return ($planet['fields'] > 500);
-	}
-
-
-	/**
-	 * Return the perfect planet for a new user
-	 *
-	 * @access	private
-	 * @return	array
-	 */
-	private function _select_position()
-	{
-		$CI			=& get_instance();
-
-		$CI->config->load('stars');
-		$stars		= array_filter($CI->config->item('stars'), '_habitable_stars');
-
-		$CI->db->select('id, galaxy, system, planet, distance, diameter');
-		$CI->db->where_in('star', array_keys($stars));
-		$query	= $CI->db->get('planets');
-
-		foreach($query->result() as $planet)
-		{
-			$stars[$planet->star]['planets'][$planet->id]	= $planet;
-		}
-
-		foreach($stars as $id => $star)
-		{
-			$magnitude				= $star['diameter'] * $star['luminosity'];
-
-			$min_position			= _min_habitable_position($magnitude);
-			$max_position			= _max_habitable_position($magnitude);
-
-			$total_habit_planets	= 1 + $max_position - $min_position;
-
-			$habitable_planets		= array();
-			for($i = $min_position; $i<= $max_position; $i++){ $habitable_planets[$i] = $i; }
-
-			$habitable_planets		= array_filter($habitable_planets, '_is_position_habitable');
-
-			$star['density']		= ($total_habit_planets - count($habitable_planets)) / $total_habit_planets;
-		}
-
-
-		$galaxies			= array_filter($galaxy, '_is_good_galaxy');
-		$position['galaxy']	= empty($galaxies) ? array_rand(array_keys(array_filter($galaxy, '_is_empty_galaxy'))) : array_rand(array_keys($galaxies));
-
-
-
-		return FALSE;
-	}
-
-	/**
-	 * Return maximum planet mass based on its star
-	 *
-	 * @access	private
-	 * @param	int
-	 * @return	int
-	 */
-	private function _max_size($star)
-	{
-		$CI		=& get_instance();
-
-		$CI->db->where('id', $star);//SIN ACABAR
-		$CI->db->select('mass');
-
-		foreach($CI->config->item('stars') as $star)
-			if(($star['galaxy'] == $position['galaxy']) && ($star['system'] == $position['system'])) break;
-
-		return ceil(pow($star['diameter'], 1/6)*2000);
 	}
 }
