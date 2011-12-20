@@ -11,8 +11,14 @@
 
 class Bigbang
 {
-	var $stars		= array();
-	var $planets	= array();
+	public $stars	= array();
+	public $planets	= array();
+
+	public function __construct()
+	{
+		$CI =& get_instance();
+		$CI->load->config('physics');
+	}
 
 	/**
 	 * Create a planet
@@ -30,7 +36,7 @@ class Bigbang
 		$mass		= _mass($radius, $position, $star_id);
 		$habitable	= _is_habitable($distance, $radius, $mass, $star_id);
 
-		if($diameter && $mass && $distance)
+		if($radius && $mass && $distance)
 		{
 			$planet	= array('system' => $star_id, 'position' => $position, 'mass' => $mass, 'radius' => $radius, 'distance' => $distance, 'habitable' => $habitable);
 			$this->planets[] = $planet;
@@ -49,7 +55,6 @@ class Bigbang
 	public function create_star($galaxy, $system)
 	{
 		$CI		=& get_instance();
-		$CI->load->config('phisics');
 
 		$type	= substr($CI->config->item('star_types'), mt_rand(0, 6), 1);
 
@@ -91,7 +96,7 @@ class Bigbang
 				$radius			= mt_rand(24, 65);
 		}
 
-		$luminosity		= round(($radius/100, 2)*$CI->config->item('Stephan-Boltzman')*pow($temperature/100, 4)*100);
+		$luminosity		= round(pow($radius/100, 2)*$CI->config->item('Boltzman_constant')*pow($temperature/100, 4)*100);
 
 		if($mass && $radius && $temperature && $luminosity)
 		{
@@ -115,8 +120,8 @@ class Bigbang
 		if( ! isset($this->stars[$star_id]['m']))
 		{
 			$this->stars[$star_id]['m']	= mt_rand(35000, 650000)/1000000;
-			$n = 13.9-25.25*log($this->stars[$star_id]['m']+1)
-			$this->stars[$star_id]['n']	= mt_rand(round($n*999000), round(n)*1001000)/1000000;
+			$n = 13.9-25.25*log($this->stars[$star_id]['m']+1);
+			$this->stars[$star_id]['n']	= mt_rand(round($n*999000), round($n*1001000))/1000000;
 		}
 		$m	= $this->stars[$star_id]['m'];
 		$n	= $this->stars[$star_id]['n'];
@@ -129,161 +134,124 @@ class Bigbang
 	 * Return the size of a future planet based on its position and star
 	 *
 	 * @access	private
-	 * @param	array
+	 * @param	int
+	 * @param	int
 	 * @return	array
 	 */
-	private function _size($position)
+	private function _radius($position, $star)
 	{
+		$CI					=& get_instance();
 		$probability		= mt_rand(1, 100);
-		$max_size			= _max_size($position);
+		$max_radius			= $this->stars[$star]['radius']*$CI->config->item('sun_radius')/5;
 
-		switch($position['planet'])
+		switch($position)
 		{
 			case 1:
-				if($probability <= 10) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 25) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 28) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 30) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 3250);
+				if($probability <= 10) $radius = mt_rand(10, 50);
+				elseif($probability <= 25) $radius = mt_rand(50, 100);
+				elseif($probability <= 28) $radius = mt_rand(100, 150);
+				elseif($probability <= 30) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 3250);
 			break;
 			case 2:
-				if($probability <= 5) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 30) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 40) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 55) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 2100);
+				if($probability <= 5) $radius = mt_rand(10, 50);
+				elseif($probability <= 30) $radius = mt_rand(50, 100);
+				elseif($probability <= 40) $radius = mt_rand(100, 150);
+				elseif($probability <= 55) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 2100);
 			break;
 			case 3:
-				if($probability <= 1) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 31) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 50) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 65) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 2000);
+				if($probability <= 1) $radius = mt_rand(10, 50);
+				elseif($probability <= 31) $radius = mt_rand(50, 100);
+				elseif($probability <= 50) $radius = mt_rand(100, 150);
+				elseif($probability <= 65) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 2000);
 			break;
 			case 4:
-				if($probability <= 10) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 35) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 65) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 75) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 2250);
+				if($probability <= 10) $radius = mt_rand(10, 50);
+				elseif($probability <= 35) $radius = mt_rand(50, 100);
+				elseif($probability <= 65) $radius = mt_rand(100, 150);
+				elseif($probability <= 75) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 2250);
 			break;
 			case 5:
-				if($probability <= 2) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 5) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 25) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 50) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 1750);
+				if($probability <= 2) $radius = mt_rand(10, 50);
+				elseif($probability <= 5) $radius = mt_rand(50, 100);
+				elseif($probability <= 25) $radius = mt_rand(100, 150);
+				elseif($probability <= 50) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 1750);
 			break;
 			case 6:
-				if($probability <= 5) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 15) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 25) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 45) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 2000);
+				if($probability <= 5) $radius = mt_rand(10, 50);
+				elseif($probability <= 15) $radius = mt_rand(50, 100);
+				elseif($probability <= 25) $radius = mt_rand(100, 150);
+				elseif($probability <= 45) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 2000);
 			break;
 			case 7:
-				if($probability <= 10) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 30) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 40) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 60) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 1500);
+				if($probability <= 10) $radius = mt_rand(10, 50);
+				elseif($probability <= 30) $radius = mt_rand(50, 100);
+				elseif($probability <= 40) $radius = mt_rand(100, 150);
+				elseif($probability <= 60) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 1500);
 			break;
 			case 8:
-				if($probability <= 20) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 45) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 55) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 70) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 1000);
+				if($probability <= 20) $radius = mt_rand(10, 50);
+				elseif($probability <= 45) $radius = mt_rand(50, 100);
+				elseif($probability <= 55) $radius = mt_rand(100, 150);
+				elseif($probability <= 70) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 1000);
 			break;
 			case 9:
-				if($probability <= 30) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 55) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 70) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 80) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 600);
+				if($probability <= 30) $radius = mt_rand(10, 50);
+				elseif($probability <= 55) $radius = mt_rand(50, 100);
+				elseif($probability <= 70) $radius = mt_rand(100, 150);
+				elseif($probability <= 80) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 600);
 			break;
 			case 10:
-				if($probability <= 40) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 70) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 80) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 85) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 500);
+				if($probability <= 40) $radius = mt_rand(10, 50);
+				elseif($probability <= 70) $radius = mt_rand(50, 100);
+				elseif($probability <= 80) $radius = mt_rand(100, 150);
+				elseif($probability <= 85) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 500);
 			break;
 			case 11:
-				if($probability <= 40) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 83) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 88) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 90) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 500);
+				if($probability <= 40) $radius = mt_rand(10, 50);
+				elseif($probability <= 83) $radius = mt_rand(50, 100);
+				elseif($probability <= 88) $radius = mt_rand(100, 150);
+				elseif($probability <= 90) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 500);
 			break;
 			case 12:
-				if($probability <= 60) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 90) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 93) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 95) $size['fields'] = mt_rand(150, 250);
-				else $size['fields'] = mt_rand(250, 400);
+				if($probability <= 60) $radius = mt_rand(10, 50);
+				elseif($probability <= 90) $radius = mt_rand(50, 100);
+				elseif($probability <= 93) $radius = mt_rand(100, 150);
+				elseif($probability <= 95) $radius = mt_rand(150, 250);
+				else $radius = mt_rand(250, 400);
 			break;
 			case 13:
-				if($probability <= 65) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 95) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 97) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 98) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 500);
+				if($probability <= 65) $radius = mt_rand(10, 50);
+				elseif($probability <= 95) $radius = mt_rand(50, 100);
+				elseif($probability <= 97) $radius = mt_rand(100, 150);
+				elseif($probability <= 98) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 500);
 			break;
 			case 14:
-				if($probability <= 70) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 97) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 98) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 99) $size['fields'] = mt_rand(150, 250);
-				else $size['fields'] = mt_rand(250, 400);
+				if($probability <= 70) $radius = mt_rand(10, 50);
+				elseif($probability <= 97) $radius = mt_rand(50, 100);
+				elseif($probability <= 98) $radius = mt_rand(100, 150);
+				elseif($probability <= 99) $radius = mt_rand(150, 250);
+				else $radius = mt_rand(250, 400);
 			break;
 			case 15:
-				if($probability <= 75) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 95) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 96) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 97) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 400);
-			break;
-			case 16:
-				if($probability <= 80) $size['fields'] = mt_rand(10, 50);
-				elseif($probability <= 93) $size['fields'] = mt_rand(50, 100);
-				elseif($probability <= 94) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 95) $size['fields'] = mt_rand(150, 250);
-				else $size['fields'] = mt_rand(250, 400);
-			break;
-			case 17:
-				if($probability <= 83) $size['fields'] = mt_rand(10, 40);
-				elseif($probability <= 93) $size['fields'] = mt_rand(40, 100);
-				elseif($probability <= 94) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 95) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 500);
-			break;
-			case 18:
-				if($probability <= 90) $size['fields'] = mt_rand(10, 40);
-				elseif($probability <= 94) $size['fields'] = mt_rand(40, 100);
-				elseif($probability <= 95) $size['fields'] = mt_rand(100, 150);
-				elseif($probability <= 96) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 1500);
-			break;
-			case 19:
-				if($probability <= 92) $size['fields'] = mt_rand(10, 30);
-				elseif($probability <= 95) $size['fields'] = mt_rand(30, 90);
-				elseif($probability <= 96) $size['fields'] = mt_rand(90, 150);
-				elseif($probability <= 97) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 750);
-			break;
-			case 20:
-				if($probability <= 94) $size['fields'] = mt_rand(10, 30);
-				elseif($probability <= 96) $size['fields'] = mt_rand(30, 90);
-				elseif($probability <= 97) $size['fields'] = mt_rand(90, 150);
-				elseif($probability <= 98) $size['fields'] = mt_rand(150, 300);
-				else $size['fields'] = mt_rand(300, 750);
-			break;
+				if($probability <= 75) $radius = mt_rand(10, 50);
+				elseif($probability <= 95) $radius = mt_rand(50, 100);
+				elseif($probability <= 96) $radius = mt_rand(100, 150);
+				elseif($probability <= 97) $radius = mt_rand(150, 300);
+				else $radius = mt_rand(300, 400);
 		}
 
-		$size['fields']		= $size['fields'] > $max_size ? ceil($max_size*mt_rand(98, 100)/100) : $size['fields'];
-		$size['diameter']	= mt_rand(($size['fields']-1)*75, ($size['fields']+1)*75);
-
-		return $size;
+		return ($radius/100);
 	}
 }

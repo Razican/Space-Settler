@@ -415,3 +415,8 @@ Tamaños, masas...:
 * Masa de un planeta: entre Mt/100000 y Mt*3.500.
 * Masa de una estrella:
 * Diámetro de un planeta:
+
+Constantes:
+-----------
+
+* Luz: 299792458 m/s

@@ -20,7 +20,8 @@ class User
 	 */
 	public function load_data($id)
 	{
-	/*	$CI							=& get_instance();
+	/*	Código
+	 	$CI							=& get_instance();
 
 		$user_id					= $CI->session->userdata('user_id');
 		$id							= is_null($id) ? $user_id : $id;
@@ -277,6 +278,6 @@ class User
 		$password	= sha1($password);
 		$CI->db->where('email', $email);
 
-		return $CI->db->update('users', array('password' => $sha1_pass)) ? TRUE : FALSE;
+		return $CI->db->update('users', array('password' => $password));
 	}
 }

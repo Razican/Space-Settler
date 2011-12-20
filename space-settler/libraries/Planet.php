@@ -215,7 +215,7 @@ class Planet
 							($star['diameter'] <= 50) &&
 							($star['luminosity'] >= 0.02) &&
 							($star['luminosity'] <= 50) &&
-							($relation <= 10) && ($relation >= 0.1);
+							($relation <= 10) && ($relation >= 0.1));
 		return  $is_habitable;
 	}
 
@@ -316,8 +316,8 @@ class Planet
 		}
 
 
-		$galaxies			= array_filter($galaxy, '_is_good_galaxy');
-		$position['galaxy']	= empty($galaxies) ? array_rand(array_keys(array_filter($galaxy, '_is_empty_galaxy'))) : array_rand(array_keys($galaxies));
+		//$galaxies			= array_filter($galaxy, '_is_good_galaxy');
+		//$position['galaxy']	= empty($galaxies) ? array_rand(array_keys(array_filter($galaxy, '_is_empty_galaxy'))) : array_rand(array_keys($galaxies));
 
 
 
@@ -339,7 +339,7 @@ class Planet
 		$CI->db->select('mass');
 
 		foreach($CI->config->item('stars') as $star)
-			if(($star['galaxy'] == $position['galaxy']) && ($star['system'] == $position['system'])) break;
+			//if(($star['galaxy'] == $position['galaxy']) && ($star['system'] == $position['system'])) break;
 
 		return ceil(pow($star['diameter'], 1/6)*2000);
 	}
