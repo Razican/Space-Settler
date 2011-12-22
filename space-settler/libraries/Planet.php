@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Planet Class
@@ -344,3 +344,6 @@ class Planet
 		return ceil(pow($star['diameter'], 1/6)*2000);
 	}
 }
+
+/* End of file Planet.php */
+/* Location: ./space_settler/libraries/Planet.php */

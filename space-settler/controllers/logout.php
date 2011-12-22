@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Logout extends CI_Controller {
 
@@ -18,4 +18,4 @@ class Logout extends CI_Controller {
 
 
 /* End of file logout.php */
-/* Location: ./megapublik/controllers/logout.php */
+/* Location: ./space_settler/controllers/logout.php */

@@ -3,6 +3,12 @@ Información de cambios:
 
 ***Por Traducir: engine/language/english/migration_lang.php***
 
+**Por hacer:**
+* Probabilidades de tamaños
+* Habitabilidad
+* Masa de los satélites: 1E-12 - 0.15 * masa_planeta (más probabilidad de que sea más pequeña cuanto más grande sea el planeta)
+* Cantidad de satélites: Más cuanta más masa, aleatoriedad incluida.
+
 El proyecto, a falta de un instalador, se entrega con un usuario predefinido:
 
 **Usuario**: admin
