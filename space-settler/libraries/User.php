@@ -185,13 +185,12 @@ class User
 			return FALSE;
 
 		$CI->load->helper('string');
-		$CI->load->library('planet');
 
 		$username	= strtolower($username);
 		$password	= random_string('alnum', 8);
 		$IP			= ip2int($CI->input->ip_address());
 		$time		= now();
-		$planet		= $CI->planet->create();
+		$planet		= $this->_select_body();
 
 
 		$data		= array(
@@ -279,5 +278,27 @@ class User
 		$CI->db->where('email', $email);
 
 		return $CI->db->update('users', array('password' => $password));
+	}
+
+	/**
+	 * Select new user's body
+	 *
+	 * @access	private
+	 * @return	array
+	 */
+	public function _select_body()
+	{
+		$CI			=& get_instance();
+
+		$CI->db->where('habitable', 1);
+		$CI->db->where('owner', NULL);
+		$CI->db->select('id');
+		$query	= $CI->db->get('bodies');
+
+		foreach($query->result() as $body) $bodies[] = $body->id;
+
+		$body			= $bodies[mt_rand(0, count($bodies))];
+
+		return $body;
 	}
 }

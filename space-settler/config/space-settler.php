@@ -10,7 +10,7 @@
 |
 */
 
-$config['version']		= '0.0.0';
+$config['version']		= 'pre-alpha1-dev';
 
 /*
 |--------------------------------------------------------------------------
@@ -65,35 +65,6 @@ $config['game_name']	= 'Space Settler';
 |
 */
 $config['min_pass_lenght']	= 6;
-
-/*
-|--------------------------------------------------------------------------
-| Starting resources
-|--------------------------------------------------------------------------
-|
-| These options will decide which will be the resources of each new user
-|
-*/
-$config['start_fields']		= 170;
-$config['start_metal_h']	= 20;
-$config['start_crystal_h']	= 10;
-$config['start_deuter_h']	= 0;
-$config['start_metal']		= 500;
-$config['start_crystal']	= 250;
-$config['start_deuterium']	= 0;
-
-/*
-|--------------------------------------------------------------------------
-| Maximum galaxies, systems and planets
-|--------------------------------------------------------------------------
-|
-| These options will decide haw meny galaxies, system and planets will the
-| universe have.
-|
-*/
-$config['max_galaxies']		= 9;
-$config['max_systems']		= 499;
-$config['max_planets']		= 15;
 
 /*
 |--------------------------------------------------------------------------

@@ -2,32 +2,41 @@
 
 class Creation extends CI_Controller {
 
-	public function create($galaxies, $stars, $planets)
+	public function index()
 	{
-		ini_set('memory_limit','512M');
+		ini_set('memory_limit','3.5G');
+		ini_set('max_execution_time', 900);
 		$this->output->enable_profiler($this->config->item('debug'));
 		$this->output->set_profiler_sections(array('queries' => FALSE));
 		$this->load->library('bigbang');
 
-		for($i=0; $i<$galaxies; $i++)
+		$total_stars	= mt_rand(95000, 105000);
+		$this->bigbang->current_stars	= $this->db->count_all('stars');
+		$this->bigbang->current_bodies	= $this->db->count_all('bodies');
+
+		for($i=0; $i < $total_stars; $i++)
 		{
-			for($f=0; $f<$stars; $f++)
+			$this->bigbang->create_star($i+1);
+		}
+
+		$stars_planets	= mt_rand(9989, 10009);
+
+		for($f=1; $f <= $stars_planets; $f++)
+		{
+			$planets	= mt_rand(10, 15);
+			$system		= mt_rand(round($f*$total_stars/($stars_planets+1)-9), round($f*$total_stars/($stars_planets+1)));
+
+			for($g=0; $g < $planets; $g++)
 			{
-				$this->bigbang->create_star($i+1, $f+1);
+				$this->bigbang->create_planet($g+1, $system);
 			}
 		}
+
 		$this->db->insert_batch('stars', $this->bigbang->stars) OR die('Error! no se han podido crear las estrellas');
-
-		foreach($this->bigbang->stars as $id => $star)
-		{
-			$planet_num	= $planets > 12 ? mt_rand(12, ($planets>15 ? 15 : $planets)) : mt_rand($planets-1, $planets);
-
-			for($g=0; $g<$planet_num; $g++)
-			{
-				$this->bigbang->create_planet($g+1, $id);
-			}
-		}
 		$this->db->insert_batch('bodies', $this->bigbang->planets) OR die('Error! no se han podido crear los planetas');
+		$this->db->insert_batch('bodies', $this->bigbang->moons) OR die('Error! no se han podido crear los satélites');
+
+		echo 'Se ha creado el universo';
 	}
 }
 
