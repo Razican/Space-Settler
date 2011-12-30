@@ -426,3 +426,4 @@ Masas:
 * Masa de un satélite: planeta doble ? 0.1 - 0.5 : 1E-11 - 0.015;
 * Si planeta doble, distancia mínima: r*(2M/m)^(1/3) //Límite de Roche, donde M es la masa del planeta,
 m la del satélite y r el rádio del satélite.
+* Radio de un planeta: entre 375.000m - 85.000.000m

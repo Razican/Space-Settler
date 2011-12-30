@@ -70,6 +70,18 @@ function is_alnum($string, $space = FALSE)
 	return ctype_alnum(str_replace($valid, '', $string));
 }
 
+/**
+ * Return the volume of a body
+ *
+ * @param	string
+ * @param	bool
+ * @return	bool
+ */
+function volume($radius)
+{
+	return 4/3*M_PI*pow($radius, 3);
+}
+
 
 /* End of file overal_helper.php */
 /* Location: ./application/helpers/overal_helper.php */
