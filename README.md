@@ -9,12 +9,6 @@ Información de cambios:
 * Masa de los satélites: 1E-12 - 0.15 * masa_planeta (más probabilidad de que sea más pequeña cuanto más grande sea el planeta)
 * Cantidad de satélites: Más cuanta más masa, aleatoriedad incluida.
 
-El proyecto, a falta de un instalador, se entrega con un usuario predefinido:
-
-**Usuario**: admin
-
-**Contraseña**: 12345
-
 * * *
 
 * Se recomienda siempre usar UTF-8 en su variante *general_ci* en la base de datos y en la codificación de todos los archivos del juego.
@@ -426,3 +420,9 @@ Constantes:
 -----------
 
 * Luz: 299792458 m/s
+
+Masas:
+------
+* Masa de un satélite: planeta doble ? 0.1 - 0.5 : 1E-11 - 0.015;
+* Si planeta doble, distancia mínima: r*(2M/m)^(1/3) //Límite de Roche, donde M es la masa del planeta,
+m la del satélite y r el rádio del satélite.
