@@ -11,11 +11,14 @@
 
 class Bigbang
 {
-	public	$stars		= array();
-	private	$stars_p	= array();
-	public	$planets	= array();
-	public	$moons		= array();
-	private	$galaxy		= NULL;
+	public	$current_stars;
+	public	$current_bodies;
+	public	$stars			= array();
+	private	$stars_p		= array();
+	public	$planets		= array();
+	public	$moons			= array();
+	private	$galaxy			= NULL;
+	private	$last_planet	= 0;
 
 	public function __construct()
 	{
@@ -42,7 +45,8 @@ class Bigbang
 		if($radius && $mass && $distance)
 		{
 			$this->planets[] = array('star' => $star_id+$this->current_stars+1, 'position' => $position, 'mass' => $mass, 'radius' => $radius, 'distance' => $distance, 'habitable' => $habitable);
-			$this->create_moons(count($this->planets)-1, $star_id);
+			$this->create_moons($star_id);
+			$this->last_planet++;
 			return TRUE;
 		}
 		return FALSE;
@@ -54,10 +58,11 @@ class Bigbang
 	 * @access	public
 	 * @param	int
 	 */
-	public function create_moons($planet_id, $star)
+	public function create_moons($star)
 	{
 		$CI				=& get_instance();
 
+		$planet_id		= $this->last_planet;
 		$planet			= $this->planets[$planet_id];
 		$double_planet	= $planet['mass'] == 1 ? mt_rand(0,1) : 0;
 		$moon_num		= round(pow($planet['mass'], 0.34));
@@ -86,7 +91,8 @@ class Bigbang
 			$habitable	= $this->_is_habitable($star_distance, $radius, $mass, $star);
 			$planet		= $planet_id+1+$this->current_bodies;
 
-			$this->moons[] = array('star' => $star+1, 'position' => $i+1, 'type' => 1, 'planet' => $planet, 'mass' => $mass, 'radius' => $radius, 'distance' => $distance, 'habitable' => $habitable);
+			//if($radius && $mass && $distance && $planet)
+				$this->moons[] = array('star' => $star+$this->current_stars+1, 'position' => $i+1, 'type' => 1, 'planet' => $planet, 'mass' => $mass, 'radius' => $radius, 'distance' => $distance, 'habitable' => $habitable);
 		}
 	}
 	/**
@@ -106,7 +112,7 @@ class Bigbang
 			$CI->db->limit(1);
 			$query	= $CI->db->get('stars');
 			if($query->num_rows() > 0)
-				foreach($query->result() as $star) $this->galaxy = $star->galaxy ? $star->galaxy : 1;
+				foreach($query->result() as $star) $this->galaxy = $star->galaxy ? $star->galaxy+1 : 1;
 		}
 		$galaxy = $this->galaxy;
 
@@ -191,13 +197,13 @@ class Bigbang
 	 * @access	private
 	 * @param	int
 	 * @param	int
-	 * @return	array
+	 * @return	int
 	 */
 	private function _radius($position, $star_id)
 	{
 		$CI											=& get_instance();
 		$probability								= mt_rand(1, 100);
-		$this->stars_p[$star_id]['max_radius']		= isset($this->stars_p[$star_id]['max_radius']) ? $this->stars_p[$star_id]['max_radius'] : $this->stars[$star_id]['radius']*$CI->config->item('sun_radius')/50000;
+		$this->stars_p[$star_id]['max_radius']		= isset($this->stars_p[$star_id]['max_radius']) ? $this->stars_p[$star_id]['max_radius'] : $this->stars[$star_id]['radius']*$CI->config->item('sun_radius')/500;
 		$max_radius									= $this->stars_p[$star_id]['max_radius'];
 
 		switch($position)
@@ -380,7 +386,8 @@ class Bigbang
 	{
 		$CI		=& get_instance();
 
-		$this->stars_p[$star_id]['max_mass']	= isset($this->stars_p[$star_id]['max_mass']) ? $this->stars_p[$star_id]['max_mass'] : $this->stars[$star_id]['mass']*$CI->config->item('sun_mass')/50000;
+		$this->stars_p[$star_id]['max_mass']	= isset($this->stars_p[$star_id]['max_mass']) ? $this->stars_p[$star_id]['max_mass'] : round($this->stars[$star_id]['mass']*$CI->config->item('sun_mass')/(5*$CI->config->item('earth_mass')));
+		$this->stars_p[$star_id]['max_mass']	= $this->stars_p[$star_id]['max_mass'] > 600000 ? 600000 : $this->stars_p[$star_id]['max_mass'];
 		$max_mass = $this->stars_p[$star_id]['max_mass'];
 
 		if($radius < 1E+6)		$density	= mt_rand(150000, 300000);
@@ -388,10 +395,10 @@ class Bigbang
 		elseif($radius < 65E+6) $density	= mt_rand(150000, 300000);
 		else					$density	= mt_rand(15000, 150000);
 
-		$mass	= round(4*M_PI*pow($radius, 3)*$density/3);
-		$mass	= $mass > $max_mass ? mt_rand($max_mass*0.95, $max_mass) : $mass;
+		$mass	= round(4*M_PI*pow($radius, 3)*$density/(3*$CI->config->item('earth_mass')));
+		$mass	= $mass > $max_mass ? mt_rand(round($max_mass*0.95), $max_mass) : $mass;
 
-		return round($mass/$CI->config->item('earth_mass')*100);
+		return $mass;
 	}
 }
 
