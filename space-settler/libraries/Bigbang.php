@@ -41,11 +41,12 @@ class Bigbang
 		$radius		= $this->_radius($position, $star_id);
 		$mass		= $this->_mass($radius, $star_id);
 		$habitable	= $this->_is_habitable($distance, $radius, $mass, $star_id);
-		$water		= $habitable ? mt_rand(100,10000) : 0;
+		$water		= $habitable ? mt_rand(1,10000) : 0;
+		$habitable	= $water > 1000 && $water < 9500 ? 1 : 0;
 
 		if($radius && $mass && $distance)
 		{
-			$this->planets[] = array('star' => $star_id+$this->current_stars+1, 'position' => $position, 'mass' => $mass, 'radius' => $radius, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water);
+			$this->planets[] = array('star' => $star_id+$this->current_stars+1, 'position' => $position, 'mass' => $mass, 'radius' => $radius, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 0);
 			$this->create_moons($star_id);
 			$this->last_planet++;
 			return TRUE;
@@ -67,30 +68,50 @@ class Bigbang
 		$planet			= $this->planets[$planet_id];
 		$double_planet	= $planet['mass'] < 100 ? mt_rand(0,1) : 0;
 		$moon_num		= round(pow($planet['mass'], 0.34));
-		$min_moons		= $moon_num > 20 ? $moon_num - 20 : 0;
-		$max_moons		= 3+$moon_num;
+		$min_moons		= $moon_num > 20 ? $moon_num - 20 : ($double_planet ? 1 : 0);
+		$max_moons		= $double_planet ? 4+$moon_num : 2+$moon_num;
 		$moon_num		= mt_rand($min_moons, $max_moons);
-		$max_mass		= $planet['mass'] > 25000 ? 50 : $planet['mass']/5;
+		$max_mass		= $planet['mass'] > 25000 ? 50*$CI->config->item('earth_mass') : $planet['mass']/500*$CI->config->item('earth_mass');
 		$star_distance	= $planet['distance'];
-		$max_distance	= 10000;
 
-		//Falta el doble planeta
+		if($double_planet)
+		{
+			$radius		= mt_rand(round($planet['radius']*0.1), round($planet['radius']*0.5));
+			$density	= mt_rand(150000, 700000);
+			$mass		= round(volume($radius)*$density);
+			$mass		= $mass > $max_mass*2.5 ? mt_rand($max_mass*2.35, $max_mass*2.65) : $mass;
+			$mass		= round($mass/$CI->config->item('earth_mass')*1E+17);
+			$distance	= (9900)/$moon_num+100;
+			$distance	= mt_rand(round($distance*0.95), round($distance*1.05));
+			$habitable	= $this->_is_habitable($star_distance, $radius, $mass, $star);
+			$water		= $habitable ? mt_rand(1,10000) : 0;
+			$habitable	= $water > 1000 && $water < 9500 ? 1 : 0;
+			$planet		= $planet_id+1+$this->current_bodies;
 
-		for($i=0; $i<$moon_num; $i++)
+			if($radius && $mass && $distance && $planet)
+			{
+				$this->moons[] = array('star' => $star+$this->current_stars+1, 'position' => 1, 'type' => 1, 'planet' => $planet, 'mass' => $mass, 'radius' => $radius, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 1);
+				$this->planets[$planet_id]['double_planet'] = 1;
+			} else echo 'ERROR';
+		}
+
+		for($i=$double_planet; $i<$moon_num; $i++)
 		{
 			$radius		= mt_rand(10000, 3000000);
 			$density	= mt_rand(150000, 700000);
 			$mass		= round(volume($radius)*$density);
 			$mass		= $mass > $max_mass ? mt_rand($max_mass*0.95, $max_mass) : $mass;
-			$mass		= round($mass/$CI->config->item('earth_mass')*1E+17); //masas terrestres MAL
-			$distance	= ($i+1)*($max_distance-100)/$moon_num+100;
+			$mass		= round($mass/$CI->config->item('earth_mass')*1E+17);
+			$distance	= ($i+1)*(9900)/$moon_num+100;
 			$distance	= mt_rand(round($distance*0.95), round($distance*1.05));
 			$habitable	= $this->_is_habitable($star_distance, $radius, $mass, $star);
-			$water		= $habitable ? mt_rand(100,10000) : 0;
+			$water		= $habitable ? mt_rand(1,10000) : 0;
+			$habitable	= $water > 1000 && $water < 9500 ? 1 : 0;
 			$planet		= $planet_id+1+$this->current_bodies;
 
-			//if($radius && $mass && $distance && $planet)
-				$this->moons[] = array('star' => $star+$this->current_stars+1, 'position' => $i+1, 'type' => 1, 'planet' => $planet, 'mass' => $mass, 'radius' => $radius, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water);
+			if($radius && $mass && $distance && $planet)
+				$this->moons[] = array('star' => $star+$this->current_stars+1, 'position' => $i+1, 'type' => 1, 'planet' => $planet, 'mass' => $mass, 'radius' => $radius, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 0);
+			else echo 'ERROR';
 		}
 	}
 	/**

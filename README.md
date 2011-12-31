@@ -1,3 +1,13 @@
+Problemas Conocidos:
+====================
+* Masas de los planetas muy pequeñas
+* Algunos satélites con masa cero
+* Registro inacabado
+* Falta introducir la densidad de los planetas en la base de datos.
+* Las unidades de Masa no están correctas al mirar la habitabilidad.
+* Unidades en general no correctas.
+
+
 Información de cambios:
 =======================
 
