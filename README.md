@@ -9,19 +9,10 @@ Problemas Conocidos:
 * Falta el detalle del radio máximo para un planeta según su estrella.
 * La máxima distancia de un satélite a su planeta debe ser calculada mediante la Esfera de Hill.
 * La distancia de un satélite a su planeta debe ser calculada mediante la ley de Titius-Bode.
+* Falta por traducir engine/language/english/migration_lang.php
 
 Información de cambios:
 =======================
-
-***Por Traducir: engine/language/english/migration_lang.php***
-
-**Por hacer:**
-* Probabilidades de tamaños
-* Habitabilidad
-* Masa de los satélites: 1E-12 - 0.15 * masa_planeta (más probabilidad de que sea más pequeña cuanto más grande sea el planeta)
-* Cantidad de satélites: Más cuanta más masa, aleatoriedad incluida.
-
-* * *
 
 * Se recomienda siempre usar UTF-8 en su variante *general_ci* en la base de datos y en la codificación de todos los archivos del juego.
 * Necesario **PHP >= 5.2.0**
@@ -34,11 +25,15 @@ Información de cambios:
 
 * * *
 
-* Hay que incluír la masa como parte de todo ente (planeta, estrella, satélite u objeto como nave, orbitador, telescopio etc.
+* Hay que incluír la masa de todo objeto (planeta, estrella, satélite u objeto como nave, orbitador, telescopio etc.
 * Los planetas los creará el instalador, y se habrán creado todos cuando el universo se inicie.
 
 Cambios en la base de datos:
 ----------------------------
+
+Se borran las tablas **sps_planets** y **sps_config**
+
+* * *
 
 Tabla **sps_aks**:
 
@@ -192,8 +187,7 @@ Cambios en el Juego
 Más Datos
 ---------
 
-Es muy probable la supresión de la tabla config, y puede que la de plugins, ya que se pueden usar archivos para gestionar dichas opciones.
-Aún así, queda mucho por ver. El sistema de plugins será adaptado a CodeIgniter, de manera que se usen librerías. Pero se debe avanzar más en el desarrollo.
+El sistema de plugins será adaptado a CodeIgniter, de manera que se usen librerías. Pero se debe avanzar más en el desarrollo.
 
 Cosas por hacer
 ---------------
@@ -203,57 +197,7 @@ Crear una función reset_password más completa, para que el controlador haga al
 Selección de Planetas en el Registro
 ------------------------------------
 
-* Se seleccionan todos los planetas: única query
-* Entre las galaxias, se selecciona la galaxia en tres pasos (es obligatorio que haya un planeta habitable disponible [1 - 7, según estrella]):
-	* Primero: se seleccionan las galaxias con media de planetas por debajo del 33,33% y que no estén vacías.
-	* Segundo: si no se ha seleccionado nada, se selecciona la galaxia vacía de ID mínima.
-	* Tercero: si seguimos sin haber seleccionado nada, se selecciona la de menor densidad.
-	* En el caso en el que todos los planetas centrales estén ocupados, se mostrará una alerta en la administración, y no se podrán registrar nuevos usuarios.
-		En caso contrario, se seleccionará aleatóriamente entre las seleccionadas.
-* Entre los sistemas de la galaxia, primero se eligen todos los sistemas de la galaxia en cuestión:
-	* Se selecciona uno aleatóriamente entre los que tengan una densidad de planetas por debajo del 33,33% y al menos un planeta habitable deshabitado.
-	* Se añaden a la selección 10 sistemas vacíos, si los hay, proferíblemente entre los de ID más baja.
-	* Si no se ha elegido ninguno, se elije el de menor media.
-* A la hora de elegir la posición, se toma como probabilidad la siguiente, para ser habitable:
-	* (1/5 - 5) Sol -> pos 3 +- 1(90%) +- 2 (10%) (distancia entre 0.40 y 5.50 UA)
-	* (1/50 - 1/5) Sol -> pos 1(90%) 2(10%) (distancia entre 0.10 y 0.50 UA)
-	* (5 - 50) Sol -> pos 6 +- 1 (distancia entre 5.00 y 20 UA)
-	* Fuera de ese rango no puede existir planeta -> se añade como requisito.
-* Los planetas en el registro tendrán una aleatoriedad de campos del +/-5% del tamaño predefinido, con variaciones de 1 campo, siempre con redondeo.
-
-Cómo Serán los Planetas? (con el nuevo juego, una vez encontrado un planeta no podrá ser cambiado)
---------------------------------------------------------------------------------------------------
-
-**Distancias al sol:**
-* Se usará la ley de Titius-Bode que se adjunta en un PDF.
-
-**Habitabilidad:**
-
-* Entre 75 y 300 campos: habitable
-* Más de 500 campos: Gigante de gas (puede ser usado para mejorar la carrera científica)
-* Menos de 30 campos: Planeta enano (puede ser usado para mejorar la carrera científica)
-* El resto: conquistable
-* Para que una estrella sea habitable, su luminosidad y diámetro deberán estar entre 0.02 y 50, y la relación entre ellos
-no puede ser mayor de 10.
-
-**Luminosidad:**
-
-* Sol = 3.827E26 W
-* Max = 10.000.000*Sol (por facilidad, y para que haya más planetas habitables pondremos un máximo de 100*Sol)
-* Min = 0,00125*Sol (por facilidad, y para que haya más planetas habitables se usará un mínimo de Sol/100)
-
-**Cantidades:**
-
-* Planetas por sistema: 15
-* Sistemas por galaxia: 100 - 1.000
-* Galaxias por Universo: 1 - 20
-
-**Mínimo de campos para un planeta:** 10
-**Máximo de campos para un planeta:** raiz_sexta(diametro_estrella(soles))*2.000, en campos.
-**Máximo de campos para una luna:** 100
-**Campos de una luna:** ((Entre 300 y 300.000)/1.000.000)*(campos del planeta origen)
-
-**FALTA POR ACTUALIZAR LAS PROBABILIDADES DE RADIO**
+* Se seleccionan uno entre los planetas habitables
 
 Distancias y velocidades:
 -------------------------
@@ -291,27 +235,15 @@ que se podrá encontrar en la sección galaxia. El diámetro no estará corréct
 * Estrellas: distancia(años)/luminosidad(soles) +/- 5% en minutos. Se ha de considerar que la distancia en otra galaxia es la distancia a la galaxia +/- la distancia de la estrella a la estrella 1.
 * Galaxias: distancia(millones de años)/(luminosidad media) +/- 5%, en minutos
 
-Estrellas:
-----------
-
-* Las estrellas de cada universo se encuentran en el archivo de configuración stars.php. El formato es el siguiente:
-ID->(galaxy->ID_galaxia, id->Posición_en_galaxia, diameter->diametro(en soles), luminosity->luminosidad(en soles))
-* Las posiciones serán de la siguiente manera: ['galaxy'], ['system'], ['position'].
-
 Tamaños, masas...:
 -----
 * Masa de un planeta: entre Mt/100000 y Mt*3.500.
-* Masa de una estrella:
-* Diámetro de un planeta:
+* Masa de un satélite: planeta doble ? 0.1 - 0.5 : 1E-11 - 0.015;
+* Si planeta doble, distancia mínima: r*(2M/m)^(1/3) //Límite de Roche, donde M es la masa del planeta,
+m la del satélite y r el rádio del satélite.
+* Radio de un planeta: entre 375.000m - 85.000.000m
 
 Constantes:
 -----------
 
 * Luz: 299792458 m/s
-
-Masas:
-------
-* Masa de un satélite: planeta doble ? 0.1 - 0.5 : 1E-11 - 0.015;
-* Si planeta doble, distancia mínima: r*(2M/m)^(1/3) //Límite de Roche, donde M es la masa del planeta,
-m la del satélite y r el rádio del satélite.
-* Radio de un planeta: entre 375.000m - 85.000.000m
