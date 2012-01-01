@@ -37,11 +37,11 @@ class Bigbang
 	{
 		$CI			=& get_instance();
 
-		$distance	= $this->_distance($position, $star_id);
-		$radius		= $this->_radius($position, $star_id);
-		$mass		= $this->_mass($radius, $star_id);
-		$habitable	= $this->_is_habitable($distance, $radius, $mass, $star_id);
-		$water		= $habitable ? mt_rand(1,10000) : 0;
+		$distance	= $this->_distance($position, $star_id); //AU
+		$radius		= $this->_radius($position, $star_id); //m
+		$mass		= $this->_mass($radius, $star_id); //Earths/10000
+		$habitable	= $this->_is_habitable($distance, $radius, $mass*$CI->config->item('earth_mass')/10000, $star_id);
+		$water		= $habitable ? mt_rand(1,10000) : 0; //Percentage/100
 		$habitable	= $water > 1000 && $water < 9500 ? 1 : 0;
 
 		if($radius && $mass && $distance)
@@ -187,19 +187,33 @@ class Bigbang
 	}
 
 	/**
+	 * Calculate the density of an object based on its radius and mass
+	 *
+	 * @access	private
+	 * @param	int		Radius in metres
+	 * @param	int		Mass in Kg
+	 * @return	int		Density in Kg/m³
+	 */
+	private function _density($radius, $mass)
+	{
+		return ($mass/volume($radius));
+	}
+
+	/**
 	 * Calculate a planet's distance to sun based on its position,
 	 * using Titius-Bode Law.
 	 *
 	 * @access	private
 	 * @param	int
 	 * @param	int
+	 * @return	int
 	 */
 	private function _distance($position, $star_id)
 	{
 		if( ! isset($this->stars_p[$star_id]['m']))
 		{
 			$this->stars_p[$star_id]['m']	= mt_rand(35E+3, 6E+5)/1E+6;
-			$n		= 25*log($this->stars_p[$star_id]['m']/12+1)+0.4;//MAL
+			$n		= 25*log($this->stars_p[$star_id]['m']/12+1)+0.4;
 			$this->stars_p[$star_id]['n']	= mt_rand(round($n*999E+3), round($n*1001E+3))/1E+6;
 		}
 		$m			= $this->stars_p[$star_id]['m'];
@@ -255,9 +269,9 @@ class Bigbang
 	 * Decide whether a planet is habitable or not
 	 *
 	 * @access	private
-	 * @param	int
-	 * @param	int
-	 * @param	int
+	 * @param	int		Distance in AU
+	 * @param	int		Radius in metres
+	 * @param	int		Mass in Kg
 	 * @param	int
 	 */
 	private function _is_habitable($distance, $radius, $mass, $star_id)
@@ -266,8 +280,8 @@ class Bigbang
 		$habitable_zone		= sqrt($this->stars[$star_id]['luminosity']*1E-12)*100;
 		$habitable_zone_min	= round($habitable_zone*0.95);
 		$habitable_zone_max	= round($habitable_zone*1.05);
-		$gravity			= $CI->config->item('G')*$mass*$CI->config->item('earth_mass')/pow($radius, 2)/10000;
-		$density			= $mass*$CI->config->item('earth_mass')/(volume($radius)*100);
+		$gravity			= gravity($mass, $radius);
+		$density			= $this->_density($mass, $radius);
 
 		if(	($distance	< $habitable_zone_min) OR
 			($distance	> $habitable_zone_max) OR

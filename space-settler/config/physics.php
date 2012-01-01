@@ -13,7 +13,7 @@ $config['Boltzman_constant']	= 8.972012087E-16; //Based on solar parameters, not
 $config['gas_constant']			= 8.3144621; // J/(mol*K)
 $config['star_types']			= 'OBAFGKM';
 $config['UA']					= 1.49597870E+12; //m
-$config['G']					= 6.67428E-11; //N*M²*Kg⁻²
+$config['G']					= 6.67428E-11; //N*m²*Kg⁻²
 
 /**
  * Sun constants

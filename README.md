@@ -10,6 +10,7 @@ Problemas Conocidos:
 * La máxima distancia de un satélite a su planeta debe ser calculada mediante la Esfera de Hill.
 * La distancia de un satélite a su planeta debe ser calculada mediante la ley de Titius-Bode.
 * Falta por traducir engine/language/english/migration_lang.php
+* Ley de Titius Bode no correctamente implementada en la distancia de un planeta a su estrella (Parámetro n da valores incorrectos)
 
 Información de cambios:
 =======================
