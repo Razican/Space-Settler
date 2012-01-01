@@ -31,7 +31,7 @@
 							<img alt="Licencia Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" />
 						</a>
 						<br />
-						<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">X-Battle</span> por <a xmlns:cc="http://creativecommons.org/ns#" href="http://www.razican.com/" property="cc:attributionName" rel="cc:attributionURL">Razican</a> se encuentra bajo una Licencia <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.es_ES">Creative Commons</a>.
+						<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title" rel="dct:type">Space Settler</span> por <a xmlns:cc="http://creativecommons.org/ns#" href="http://informatica.razican.com/" property="cc:attributionName" rel="cc:attributionURL">Razican</a> se encuentra bajo una Licencia <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.es_ES">Creative Commons</a>.
 					</div>
 					<!-- PLEASE DO NOT REMOVE THE COPYRGHT LINE // POR FAVOR NO BORRES LA LINEA DE COPYRIGHTS -->
 				</div>
