@@ -11,6 +11,8 @@ Problemas Conocidos:
 * Ley de Titius Bode no correctamente implementada en la distancia de un planeta a su estrella (Parámetro n da valores incorrectos)
 * El profiler no muestra correctamente los bordes de la sección de bases de datos.
 * Validación por email del registro.
+* La densidad da valores incorrectos, puede ser por problemas de unidades en otros valores.
+* Solo se crean satélites que son dobles planetas.
 
 Información de cambios:
 =======================

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 30-12-2011 a las 13:17:44
+-- Tiempo de generación: 03-01-2012 a las 00:16:52
 -- Versión del servidor: 5.1.58
 -- Versión de PHP: 5.3.6-13ubuntu3.3
 
@@ -93,8 +93,8 @@ CREATE TABLE IF NOT EXISTS `sps_banned` (
 --
 -- Estructura de tabla para la tabla `sps_bodies`
 --
--- Creación: 30-12-2011 a las 12:16:59
--- Última actualización: 30-12-2011 a las 12:16:59
+-- Creación: 02-01-2012 a las 23:15:45
+-- Última actualización: 02-01-2012 a las 23:15:45
 --
 
 CREATE TABLE IF NOT EXISTS `sps_bodies` (
@@ -102,11 +102,14 @@ CREATE TABLE IF NOT EXISTS `sps_bodies` (
   `star` int(8) unsigned NOT NULL,
   `position` tinyint(2) unsigned DEFAULT NULL,
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `double_planet` tinyint(1) NOT NULL,
   `planet` bigint(20) unsigned DEFAULT NULL,
   `mass` bigint(17) unsigned NOT NULL,
   `radius` int(8) unsigned NOT NULL,
+  `density` smallint(5) unsigned NOT NULL,
   `distance` mediumint(5) unsigned NOT NULL,
   `habitable` tinyint(1) unsigned NOT NULL,
+  `water` smallint(5) unsigned NOT NULL,
   `owner` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -205,8 +208,8 @@ CREATE TABLE IF NOT EXISTS `sps_messages` (
 --
 -- Estructura de tabla para la tabla `sps_moons`
 --
--- Creación: 22-12-2011 a las 21:18:27
--- Última actualización: 22-12-2011 a las 21:18:27
+-- Creación: 02-01-2012 a las 23:15:45
+-- Última actualización: 02-01-2012 a las 23:15:45
 --
 
 CREATE TABLE IF NOT EXISTS `sps_moons` (
@@ -242,8 +245,8 @@ CREATE TABLE IF NOT EXISTS `sps_notes` (
 --
 -- Estructura de tabla para la tabla `sps_plugins`
 --
--- Creación: 22-08-2011 a las 18:56:06
--- Última actualización: 22-08-2011 a las 18:56:06
+-- Creación: 02-01-2012 a las 23:15:45
+-- Última actualización: 02-01-2012 a las 23:15:45
 --
 
 CREATE TABLE IF NOT EXISTS `sps_plugins` (
@@ -257,9 +260,8 @@ CREATE TABLE IF NOT EXISTS `sps_plugins` (
 --
 -- Estructura de tabla para la tabla `sps_rw`
 --
--- Creación: 22-08-2011 a las 16:00:36
--- Última actualización: 22-08-2011 a las 16:00:36
--- Última revisión: 22-08-2011 a las 16:00:36
+-- Creación: 02-01-2012 a las 23:15:45
+-- Última actualización: 02-01-2012 a las 23:15:45
 --
 
 CREATE TABLE IF NOT EXISTS `sps_rw` (
@@ -295,8 +297,8 @@ CREATE TABLE IF NOT EXISTS `sps_sessions` (
 --
 -- Estructura de tabla para la tabla `sps_stars`
 --
--- Creación: 30-12-2011 a las 12:16:59
--- Última actualización: 30-12-2011 a las 12:16:59
+-- Creación: 02-01-2012 a las 23:15:46
+-- Última actualización: 02-01-2012 a las 23:15:46
 --
 
 CREATE TABLE IF NOT EXISTS `sps_stars` (
@@ -357,7 +359,7 @@ CREATE TABLE IF NOT EXISTS `sps_statpoints` (
 --
 -- Estructura de tabla para la tabla `sps_users`
 --
--- Creación: 02-12-2011 a las 20:14:32
+-- Creación: 02-01-2012 a las 21:39:55
 --
 
 CREATE TABLE IF NOT EXISTS `sps_users` (
@@ -367,71 +369,12 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
   `email` varchar(50) NOT NULL,
   `reg_email` varchar(50) NOT NULL,
   `name` varchar(20) NOT NULL,
-  `authlevel` tinyint(4) NOT NULL DEFAULT '0',
   `last_ip` int(10) unsigned NOT NULL,
   `reg_ip` int(10) unsigned NOT NULL,
   `register_time` int(10) unsigned NOT NULL,
   `online_time` int(10) unsigned NOT NULL,
-  `dpath` varchar(255) NOT NULL DEFAULT '',
-  `design` tinyint(4) NOT NULL DEFAULT '1',
-  `noipcheck` tinyint(4) NOT NULL DEFAULT '1',
-  `planet_sort` tinyint(1) NOT NULL DEFAULT '0',
-  `planet_sort_order` tinyint(1) NOT NULL DEFAULT '0',
-  `espionage_probes` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `settings_tooltiptime` tinyint(4) NOT NULL DEFAULT '5',
-  `settings_fleetactions` tinyint(4) NOT NULL DEFAULT '0',
-  `settings_allylogo` tinyint(4) NOT NULL DEFAULT '0',
-  `settings_esp` tinyint(4) NOT NULL DEFAULT '1',
-  `settings_wri` tinyint(4) NOT NULL DEFAULT '1',
-  `settings_bud` tinyint(4) NOT NULL DEFAULT '1',
-  `settings_mis` tinyint(4) NOT NULL DEFAULT '1',
-  `settings_rep` tinyint(4) NOT NULL DEFAULT '0',
-  `urlaubs_modus` tinyint(4) NOT NULL DEFAULT '0',
-  `urlaubs_until` int(10) unsigned NOT NULL DEFAULT '0',
-  `db_deaktjava` bigint(19) NOT NULL DEFAULT '0',
-  `new_message` int(10) unsigned NOT NULL DEFAULT '0',
-  `fleet_shortcut` text,
-  `b_tech_planet` int(10) unsigned NOT NULL DEFAULT '0',
-  `spy_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `computer_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `military_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `defence_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `shield_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `energy_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `hyperspace_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `combustion_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `impulse_motor_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `hyperspace_motor_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `laser_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `ionic_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `buster_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `intergalactic_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `expedition_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `graviton_tech` int(10) unsigned NOT NULL DEFAULT '0',
-  `ally_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `ally_name` varchar(32) DEFAULT NULL,
-  `ally_request` int(10) unsigned NOT NULL DEFAULT '0',
-  `ally_request_text` text,
-  `ally_register_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `ally_rank_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `current_moon` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_geologist` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_admiral` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_engineer` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_technocrat` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_spy` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_constructor` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_scientific` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_commander` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_storekeeper` int(10) unsigned NOT NULL DEFAULT '0',
   `darkmatter` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_defender` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_destroyer` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_general` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_bunker` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_raider` int(10) unsigned NOT NULL DEFAULT '0',
-  `rpg_emperor` int(10) unsigned NOT NULL DEFAULT '0',
-  `banned` int(10) unsigned DEFAULT NULL,
+  `warnings` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `ban_finish` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
