@@ -186,7 +186,6 @@ class User
 
 		$CI->load->helper('string');
 
-		$username	= strtolower($username);
 		$password	= random_string('alnum', 8);
 		$IP			= ip2int($CI->input->ip_address());
 		$time		= now();
@@ -194,7 +193,7 @@ class User
 
 
 		$data		= array(
-					'username'		=> $username,
+					'username'		=> strtolower($username),
 					'password'		=> sha1($password),
 					'email'			=> $email,
 					'reg_email'		=> $email,
@@ -202,12 +201,16 @@ class User
 					'last_ip'		=> $IP,
 					'reg_ip'		=> $IP,
 					'register_time'	=> $time,
-					'online_time'	=> $time,
-					'planet_id'		=> $planet->id
+					'online_time'	=> $time
 					);
-					/* NO ESTA ACABADA!!!*/
 
-		return FALSE;
+		$CI->db->insert('users', $data);
+
+		$CI->db->select_max('id');
+		$query = $CI->db->get('users');
+		foreach ($query->result() as $user) $user = $user->id;
+
+		return $CI->db->update('bodies', array('owner' => $user), array('id' => $planet));
 	}
 
 	/**
@@ -284,7 +287,7 @@ class User
 	 * Select new user's body
 	 *
 	 * @access	private
-	 * @return	array
+	 * @return	int
 	 */
 	public function _select_body()
 	{

@@ -2,7 +2,6 @@ Problemas Conocidos:
 ====================
 * Masas de los planetas muy pequeñas
 * Algunos satélites con masa cero
-* Registro inacabado
 * Falta introducir la densidad de los planetas en la base de datos.
 * Las unidades de Masa no están correctas al mirar la habitabilidad de los satélites.
 * Unidades en general no correctas.
@@ -11,6 +10,7 @@ Problemas Conocidos:
 * La distancia de un satélite a su planeta debe ser calculada mediante la ley de Titius-Bode.
 * Falta por traducir engine/language/english/migration_lang.php
 * Ley de Titius Bode no correctamente implementada en la distancia de un planeta a su estrella (Parámetro n da valores incorrectos)
+* El profiler no muestra correctamente los bordes de la sección de bases de datos.
 
 Información de cambios:
 =======================
