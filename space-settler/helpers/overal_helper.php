@@ -90,7 +90,8 @@ function volume($radius)
  */
 function gravity($mass, $distance)
 {
-	return $CI->config->item('G')*$mass/pow($radius, 2);
+	$CI =& get_instance();
+	return $CI->config->item('G')*$mass/pow($distance, 2);
 }
 
 

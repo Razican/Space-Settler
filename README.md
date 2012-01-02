@@ -4,7 +4,7 @@ Problemas Conocidos:
 * Algunos satélites con masa cero
 * Registro inacabado
 * Falta introducir la densidad de los planetas en la base de datos.
-* Las unidades de Masa no están correctas al mirar la habitabilidad.
+* Las unidades de Masa no están correctas al mirar la habitabilidad de los satélites.
 * Unidades en general no correctas.
 * Falta el detalle del radio máximo para un planeta según su estrella.
 * La máxima distancia de un satélite a su planeta debe ser calculada mediante la Esfera de Hill.

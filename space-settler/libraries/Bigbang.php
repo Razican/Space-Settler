@@ -71,16 +71,14 @@ class Bigbang
 		$min_moons		= $moon_num > 20 ? $moon_num - 20 : ($double_planet ? 1 : 0);
 		$max_moons		= $double_planet ? 4+$moon_num : 2+$moon_num;
 		$moon_num		= mt_rand($min_moons, $max_moons);
-		$max_mass		= $planet['mass'] > 25000 ? 50*$CI->config->item('earth_mass') : $planet['mass']/500*$CI->config->item('earth_mass');
+		$max_mass		= $planet['mass'] > (1E+5/3) ? 1/30 : $planet['mass']/1E+6; //masas terrestres
 		$star_distance	= $planet['distance'];
 
 		if($double_planet)
 		{
 			$radius		= mt_rand(round($planet['radius']*0.1), round($planet['radius']*0.5));
-			$density	= mt_rand(150000, 700000);
-			$mass		= round(volume($radius)*$density);
-			$mass		= $mass > $max_mass*2.5 ? mt_rand($max_mass*2.35, $max_mass*2.65) : $mass;
-			$mass		= round($mass/$CI->config->item('earth_mass')*1E+17);
+			$mass		= mt_rand(round($planet['mass']/10), round($planet['mass']/2)); //Masas terrestres/10.000
+			$mass		= round($mass*1E+17);
 			$distance	= (9900)/$moon_num+100;
 			$distance	= mt_rand(round($distance*0.95), round($distance*1.05));
 			$habitable	= $this->_is_habitable($star_distance, $radius, $mass, $star);
@@ -92,15 +90,15 @@ class Bigbang
 			{
 				$this->moons[] = array('star' => $star+$this->current_stars+1, 'position' => 1, 'type' => 1, 'planet' => $planet, 'mass' => $mass, 'radius' => $radius, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 1);
 				$this->planets[$planet_id]['double_planet'] = 1;
-			} else echo 'ERROR';
+			}// else echo 'ERROR-DP';
 		}
 
 		for($i=$double_planet; $i<$moon_num; $i++)
 		{
 			$radius		= mt_rand(10000, 3000000);
 			$density	= mt_rand(150000, 700000);
-			$mass		= round(volume($radius)*$density);
-			$mass		= $mass > $max_mass ? mt_rand($max_mass*0.95, $max_mass) : $mass;
+			$mass		= round(volume($radius)*$density)/100;
+			$mass		= $mass > $max_mass ? mt_rand(round($max_mass*0.95), round($max_mass)) : $mass;
 			$mass		= round($mass/$CI->config->item('earth_mass')*1E+17);
 			$distance	= ($i+1)*(9900)/$moon_num+100;
 			$distance	= mt_rand(round($distance*0.95), round($distance*1.05));
@@ -111,7 +109,7 @@ class Bigbang
 
 			if($radius && $mass && $distance && $planet)
 				$this->moons[] = array('star' => $star+$this->current_stars+1, 'position' => $i+1, 'type' => 1, 'planet' => $planet, 'mass' => $mass, 'radius' => $radius, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 0);
-			else echo 'ERROR';
+			//else echo 'ERROR-SAT';
 		}
 	}
 	/**
@@ -277,11 +275,12 @@ class Bigbang
 	private function _is_habitable($distance, $radius, $mass, $star_id)
 	{
 		$CI					=& get_instance();
+
 		$habitable_zone		= sqrt($this->stars[$star_id]['luminosity']*1E-12)*100;
 		$habitable_zone_min	= round($habitable_zone*0.95);
 		$habitable_zone_max	= round($habitable_zone*1.05);
 		$gravity			= gravity($mass, $radius);
-		$density			= $this->_density($mass, $radius);
+		$density			= $this->_density($radius, $mass);
 
 		if(	($distance	< $habitable_zone_min) OR
 			($distance	> $habitable_zone_max) OR
@@ -310,7 +309,7 @@ class Bigbang
 
 		if($radius < 1E+6)		$density	= mt_rand(15000000, 30000000);
 		elseif($radius < 16E+6) $density	= mt_rand(30000000, 150000000);
-		elseif($radius < 65E+6) $density	= mt_rand(15000000, 30000000);
+		elseif($radius < 50E+6) $density	= mt_rand(15000000, 30000000);
 		else					$density	= mt_rand(1500000, 15000000);
 
 		$mass	= round(volume($radius)*$density/$CI->config->item('earth_mass'));
