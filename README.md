@@ -2,7 +2,6 @@ Problemas Conocidos:
 ====================
 * Masas de los planetas muy pequeñas
 * Algunos satélites con masa cero
-* Falta introducir la densidad de los planetas en la base de datos.
 * Las unidades de Masa no están correctas al mirar la habitabilidad de los satélites.
 * Unidades en general no correctas.
 * Falta el detalle del radio máximo para un planeta según su estrella.
@@ -11,6 +10,7 @@ Problemas Conocidos:
 * Falta por traducir engine/language/english/migration_lang.php
 * Ley de Titius Bode no correctamente implementada en la distancia de un planeta a su estrella (Parámetro n da valores incorrectos)
 * El profiler no muestra correctamente los bordes de la sección de bases de datos.
+* Validación por email del registro.
 
 Información de cambios:
 =======================
