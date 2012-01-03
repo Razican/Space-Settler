@@ -16,7 +16,7 @@ Dado que actualmente el Big Bang no tiene un algoritmo sólido, y es un problema
 se creará un nuevo algoritmo con las siguientes bases, para que todo funcione mejor:
 
 * Se usará el sistema internacional de unidades (IS).
-* La base de datos contendrá los parámetros principales de los objetoa:
+* La base de datos contendrá los parámetros principales de los objetos:
 	* Incluso aunque los calculos como los de la densidad se puedan hacer a posteriori, se incluirán para ahorrar
 	recursos.
 	* La densidad no será incluida en la tabla de estrellas

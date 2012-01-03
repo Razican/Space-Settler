@@ -9,8 +9,8 @@
  * @link		http://www.razican.com/
  */
 
-$config['Boltzman_constant']	= 8.972012087E-16; //Based on solar parameters, not in IS (1/5778^4)
-$config['gas_constant']			= 8.3144621; // J/(mol*K)
+$config['Boltzman_constant']	= 5.6704E-8; // W*m⁻²*K⁻⁴
+$config['gas_constant']			= 8.3144621; // J*mol⁻¹*K⁻¹)
 $config['star_types']			= 'OBAFGKM';
 $config['UA']					= 1.49597870E+12; //m
 $config['G']					= 6.67428E-11; //N*m²*Kg⁻²
