@@ -38,14 +38,14 @@ class Bigbang
 	{
 		$CI			=& get_instance();
 
-		$distance	= $this->_distance($position, $star_id); //AU
-		$radius		= $this->_radius($position, $star_id); //m
-		$mass		= $this->_mass($radius, $star_id); //Earths/10000
+		$distance	= $this->_distance($position, $star_id);
+		$radius		= $this->_radius($distance/10000, $star_id);
+		$mass		= $this->_mass($radius, $star_id);
 
 		if($radius && $mass && $distance)
 		{
 			$habitable	= $this->_is_habitable($distance, $radius, $mass*$CI->config->item('earth_mass')/10000, $star_id);
-			$water		= $habitable ? mt_rand(1,10000) : 0; //Percentage/100
+			$water		= $habitable ? mt_rand(1,10000) : 0;
 			$habitable	= $water > 1000 && $water < 9500 ? 1 : 0;
 			$density	= round($this->_density($radius, $mass*$CI->config->item('earth_mass')/10000));
 			$this->planets[] = array('star' => $star_id+$this->current_stars+1, 'position' => $position, 'mass' => $mass, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 0);
@@ -232,42 +232,26 @@ class Bigbang
 	 * Return the size of a future planet based on its position and star
 	 *
 	 * @access	private
-	 * @param	int
+	 * @param	int		distance in AU
 	 * @param	int
 	 * @return	int
 	 */
-	private function _radius($position, $star_id)
+	private function _radius($distance, $star_id)
 	{
 		$CI											=& get_instance();
 		$probability								= mt_rand(1, 100);
-		$this->stars_p[$star_id]['max_radius']		= isset($this->stars_p[$star_id]['max_radius']) ? $this->stars_p[$star_id]['max_radius'] : $this->stars[$star_id]['radius']*$CI->config->item('sun_radius')/5000;
 		$max_radius									= $this->stars_p[$star_id]['max_radius'];
 
-		if($position < 5)
+		if($distance < 35)
 		{
-			if($probability <= 10) $radius		= mt_rand(375E+3, 1875E+3);
-			elseif($probability <= 40) $radius	= mt_rand(1875E+3, 375E+4);
-			elseif($probability <= 70) $radius	= mt_rand(375E+4, 5625E+3);
-			elseif($probability <= 85) $radius	= mt_rand(5625E+3, 1125E+4);
-			elseif($probability <= 95) $radius	= mt_rand(1125E+4, 25E+6);
-			else $radius						= mt_rand(25E+6, 85E+6);
-		} elseif($position < 10)
-		{
-			if($probability <= 5) $radius		= mt_rand(375E+3, 1875E+3);
-			elseif($probability <= 30) $radius	= mt_rand(1875E+3, 375E+4);
-			elseif($probability <= 50) $radius	= mt_rand(375E+4, 5625E+3);
-			elseif($probability <= 65) $radius	= mt_rand(5625E+3, 1125E+4);
-			elseif($probability <= 95) $radius	= mt_rand(1125E+4, 25E+6);
-			else $radius						= mt_rand(25E+6, 85E+6);
+			if($probability <= 30) $radius		= mt_rand(4E+5, 1E+6);
+			elseif($probability <= 70) $radius	= mt_rand(1E+6, 15E+6);
+			else $radius						= mt_rand(15E+6, 125E+6);
 		} else {
-			if($probability <= 50) $radius		= mt_rand(375E+3, 1875E+3);
-			elseif($probability <= 80) $radius	= mt_rand(1875E+3, 375E+4);
-			elseif($probability <= 95) $radius	= mt_rand(375E+4, 5625E+3);
-			elseif($probability <= 99) $radius	= mt_rand(1125E+4, 25E+6);
-			else $radius						= mt_rand(25E+6, 85E+6);
+			$radius								= mt_rand(4E+5, 15E+5);
 		}
 
-		return $radius;// > $max_radius ? mt_rand($max_radius*0.95, $max_radius) : $radius;
+		return $radius > $max_radius ? mt_rand(round($max_radius*0.95), round($max_radius)) : $radius;
 	}
 
 	/**
