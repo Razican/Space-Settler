@@ -214,6 +214,24 @@ class User
 	}
 
 	/**
+	 * Reset user's password
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	string
+	 * @return	bool
+	 */
+	public function reset_password($email, $password)
+	{
+		$CI			=& get_instance();
+
+		$password	= sha1($password);
+		$CI->db->where('email', $email);
+
+		return $CI->db->update('users', array('password' => $password));
+	}
+
+	/**
 	 * Check if it's banned
 	 *
 	 * @access	public
@@ -266,30 +284,12 @@ class User
 	}
 
 	/**
-	 * Reset user's password
-	 *
-	 * @access	public
-	 * @param	string
-	 * @param	string
-	 * @return	bool
-	 */
-	public function reset_password($email, $password)
-	{
-		$CI			=& get_instance();
-
-		$password	= sha1($password);
-		$CI->db->where('email', $email);
-
-		return $CI->db->update('users', array('password' => $password));
-	}
-
-	/**
 	 * Select new user's body
 	 *
 	 * @access	private
 	 * @return	int
 	 */
-	public function _select_body()
+	private function _select_body()
 	{
 		$CI			=& get_instance();
 

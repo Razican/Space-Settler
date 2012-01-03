@@ -7,12 +7,12 @@ Problemas Conocidos:
 * Falta el detalle del radio máximo para un planeta según su estrella.
 * La máxima distancia de un satélite a su planeta debe ser calculada mediante la Esfera de Hill.
 * La distancia de un satélite a su planeta debe ser calculada mediante la ley de Titius-Bode.
-* Falta por traducir engine/language/english/migration_lang.php
 * Ley de Titius Bode no correctamente implementada en la distancia de un planeta a su estrella (Parámetro n da valores incorrectos)
 * El profiler no muestra correctamente los bordes de la sección de bases de datos.
 * Validación por email del registro.
 * La densidad da valores incorrectos, puede ser por problemas de unidades en otros valores.
 * Solo se crean satélites que son dobles planetas.
+* Comprobar longitud de contraseña (mínimo de caracteres) y validez de usuario (no sirven palabras reservadas).
 
 Información de cambios:
 =======================
