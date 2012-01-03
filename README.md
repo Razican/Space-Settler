@@ -22,6 +22,25 @@ se creará un nuevo algoritmo con las siguientes bases, para que todo funcione m
 	* La densidad no será incluida en la tabla de estrellas
 * En el oveal_helper solo se incluirán las funciones de cálculo de gravedad y volumen, de momento.
 
+Unidades en la base de datos:
+-----------------------------
+
+* Masas planetarias: Kg (Hay que multiplicarlo por 10¹⁹)
+* Radios planetarios: m
+* Densidad planetaria: Kg/m³ (Hay que dividirlo entre 100)ç
+* Masas de satélites: Por determinar.
+* Radios de satélites: m
+* Densidad de satélites: Kg/m³ (Hay que dividirlo entre 100)
+* Masas estelares: Masas solares (Hay que dividirlo entre 100)
+* Radios estelares: Radios solares (Hay que dividirlo entre 100)
+
+Cosas por hacer:
+----------------
+
+* Que en la creación de estrellas se cree la matriz $this->star_p.
+* Cálculo de distancias con el nuevo algoritmo.
+* Satélites.
+
 Cambios en el Juego
 -------------------
 

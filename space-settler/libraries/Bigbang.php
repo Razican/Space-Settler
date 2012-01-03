@@ -30,24 +30,29 @@ class Bigbang
 	 * Create a planet
 	 *
 	 * @access	public
-	 * @param	int
-	 * @param	int
-	 * return	bool
+	 * @param	int		$position
+	 * @param	int		$star_id
+	 * return	bool	Returns TRUE on success, False on failure
 	 */
 	public function create_planet($position, $star_id)
 	{
 		$CI			=& get_instance();
 
 		$distance	= $this->_distance($position, $star_id);
-		$radius		= $this->_radius($distance/10000, $star_id);
-		$mass		= $this->_mass($radius, $star_id);
+		$radius		= $this->_radius($distance, $star_id);
+
+		$terrestrial	= ($radius < 14000000) || ($radius < 16000000 && mt_rand(0,1));
+
+		$mass		= $this->_mass($radius, $terrestrial, $star_id);
 
 		if($radius && $mass && $distance)
 		{
-			$habitable	= $this->_is_habitable($distance, $radius, $mass*$CI->config->item('earth_mass')/10000, $star_id);
+			$distance	= round($distance*10000);
+			$mass		= round($mass/1E+19);
+			$habitable	= $this->_is_habitable($distance, $radius, $mass, $terrestrial, $star_id);
 			$water		= $habitable ? mt_rand(1,10000) : 0;
 			$habitable	= $water > 1000 && $water < 9500 ? 1 : 0;
-			$density	= round($this->_density($radius, $mass*$CI->config->item('earth_mass')/10000));
+			$density	= round($this->_density($radius, $mass*1E+19));
 			$this->planets[] = array('star' => $star_id+$this->current_stars+1, 'position' => $position, 'mass' => $mass, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 0);
 			$this->create_moons($star_id);
 			$this->last_planet++;
@@ -60,7 +65,7 @@ class Bigbang
 	 * Create moons for a planet
 	 *
 	 * @access	public
-	 * @param	int
+	 * @param	int		$star
 	 * @return	void
 	 */
 	public function create_moons($star)
@@ -123,8 +128,8 @@ class Bigbang
 	 * Create a star
 	 *
 	 * @access	public
-	 * @param	int
-	 * @return	bool
+	 * @param	int		$system
+	 * @return	bool	Returns TRUE on success, False on failure
 	 */
 	public function create_star($system)
 	{
@@ -195,9 +200,9 @@ class Bigbang
 	 * Calculate the density of an object based on its radius and mass
 	 *
 	 * @access	private
-	 * @param	int		Radius in metres
-	 * @param	int		Mass in Kg
-	 * @return	int		Density in Kg/m³
+	 * @param	int		$radius	(m)
+	 * @param	int		$mass	(Kg)
+	 * @return	int		Density (Kg/m³)
 	 */
 	private function _density($radius, $mass)
 	{
@@ -209,9 +214,9 @@ class Bigbang
 	 * using Titius-Bode Law.
 	 *
 	 * @access	private
-	 * @param	int
-	 * @param	int
-	 * @return	int
+	 * @param	int		$position
+	 * @param	int		$star_id
+	 * @return	int		Distance (AU)
 	 */
 	private function _distance($position, $star_id)
 	{
@@ -232,9 +237,9 @@ class Bigbang
 	 * Return the size of a future planet based on its position and star
 	 *
 	 * @access	private
-	 * @param	int		distance in AU
-	 * @param	int
-	 * @return	int
+	 * @param	int		$distance	(AU)
+	 * @param	int		$star_id
+	 * @return	int		Radius		(m)
 	 */
 	private function _radius($distance, $star_id)
 	{
@@ -258,13 +263,14 @@ class Bigbang
 	 * Decide whether a planet is habitable or not
 	 *
 	 * @access	private
-	 * @param	int		Distance in AU
-	 * @param	int		Radius in metres
-	 * @param	int		Mass in Kg
-	 * @param	int
-	 * @return	int
+	 * @param	int		$distance	(AU)
+	 * @param	int		$radius		(m)
+	 * @param	int		$mass		(Kg)
+	 * @param	bool	$terrestrial
+	 * @param	int		$star_id
+	 * @return	bool	Whether the body is habitable or not
 	 */
-	private function _is_habitable($distance, $radius, $mass, $star_id)
+	private function _is_habitable($distance, $radius, $mass, $terrestrial, $star_id)
 	{
 		$CI					=& get_instance();
 
@@ -274,37 +280,40 @@ class Bigbang
 		$gravity			= gravity($mass, $radius);
 		$density			= $this->_density($radius, $mass);
 
-		if(	($distance	< $habitable_zone_min) OR
-			($distance	> $habitable_zone_max) OR
-			($gravity	< 3) OR ($gravity > 15) OR
-			($density	< 1500)) return 0;
+		$habitable			= 	($terrestrial)						&&
+								($distance	> $habitable_zone_min)	&&
+								($distance	< $habitable_zone_max)	&&
+								($gravity	> 3) && ($gravity < 15);
 
-		return 1;
+		return $habitable;
 	}
 
 	/**
 	 * Return the mass of a planet based on
 	 *
 	 * @access	private
-	 * @param	int
-	 * @param	int
-	 * @return	int
+	 * @param	int		$radius (m)
+	 * @param	bool	$terrestrial Whether the planet is terrestrial or not
+	 * @param	int		$star_id
+	 * @return	int		Mass	(Kg)
 	 */
-	private function _mass($radius, $star_id)
+	private function _mass($radius, $terrestrial, $star_id)
 	{
-		$CI		=& get_instance();
+		$CI			=& get_instance();
+		$max_mass	= $this->stars_p[$star_id]['max_mass'];
 
-		$this->stars_p[$star_id]['max_mass']	= isset($this->stars_p[$star_id]['max_mass']) ? $this->stars_p[$star_id]['max_mass'] : round($this->stars[$star_id]['mass']*$CI->config->item('sun_mass')/(50000*$CI->config->item('earth_mass')));
-		$this->stars_p[$star_id]['max_mass']	= $this->stars_p[$star_id]['max_mass'] > 60000000 ? 60000000 : $this->stars_p[$star_id]['max_mass'];
-		$max_mass = $this->stars_p[$star_id]['max_mass'];
+		if($terrestrial)
+		{
+			if($radius < 1250000)		$density	= mt_rand(150000, 275000);
+			elseif($radius < 7500000)	$density	= mt_rand(270000, 650000);
+			else						$density	= mt_rand(550000, 1500000);
+		} else							$density	= mt_rand(15000, 1250000);
 
-		if($radius < 1E+6)		$density	= mt_rand(15000000, 30000000);
-		elseif($radius < 16E+6) $density	= mt_rand(30000000, 150000000);
-		elseif($radius < 50E+6) $density	= mt_rand(15000000, 30000000);
-		else					$density	= mt_rand(1500000, 15000000);
+		$density	= $density/100;
 
-		$mass	= round(volume($radius)*$density/$CI->config->item('earth_mass'));
-		$mass	= $mass > $max_mass ? mt_rand(round($max_mass*0.95), $max_mass) : $mass;
+		$mass		= round(volume($radius)*$density);
+
+		$mass		= $mass > $max_mass ? mt_rand(round($max_mass*0.95)) : $mass;
 
 		return $mass;
 	}
