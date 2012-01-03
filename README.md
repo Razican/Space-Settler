@@ -1,180 +1,26 @@
-Problemas Conocidos:
-====================
-* Masas de los planetas muy pequeñas
-* Algunos satélites con masa cero
-* Las unidades de Masa no están correctas al mirar la habitabilidad de los satélites.
-* Unidades en general no correctas.
-* Falta el detalle del radio máximo para un planeta según su estrella.
-* La máxima distancia de un satélite a su planeta debe ser calculada mediante la Esfera de Hill.
-* La distancia de un satélite a su planeta debe ser calculada mediante la ley de Titius-Bode.
-* Ley de Titius Bode no correctamente implementada en la distancia de un planeta a su estrella (Parámetro n da valores incorrectos)
-* El profiler no muestra correctamente los bordes de la sección de bases de datos.
-* Validación por email del registro.
-* La densidad da valores incorrectos, puede ser por problemas de unidades en otros valores.
-* Solo se crean satélites que son dobles planetas.
-* Comprobar longitud de contraseña (mínimo de caracteres) y validez de usuario (no sirven palabras reservadas).
-
-Información de cambios:
-=======================
+Requisitos Mínimos
+==================
 
 * Se recomienda siempre usar UTF-8 en su variante *general_ci* en la base de datos y en la codificación de todos los archivos del juego.
 * Necesario **PHP >= 5.2.0**
 * Necesario **MySQL >= 4.1**
 * También soporta MySQLi, MS SQL, Postgres, Oracle, SQLite y ODBC.
 
-* * *
+Información de cambios:
+=======================
 
-* Se decide que se borran los campos galaxy y los de system serán **star**, ahora, se mirará en la tabla stars por ID.
+Nuevo Algoritmo:
+----------------
 
-* * *
+Dado que actualmente el Big Bang no tiene un algoritmo sólido, y es un problema para el cálculo de unidades etc,
+se creará un nuevo algoritmo con las siguientes bases, para que todo funcione mejor:
 
-* Hay que incluír la masa de todo objeto (planeta, estrella, satélite u objeto como nave, orbitador, telescopio etc.
-* Los planetas los creará el instalador, y se habrán creado todos cuando el universo se inicie.
-
-Cambios en la base de datos:
-----------------------------
-
-Se borran las tablas **sps_planets** y **sps_config**
-
-* * *
-
-Tabla **sps_aks**:
-
-* teilnehmer -- participant
-* flotten -- fleet
-* ankunft -- arrival
-* eingeladen -- invited
-
-* * *
-
-Tabla **sps_banned**:
-
-* theme -- reason
-
-* * *
-
-Tabla **sps_buddy**: --> **sps_friends**:
-
-* * *
-
-Tabla **sps_galaxy**:
-
-* id_planet -- planet_id
-* id_luna -- moon_id
-* luna -- moon
-
-* * *
-
-Tabla **sps_planets**:
-
-* destruyed -- destroyed
-* misil_launcher -- missile_launcher
-* interceptor_misil -- interceptor_missile
-* interplanetary_misil -- interplanetary_missile
-* metal_mine_porcent -- metal_mine_percent
-* crystal_mine_porcent -- crystal_mine_percent
-* deuterium_sintetizer_porcent -- deuterium_sintetizer_percent
-* solar_plant_porcent -- solar_plant_percent
-* fusion_plant_porcent -- fusion_plant_percent
-* solar_satelit_porcent -- solar_satelit_percent
-* mondbasis -- lunar_base
-* sprungtor -- jumpgate
-
-* * *
-
-Tabla **sps_errors**:
-
-* Se quitan los prefijos error_
-
-* * *
-
-Tabla **sps_alliance**: --> **sps_alliances**:
-
-* Se quitan los prefijos ally_
-
-* * *
-
-Tabla **sps_fleets**:
-
-* Se quitan los prefijos fleet_
-
-* * *
-
-Tabla **sps_message**:
-
-* Se quitan los prefijos message_
-
-* * *
-
-Tabla **sps_rw**:
-
-* Queda pendiente, ya que no sabemos su uso.
-
-* * *
-
-Tabla **sps_users**:
-
-* Se borran los campos current_planet, user_agent y current_page. Se usarán sesiones para su control.
-* Queda pendiente dpath, ya que no tiene un nombre significativo.
-* email_2 -- reg_email
-* ip_at_reg -- reg_ip
-* user_lastip -- last_ip
-* id_planet -- planet_id
-* onlinetime -- online_time
-* spio_anz -- espionage_probes
-* current_luna -- current_moon
-* rpg_geologue -- rpg_geologist
-* rpg_amiral -- rpg_admiral
-* rpg_ingenieur -- rpg_engineer
-* rpg_technocrate -- rpg_technocrat
-* rpg_espion -- rpg_spy
-* rpg_constructeur -- rpg_constructor
-* rpg_scientifique -- rpg_scientific
-* rpg_commandant -- rpg_commander
-* rpg_stockeur -- rpg_storekeeper
-* rpg_defenseur -- rpg_defender
-* rpg_destructeur -- rpg_destroyer
-* rpg_raideur -- rpg_raider
-* rpg_empereur -- rpg_emperor
-* bana -- banned --> Pendiente de borrado: O de crear la tabla banned dentro de este campo, ya que parece innecesaria.
-* banaday -- ban_finish
-
-*Quedan pendientes, también los siguientes campos*:
-
-* db_deaktjava
-* urlaubs_until
-* urlaubs_modus
-* settings_rep
-* settings_mis
-* settings_bud
-* settings_wri
-* settings_esp
-* spio_anz
-
-* * *
-
-**Cambios Generales**
-
-* Se cambian las ID's a int(10) unsigned, para permitir 4.294.967.295 ID's, ya que no tiene sentido tener mucísimas veces más ID's que personas en el mundo.
-Solo aplicado a usuarios, alianzas y planetas. Las demás serán bigint(20) unsigned, así tendrán 18.446.744.073.709.551.615 de ID's.
-* Se ajustan los valires numéricos, ya que no tiene sentido un int(32).
-* Se cambia la codificación a UTF-8, con la variante "general_ci".
-* Se usarán los int's más pequeños posibles para almacenar datos: int(2) --> tinyint(2).
-* Recursos: bigint(20) unsigned.
-* Naves: bigint(20) unsigned.
-* Niveles: int(10) unsigned.
-* Tiempo: int(10) unsigned.
-* Misiles: int(10) unsigned.
-* Campos tipo galaxy: tinyint(2)
-* Campos tipo system: smallint(4)
-* Campos tipo planet: tinyint(2)
-* Campos IP: int(10) unsigned (menos los de sesiones).
-
-Nota:
------
-
-Esta no es ni mucho menos la base de datos definitiva, ya que vamos a quitar las variables de configuración y ir modificándola según avancemos.
-Es probable que decidamos unir todas las tecnologías en un array, y que hagamos lo mismo con los edificios. Además, es posible que no necesitemos usar campos como ally_members etc.
+* Se usará el sistema internacional de unidades (IS).
+* La base de datos contendrá los parámetros principales de los objetoa:
+	* Incluso aunque los calculos como los de la densidad se puedan hacer a posteriori, se incluirán para ahorrar
+	recursos.
+	* La densidad no será incluida en la tabla de estrellas
+* En el oveal_helper solo se incluirán las funciones de cálculo de gravedad y volumen, de momento.
 
 Cambios en el Juego
 -------------------
@@ -239,7 +85,8 @@ que se podrá encontrar en la sección galaxia. El diámetro no estará corréct
 * Galaxias: distancia(millones de años)/(luminosidad media) +/- 5%, en minutos
 
 Tamaños, masas...:
------
+------------------
+
 * Masa de un planeta: entre Mt/100000 y Mt*3.500.
 * Masa de un satélite: planeta doble ? 0.1 - 0.5 : 1E-11 - 0.015;
 * Si planeta doble, distancia mínima: r*(2M/m)^(1/3) //Límite de Roche, donde M es la masa del planeta,

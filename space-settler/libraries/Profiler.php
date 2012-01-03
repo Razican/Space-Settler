@@ -169,12 +169,12 @@ class CI_Profiler {
 		if (count($dbs) == 0)
 		{
 			$output  = "\n\n";
-			$output .= '<div style="padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#fff;border-radius:10px;border:1px solid #0000FF;color:#0000FF" id="ci_profiler_queries">';
+			$output .= '<div style="padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#fff;border-radius:10px;border:1px solid #00F;color:#00F" id="ci_profiler_queries">';
 			$output .= "\n";
 			$output .= '<span style="position:relative;bottom:15px;background-color:#fff">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_queries').'&nbsp;&nbsp;</span>';
 			$output .= "\n";
-			$output .= "\n\n<table style='width:100%;text-align:left;font-size:16px;border:none'>\n";
-			$output .="<tr><td style='padding:5px;'>".$this->CI->lang->line('profiler_no_db')."</td></tr>\n";
+			$output .= "\n\n<table style='width:100%;text-align:left;font-size:16px'>\n";
+			$output .="<tr><td style='padding:5px;width:100%;background-color:#ddd;color:#000;'>".$this->CI->lang->line('profiler_no_db')."</td></tr>\n";
 			$output .= "</table>\n";
 			$output .= "</div>";
 
@@ -204,11 +204,11 @@ class CI_Profiler {
 				$show_hide_js = '(<span style="cursor: pointer;" onclick="var s=document.getElementById(\'ci_profiler_queries_db_'.$count.'\').style;s.display=s.display==\'none\'?\'\':\'none\';this.innerHTML=this.innerHTML==\''.$this->CI->lang->line('profiler_section_show').'\'?\''.$this->CI->lang->line('profiler_section_hide').'\':\''.$this->CI->lang->line('profiler_section_show').'\';">'.$this->CI->lang->line('profiler_section_show').'</span>)';
 			}
 
-			$output .= '<div style="padding:4px 0 4px 0;border:1px solid #0000FF;background-color:transparent;position:static">';
+			$output .= '<div style="padding:6px 10px 10px 10px;margin:20px 0 20px 0;background-color:#fff;border-radius:10px;border:1px solid #00F;color:#00F" id="ci_profiler_queries">';
 			$output .= "\n";
-			$output .= '<span style="position:relative;bottom:15px;background-color:#fff;">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_database').':&nbsp; '.$db->database.'&nbsp;&nbsp;&nbsp;'.$this->CI->lang->line('profiler_queries').': '.count($db->queries).'&nbsp;&nbsp;'.$show_hide_js.'</span>';
+			$output .= '<span style="position:relative;bottom:15px;background-color:#fff;padding-right:10px">&nbsp;&nbsp;'.$this->CI->lang->line('profiler_database').':&nbsp; '.$db->database.'&nbsp;&nbsp;&nbsp;'.$this->CI->lang->line('profiler_queries').': '.count($db->queries).'&nbsp;&nbsp;'.$show_hide_js.'</span>';
 			$output .= "\n";
-			$output .= "\n\n<table style='width:100%;text-align:left;font-size:16px;border:none;{$hide_queries}' id='ci_profiler_queries_db_{$count}'>\n";
+			$output .= "\n\n<table style='width:100%;text-align:left;font-size:16px;{$hide_queries}' id='ci_profiler_queries_db_{$count}'>\n";
 
 			if (count($db->queries) == 0)
 			{
