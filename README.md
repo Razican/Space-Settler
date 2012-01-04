@@ -6,6 +6,17 @@ Requisitos Mínimos
 * Necesario **MySQL >= 4.1**
 * También soporta MySQLi, MS SQL, Postgres, Oracle, SQLite y ODBC.
 
+Instalación:
+============
+
+* El programa está preparado para instalarse en localhost/space_settler
+* Necesita habilitado el mod_rewrite de Apache, y AllowOverride All en el directorio de instalación.
+* Para cambiar los parámetros de la base de datos se debe editar el archivo /space-settler/config/database.php
+* No se debe cambiar el prefijo de las tablas, ya que está preparado para sps_
+* El archivo SQL hay que importarlo a la base de datos.
+* Si se quiere usar sin cambiar nada, se debe usar una base de datos con usuario root y contraseña 12345.
+* Para cambiar la ruta del programa, se debe cambiar el archivo /space-settler/config/config.php y el .htaccess
+
 Información de cambios:
 =======================
 
