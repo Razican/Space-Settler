@@ -36,27 +36,30 @@ class Bigbang
 	 */
 	public function create_planet($position, $star_id)
 	{
-		$CI			=& get_instance();
-
-		$distance	= $this->_distance($position, $star_id);
-		$radius		= $this->_radius($distance, $star_id);
-
-		$terrestrial	= ($radius < 14000000) || ($radius < 16000000 && mt_rand(0,1));
-
-		$mass		= $this->_mass($radius, $terrestrial, $star_id);
-
-		if($radius && $mass && $distance)
+		if(mt_rand(0,9))
 		{
-			$distance	= round($distance*10000);
-			$mass		= round($mass/1E+19);
-			$habitable	= $this->_is_habitable($distance, $radius, $mass, $terrestrial, $star_id);
-			$water		= $habitable ? mt_rand(1,10000) : 0;
-			$habitable	= $water > 1000 && $water < 9500 ? 1 : 0;
-			$density	= round($this->_density($radius, $mass*1E+19));
-			$this->planets[] = array('star' => $star_id+$this->current_stars+1, 'position' => $position, 'mass' => $mass, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 0);
-			$this->create_moons($star_id);
-			$this->last_planet++;
-			return TRUE;
+			$CI			=& get_instance();
+
+			$distance	= $this->_distance($position, $star_id);
+			$radius		= $this->_radius($distance, $star_id);
+
+			$terrestrial	= ($radius < 14000000) || ($radius < 16000000 && mt_rand(0,1));
+
+			$mass		= $this->_mass($radius, $terrestrial, $star_id);
+
+			if($radius && $mass && $distance)
+			{
+				$distance	= round($distance*10000);
+				$mass		= round($mass/1E+19);
+				$habitable	= $this->_is_habitable($distance, $radius, $mass, $terrestrial, $star_id);
+				$water		= $habitable ? mt_rand(1,10000) : 0;
+				$habitable	= $water > 1000 && $water < 9500 ? 1 : 0;
+				$density	= round($this->_density($radius, $mass*1E+19));
+				$this->planets[] = array('star' => $star_id+$this->current_stars+1, 'position' => $position, 'mass' => $mass, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 0);
+				$this->create_moons($star_id);
+				$this->last_planet++;
+				return TRUE;
+			}
 		}
 		return FALSE;
 	}
@@ -230,7 +233,7 @@ class Bigbang
 		$n			= $this->stars_p[$star_id]['n'];
 
 		$distance	= exp(($m*$position - $n))*100;
-		return mt_rand(round($distance*0.9), round($distance*1.1));
+		return mt_rand(round($distance*0.9), round($distance*1.1))/100;
 	}
 
 	/**

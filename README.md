@@ -20,7 +20,9 @@ se creará un nuevo algoritmo con las siguientes bases, para que todo funcione m
 	* Incluso aunque los calculos como los de la densidad se puedan hacer a posteriori, se incluirán para ahorrar
 	recursos.
 	* La densidad no será incluida en la tabla de estrellas
-* En el oveal_helper solo se incluirán las funciones de cálculo de gravedad y volumen, de momento.
+* En el overal_helper solo se incluirán las funciones de cálculo de gravedad y volumen, de momento.
+* Habrá un a media de entre 8 y 10 planetas en el sistema solar. con una probabilidad del 10% de que en una posición dada no haya planeta.
+En una versión posterior esos huevos tendrán una probabilidad del 50% de contener un cinturon de asteroides.
 
 Unidades en la base de datos:
 -----------------------------
