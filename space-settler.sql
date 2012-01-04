@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 03-01-2012 a las 00:16:52
+-- Tiempo de generación: 04-01-2012 a las 22:47:39
 -- Versión del servidor: 5.1.58
 -- Versión de PHP: 5.3.6-13ubuntu3.3
 
@@ -93,8 +93,8 @@ CREATE TABLE IF NOT EXISTS `sps_banned` (
 --
 -- Estructura de tabla para la tabla `sps_bodies`
 --
--- Creación: 02-01-2012 a las 23:15:45
--- Última actualización: 02-01-2012 a las 23:15:45
+-- Creación: 04-01-2012 a las 21:43:04
+-- Última actualización: 04-01-2012 a las 21:43:04
 --
 
 CREATE TABLE IF NOT EXISTS `sps_bodies` (
@@ -102,6 +102,7 @@ CREATE TABLE IF NOT EXISTS `sps_bodies` (
   `star` int(8) unsigned NOT NULL,
   `position` tinyint(2) unsigned DEFAULT NULL,
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `terrestrial` tinyint(1) unsigned NOT NULL,
   `double_planet` tinyint(1) NOT NULL,
   `planet` bigint(20) unsigned DEFAULT NULL,
   `mass` bigint(17) unsigned NOT NULL,

@@ -53,9 +53,9 @@ class Bigbang
 				$mass		= round($mass/1E+19);
 				$habitable	= $this->_is_habitable($distance, $radius, $mass, $terrestrial, $star_id);
 				$water		= $habitable ? mt_rand(1,10000) : 0;
-				$habitable	= $water > 1000 && $water < 9500 ? 1 : 0;
+				$habitable	= $water > 1000 && $water < 9500;
 				$density	= round($this->_density($radius, $mass*1E+19));
-				$this->planets[] = array('star' => $star_id+$this->current_stars+1, 'position' => $position, 'mass' => $mass, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 0);
+				$this->planets[] = array('star' => $star_id+$this->current_stars+1, 'position' => $position, 'terrestrial' => $terrestrial, 'double_planet' => FALSE, 'mass' => $mass, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water);
 				$this->create_moons($star_id);
 				$this->last_planet++;
 				return TRUE;
@@ -121,7 +121,7 @@ class Bigbang
 			{
 				$habitable	= $this->_is_habitable($star_distance, $radius, $mass, $star);
 				$water		= $habitable ? mt_rand(1,10000) : 0;
-				$habitable	= $water > 1000 && $water < 9500 ? 1 : 0;
+				$habitable	= $water > 1000 && $water < 9500;
 				$density	= 0;//round($this->_density($radius, $mass*$CI->config->item('earth_mass')/1E+17));
 				$this->moons[] = array('star' => $star+$this->current_stars+1, 'position' => $i+1, 'type' => 1, 'planet' => $planet, 'mass' => $mass, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 0);
 			}

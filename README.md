@@ -29,7 +29,7 @@ Unidades en la base de datos:
 
 * Masas planetarias: Kg (Hay que multiplicarlo por 10¹⁹)
 * Radios planetarios: m
-* Densidad planetaria: Kg/m³ (Hay que dividirlo entre 100)ç
+* Densidad planetaria: Kg/m³ (Hay que dividirlo entre 100)
 * Masas de satélites: Por determinar.
 * Radios de satélites: m
 * Densidad de satélites: Kg/m³ (Hay que dividirlo entre 100)
@@ -108,11 +108,9 @@ que se podrá encontrar en la sección galaxia. El diámetro no estará corréct
 Tamaños, masas...:
 ------------------
 
-* Masa de un planeta: entre Mt/100000 y Mt*3.500.
 * Masa de un satélite: planeta doble ? 0.1 - 0.5 : 1E-11 - 0.015;
 * Si planeta doble, distancia mínima: r*(2M/m)^(1/3) //Límite de Roche, donde M es la masa del planeta,
 m la del satélite y r el rádio del satélite.
-* Radio de un planeta: entre 375.000m - 85.000.000m
 
 Constantes:
 -----------
