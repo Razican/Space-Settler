@@ -6,6 +6,8 @@ Requisitos Mínimos
 * Necesario **MySQL >= 4.1**
 * También soporta MySQLi, MS SQL, Postgres, Oracle, SQLite y ODBC.
 
+* El programa ofrecerá un poco más de exactitud al usar un sistema operativo de 64 bits, ya que se ueden usar números más grandes.
+
 Instalación:
 ============
 
@@ -34,6 +36,9 @@ se creará un nuevo algoritmo con las siguientes bases, para que todo funcione m
 * En el overal_helper solo se incluirán las funciones de cálculo de gravedad y volumen, de momento.
 * Habrá un a media de entre 8 y 10 planetas en el sistema solar. con una probabilidad del 10% de que en una posición dada no haya planeta.
 En una versión posterior esos huevos tendrán una probabilidad del 50% de contener un cinturon de asteroides.
+* Este algoritmo creará una media de 100.000 estrellas y 76.400 planetas por galaxia. No obstante, en un futuro
+se añadirán más planetas pequeños al final de cada sistema solar, sin cumplir la ley de Titius-Bode, y se crearán cinturones de asteroides.
+Con las lunas pasará lo mismo.
 
 Unidades en la base de datos:
 -----------------------------

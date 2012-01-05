@@ -49,17 +49,18 @@ class Bigbang
 
 			if($radius && $mass && $distance)
 			{
-				$distance	= round($distance*10000);
+				$distance	= $distance*10000;
 				$mass		= round($mass/1E+19);
 				$habitable	= $this->_is_habitable($distance, $radius, $mass, $terrestrial, $star_id);
 				$water		= $habitable ? mt_rand(1,10000) : 0;
 				$habitable	= $water > 1000 && $water < 9500;
-				$density	= round($this->_density($radius, $mass*1E+19));
+				$density	= round($this->_density($radius, $mass*1E+19)*100);
 				$this->planets[] = array('star' => $star_id+$this->current_stars+1, 'position' => $position, 'terrestrial' => $terrestrial, 'double_planet' => FALSE, 'mass' => $mass, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water);
-				$this->create_moons($star_id);
+			//	$this->create_moons($star_id);
 				$this->last_planet++;
 				return TRUE;
 			}
+			log_message('error', 'No se ha creado el planeta.');
 		}
 		return FALSE;
 	}
@@ -188,14 +189,15 @@ class Bigbang
 				$radius			= mt_rand(24, 65);
 		}
 
-		$luminosity				= round(pow($radius/10000, 2)*$CI->config->item('Boltzman_constant')*pow($temperature, 4)*1E+12);
+		$luminosity				= round(pow($radius*$CI->config->item('sun_radius')/10000, 2)*$CI->config->item('Boltzman_constant')*pow($temperature, 4)*1E+12/$CI->config->item('sun_luminosity'));
 
 		if($mass && $radius && $temperature && $luminosity)
 		{
 			$this->stars[]		= array('galaxy' => $galaxy, 'system' => $system, 'type' => $type, 'mass' => $mass, 'radius' => $radius, 'luminosity' => $luminosity, 'temperature' => $temperature);
-			$this->stars_p[]	= array();
+			$this->stars_p[]	= array('max_radius' => round($radius*$CI->config->item('sun_radius')/500), 'max_mass' => round($mass*$CI->config->item('sun_mass')/50000));
 			return TRUE;
 		}
+		log_message('error', 'No se ha creado la estrella.');
 		return FALSE;
 	}
 
@@ -225,15 +227,16 @@ class Bigbang
 	{
 		if( ! isset($this->stars_p[$star_id]['m']))
 		{
-			$this->stars_p[$star_id]['m']	= mt_rand(35E+3, 6E+5)/1E+6;
-			$n		= 25*log($this->stars_p[$star_id]['m']/12+1)+0.4;
-			$this->stars_p[$star_id]['n']	= mt_rand(round($n*999E+3), round($n*1001E+3))/1E+6;
+			$this->stars_p[$star_id]['m']		= mt_rand(15E+2, 95E+2)/1E+4;
+			$this->stars_p[$star_id]['n']		= mt_rand(125E+2, 525E+2)/1E+4;
+			if(exp(($this->stars_p[$star_id]['m']*10 - $this->stars_p[$star_id]['n']) > 1000))
+				$this->stars_p[$star_id]['m']	= log(1000 + $this->stars_p[$star_id]['n'])/10;
 		}
 		$m			= $this->stars_p[$star_id]['m'];
 		$n			= $this->stars_p[$star_id]['n'];
 
-		$distance	= exp(($m*$position - $n))*100;
-		return mt_rand(round($distance*0.9), round($distance*1.1))/100;
+		$distance	= exp(($m*$position - $n))*10000;
+		return mt_rand(round($distance*0.9), round($distance*1.1))/10000;
 	}
 
 	/**
@@ -315,8 +318,8 @@ class Bigbang
 		$density	= $density/100;
 
 		$mass		= round(volume($radius)*$density);
-
-		$mass		= $mass > $max_mass ? mt_rand(round($max_mass*0.95)) : $mass;
+		if($mass > $max_mass)
+			$mass	= IS_64 ? mt_rand(round($max_mass*0.95)/1E+10, round($max_mass/1E+10))*1E+10 : mt_rand(round($max_mass*0.95)/1E+20, round($max_mass/1E+20))*1E+20;
 
 		return $mass;
 	}

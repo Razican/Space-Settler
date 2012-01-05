@@ -26,7 +26,7 @@ class Creation extends CI_Controller {
 		$this->benchmark->mark('Planets and Moons created_start');
 		for($f=1; $f <= $stars_planets; $f++)
 		{
-			$planets	= mt_rand(10, 15);
+			$planets	= mt_rand(7, 10);
 			$system		= mt_rand(round($f*$total_stars/($stars_planets+1)-9), round($f*$total_stars/($stars_planets+1)));
 
 			for($g=0; $g < $planets; $g++)
@@ -47,7 +47,7 @@ class Creation extends CI_Controller {
 		$this->db->insert_batch('bodies', $this->bigbang->planets) OR die('Error! no se han podido crear los planetas');
 		$this->benchmark->mark($planets.' Planet insertion_end');
 		$this->benchmark->mark($moons.' Moon insertion_start');
-		$this->db->insert_batch('bodies', $this->bigbang->moons) OR die('Error! no se han podido crear los satélites');
+		//$this->db->insert_batch('bodies', $this->bigbang->moons) OR die('Error! no se han podido crear los satélites');
 		$this->benchmark->mark($moons.' Moon insertion_end');
 
 		echo 'Se ha creado el universo';
