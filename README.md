@@ -39,6 +39,7 @@ En una versión posterior esos huevos tendrán una probabilidad del 50% de conte
 * Este algoritmo creará una media de 100.000 estrellas y 76.400 planetas por galaxia. No obstante, en un futuro
 se añadirán más planetas pequeños al final de cada sistema solar, sin cumplir la ley de Titius-Bode, y se crearán cinturones de asteroides.
 Con las lunas pasará lo mismo.
+* Falta para un futuro la temperatura superficial del planeta/luna.
 
 Unidades en la base de datos:
 -----------------------------

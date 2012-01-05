@@ -49,13 +49,13 @@ class Bigbang
 
 			if($radius && $mass && $distance)
 			{
-				$distance	= $distance*10000;
-				$mass		= round($mass/1E+19);
+				$mass		= round($mass/1E+19)*1E+19;
 				$habitable	= $this->_is_habitable($distance, $radius, $mass, $terrestrial, $star_id);
 				$water		= $habitable ? mt_rand(1,10000) : 0;
 				$habitable	= $water > 1000 && $water < 9500;
-				$density	= round($this->_density($radius, $mass*1E+19)*100);
-				$this->planets[] = array('star' => $star_id+$this->current_stars+1, 'position' => $position, 'terrestrial' => $terrestrial, 'double_planet' => FALSE, 'mass' => $mass, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water);
+				$density	= round($this->_density($radius, $mass)*100);
+				$distance	= $distance*10000;
+				$this->planets[] = array('star' => $star_id+$this->current_stars+1, 'position' => $position, 'terrestrial' => $terrestrial, 'double_planet' => FALSE, 'mass' => $mass/1E+19, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water);
 			//	$this->create_moons($star_id);
 				$this->last_planet++;
 				return TRUE;
@@ -141,7 +141,6 @@ class Bigbang
 		if ( ! $this->galaxy)
 		{
 			$CI->db->select_max('galaxy');
-			$CI->db->select('galaxy');
 			$CI->db->limit(1);
 			$query	= $CI->db->get('stars');
 			if($query->num_rows() > 0)
@@ -194,7 +193,8 @@ class Bigbang
 		if($mass && $radius && $temperature && $luminosity)
 		{
 			$this->stars[]		= array('galaxy' => $galaxy, 'system' => $system, 'type' => $type, 'mass' => $mass, 'radius' => $radius, 'luminosity' => $luminosity, 'temperature' => $temperature);
-			$this->stars_p[]	= array('max_radius' => round($radius*$CI->config->item('sun_radius')/500), 'max_mass' => round($mass*$CI->config->item('sun_mass')/50000));
+			$max_mass			= round($mass*$CI->config->item('sun_mass')/50000);
+			$this->stars_p[]	= array('max_radius' => round($radius*$CI->config->item('sun_radius')/500), 'max_mass' => ($max_mass > 19E+27 ? 19E+27 : $max_mass));
 			return TRUE;
 		}
 		log_message('error', 'No se ha creado la estrella.');
@@ -290,6 +290,8 @@ class Bigbang
 								($distance	> $habitable_zone_min)	&&
 								($distance	< $habitable_zone_max)	&&
 								($gravity	> 3) && ($gravity < 15);
+
+		if($terrestrial && ! $habitable) log_message('debug', 'Planeta: '.$gravity);
 
 		return $habitable;
 	}
