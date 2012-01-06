@@ -12,7 +12,7 @@
 $config['Boltzman_constant']	= 5.6704E-8; // W*m⁻²*K⁻⁴
 $config['gas_constant']			= 8.3144621; // J*mol⁻¹*K⁻¹
 $config['star_types']			= 'OBAFGKM';
-$config['UA']					= 1.49597870E+12; //m
+$config['AU']					= 1.4959787E+11; //m
 $config['G']					= 6.67428E-11; //N*m²*Kg⁻²
 
 /**
