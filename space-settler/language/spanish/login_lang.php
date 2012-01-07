@@ -24,7 +24,8 @@ $lang['login.accept_TaC']			= 'Aceptar terminos y condiciones de uso';
 $lang['login.register_incomplete']	= '¡Debes introducir todos los campos!';
 $lang['login.mail_exists']			= '¡El email ingresado ya existe!';
 $lang['login.user_not_alnum']		= '¡El campo de usuario sólo puede contener caracteres alfanuméricos!';
-$lang['login.user_exists']			= '¡El nombre de usuario elegido ya existe!<br />';
+$lang['login.user_exists']			= '¡El nombre de usuario elegido ya existe!';
+$lang['login.no_planet']			= 'Lo sentimos, en estos momentos no hay planetas disponibles para el registro.';
 $lang['login.register_correct']		= '¡Registro completo!<br />Se te ha enviado un email con tu nueva contraseña. Por motivos de seguridad, por favor, cámbiala.';
 
 

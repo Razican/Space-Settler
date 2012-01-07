@@ -181,6 +181,10 @@ class User
 		if($this->exists_user($username))
 			$this->register_errors	.= lang('login.user_exists').'<br />';
 
+		$planet		= $this->_select_body();
+		if( ! $planet)
+			$this->register_errors	.= lang('login.no_planet').'<br />';
+
 		if($this->register_errors)
 			return FALSE;
 
@@ -189,8 +193,6 @@ class User
 		$password	= random_string('alnum', 8);
 		$IP			= ip2int($CI->input->ip_address());
 		$time		= now();
-		$planet		= $this->_select_body();
-
 
 		$data		= array(
 					'username'		=> strtolower($username),
@@ -298,9 +300,9 @@ class User
 		$CI->db->select('id');
 		$query	= $CI->db->get('bodies');
 
-		foreach($query->result() as $body) $bodies[] = $body->id;
+		if($query->num_rows()) foreach($query->result() as $body) $bodies[] = $body->id;
 
-		$body			= $bodies[mt_rand(0, count($bodies))];
+		$body			= isset($boddies) ? $bodies[mt_rand(0, count($bodies))] : FALSE;
 
 		return $body;
 	}
