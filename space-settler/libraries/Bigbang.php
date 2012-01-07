@@ -188,7 +188,7 @@ class Bigbang
 				$radius			= mt_rand(24, 65);
 		}
 
-		$luminosity				= round(pow($radius*$CI->config->item('sun_radius')/10000, 2)*$CI->config->item('Boltzman_constant')*pow($temperature, 4)*1E+12/$CI->config->item('sun_luminosity'));
+		$luminosity				= round(4*M_PI*pow($radius*$CI->config->item('sun_radius')/100, 2)*$CI->config->item('Boltzman_constant')*pow($temperature, 4)*1E+12/$CI->config->item('sun_luminosity'));
 
 		if($mass && $radius && $temperature && $luminosity)
 		{
@@ -253,10 +253,15 @@ class Bigbang
 		$probability								= mt_rand(1, 100);
 		$max_radius									= $this->stars_p[$star_id]['max_radius'];
 
-		if($distance < 35)
+		if($distance < 4)
 		{
-			if($probability <= 40) $radius		= mt_rand(4E+5, 1E+6);
-			elseif($probability <= 70) $radius	= mt_rand(1E+6, 15E+6);
+			if($probability <= 25) $radius		= mt_rand(4E+5, 1E+6);
+			elseif($probability <= 90) $radius	= mt_rand(1E+6, 15E+6);
+			else $radius						= mt_rand(15E+6, 125E+6);
+		} elseif($distance < 35)
+		{
+			if($probability <= 20) $radius		= mt_rand(4E+5, 1E+6);
+			elseif($probability <= 50) $radius	= mt_rand(1E+6, 15E+6);
 			else $radius						= mt_rand(15E+6, 125E+6);
 		} else {
 			$radius								= mt_rand(4E+5, 15E+5);
@@ -280,16 +285,16 @@ class Bigbang
 	{
 		$CI					=& get_instance();
 
-		$habitable_zone		= sqrt($this->stars[$star_id]['luminosity']*1E-12)*100;
-		$habitable_zone_min	= round($habitable_zone*0.95);
-		$habitable_zone_max	= round($habitable_zone*1.05);
+		$habitable_zone		= sqrt($this->stars[$star_id]['luminosity']/1E+12)*100;
+		$habitable_zone_min	= round($habitable_zone*0.85);
+		$habitable_zone_max	= round($habitable_zone*1.2);
 		$gravity			= gravity($mass, $radius);
 		$density			= $this->_density($radius, $mass);
 
 		$habitable			= 	($terrestrial)						&&
 								($distance	> $habitable_zone_min)	&&
 								($distance	< $habitable_zone_max)	&&
-								($gravity	> 3) && ($gravity < 15);
+								($gravity	> 2) && ($gravity < 20);
 
 		return $habitable;
 	}
