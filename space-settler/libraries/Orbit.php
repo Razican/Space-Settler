@@ -4,7 +4,7 @@ class Orbit
 {
 	public $major_mass, $orbiting_mass, $semimajor_axis, $eccentricity, $time;
 
-	public function construct($param)
+	public function __construct($param)
 	{
 		$CI				=& get_instance();
 		$CI->config->load('physics');
@@ -20,11 +20,11 @@ class Orbit
 	{
 		$CI				=& get_instance();
 
-		$sun_mass		= $this->sun_mass*$CI->config->item('sun_mass');
-		$planet_mass	= $this->planet_mass*$CI->config->item('earth_mass');
+		$major_mass		= $this->major_mass*$CI->config->item('sun_mass');
+		$orbiting_mass	= $this->orbiting_mass*$CI->config->item('earth_mass');
 		$a				= $this->semimajor_axis*$CI->config->item('AU');
 
-		$period			= 2*M_PI*sqrt(pow($a, 3)/($CI->config->item('G')*($this->sun_mass+$this->planet_mass)));
+		$period			= 2*M_PI*sqrt(pow($a, 3)/($CI->config->item('G')*($major_mass+$orbiting_mass)));
 
 		$M				= 2*M_PI*($this->time % $period)/$period;
 
@@ -48,7 +48,12 @@ class Orbit
 	{
 		$CI				=& get_instance();
 
-		$v				= sqrt(2*$CI->config->item('G')*($this->sun_mass+$this->planet_mass)*(1/$this->distance - 1/(2*$this->semimajor_axis)));
+		$major_mass		= $this->major_mass*$CI->config->item('sun_mass');
+		$orbiting_mass	= $this->orbiting_mass*$CI->config->item('earth_mass');
+
+		$this->velocity	= sqrt(2*$CI->config->item('G')*($major_mass+$orbiting_mass)*(1/$this->distance - 1/(2*$this->semimajor_axis)));
+
+		return $this->velocity;
 	}
 }
 
