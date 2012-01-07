@@ -47,7 +47,7 @@ class Creation extends CI_Controller {
 		$this->db->insert_batch('bodies', $this->bigbang->planets) OR die('Error! no se han podido crear los planetas');
 		$this->benchmark->mark($planets.' Planet insertion_end');
 		$this->benchmark->mark($moons.' Moon insertion_start');
-		//$this->db->insert_batch('bodies', $this->bigbang->moons) OR die('Error! no se han podido crear los satélites');
+		$this->db->insert_batch('bodies', $this->bigbang->moons) OR die('Error! no se han podido crear los satélites');
 		$this->benchmark->mark($moons.' Moon insertion_end');
 
 		echo 'Se ha creado el universo';
