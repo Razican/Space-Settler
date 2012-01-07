@@ -21,17 +21,18 @@ class Creation extends CI_Controller {
 		}
 		$this->benchmark->mark('Stars created_end');
 
-		$stars_planets	= mt_rand(9989, 10009);
-
 		$this->benchmark->mark('Planets and Moons created_start');
-		for($f=1; $f <= $stars_planets; $f++)
-		{
-			$planets	= mt_rand(7, 10);
-			$system		= mt_rand(round($f*$total_stars/($stars_planets+1)-9), round($f*$total_stars/($stars_planets+1)));
 
-			for($g=0; $g < $planets; $g++)
+		for($f=0; $f < $total_stars; $f++)
+		{
+			if(mt_rand(1,10) > 5)
 			{
-				$this->bigbang->create_planet($g+1, $system);
+				$planets	= mt_rand(7, 10);
+
+				for($g=0; $g < $planets; $g++)
+				{
+					$this->bigbang->create_planet($g+1, $f);
+				}
 			}
 		}
 		$this->benchmark->mark('Planets and Moons created_end');
