@@ -36,7 +36,7 @@ class Bigbang
 	 */
 	public function create_planet($position, $star_id)
 	{
-		if(mt_rand(0,9))
+		if(mt_rand(0,5))
 		{
 			$CI			=& get_instance();
 
@@ -80,21 +80,23 @@ class Bigbang
 		$planet_db			= $planet_id+1+$this->current_bodies;
 		$planet				= $this->planets[$planet_id];
 		$planet_mass		= $planet['mass']*1E+19;
+		$star_mass			= $this->stars[$star]['mass']*$CI->config->item('sun_mass')/100;
 		$planet_distance	= $planet['distance']/10000;
 		$double_planet		= ($planet_mass < 5E+22 && $planet_distance > 30) ? (mt_rand(0,2) === 2) : FALSE;
-		$moon_num			= round(pow($planet_mass, 0.0625));
-		$moon_num			= mt_rand(($moon_num-45 < 0 ? 0 :$moon_num-45), ($moon_num-34 < 0 ? 0 :$moon_num-34));
+		$max_distance		= round($planet_distance*$CI->config->item('AU')*pow($planet_mass/(3*$star_mass),1/3)/$planet['radius']*10000)/10000;
+		$titius_m			= mt_rand(2500, 6000)/10000;
+		$titius_n			= mt_rand(11E+4, 13E+4)/10000;
 
 		if($double_planet)
 		{
 			$mass			= IS_64 ? mt_rand(round($planet_mass/1E+11), round($planet_mass/2E+10))*1E+10 : mt_rand(round($planet_mass/1E+21), round($planet_mass/2E+20))*1E+20;
 			$density		= mt_rand(15E+4, 2E+5)/100;
-			$distance		= mt_rand(15E+5, 25E+5)/100;
+			$distance		= round(mt_rand(15E+6, (25E+6 > $max_distance ? $max_distance*$planet['radius'] : 25E+6))/$planet['radius']*10000)/10000;
 
 			if($mass && $density && $distance)
 			{
 				$radius		= round(pow(3*$mass/(4*M_PI*$density),1/3));
-				$habitable	= $this->_is_habitable($planet['distance'], $radius, $mass, TRUE, $star);
+				$habitable	= $this->_is_habitable($planet_distance, $radius, $mass, TRUE, $star);
 				$water		= $habitable ? mt_rand(1,10000) : 0;
 				$habitable	= $water > 1000 && $water < 9500;
 
@@ -105,28 +107,40 @@ class Bigbang
 			}
 		}
 
-	/*	$max_mass		= $planet['mass'] > (1E+5/3) ? 1/30 : $planet['mass']/1E+6; //masas terrestres
-		$star_distance	= $planet['distance'];
+		$max_moons			= round(pow($planet_mass/$CI->config->item('earth_mass'), 0.06))-25;
+		$max_moons			= $max_moons < 0 ? 0 : $max_moons;
+		$max_radius			= $planet['radius']/3.5 > 3000000 ? 3000000 : round($planet['radius']/3.5);
+		$max_mass			= $planet_mass > (1E+2/3)*$CI->config->item('earth_mass') ? 1/30*$CI->config->item('earth_mass') : $planet_mass/1E+6;
 
-		for($i=$double_planet; $i<$moon_num; $i++)
+		for($i=$double_planet; $i <= $max_moons; $i++)
 		{
-			$radius		= mt_rand(10000, 3000000);
-			$density	= mt_rand(150000, 700000);
-			$mass		= round(volume($radius)*$density)/100;
-			$mass		= $mass > $max_mass ? mt_rand(round($max_mass*0.95), round($max_mass)) : $mass;
-			$mass		= round($mass/$CI->config->item('earth_mass')*1E+17);
-			$distance	= ($i+1)*(9900)/$moon_num+100;
-			$distance	= mt_rand(round($distance*0.95), round($distance*1.05));
-
-			if($radius && $mass && $distance && $planet)
+			if(mt_rand(0, $max_moons) > mt_rand(0, round($max_moons/2)))
 			{
-				$habitable	= $this->_is_habitable($star_distance, $radius, $mass, $star);
-				$water		= $habitable ? mt_rand(1,10000) : 0;
-				$habitable	= $water > 1000 && $water < 9500;
-				$density	= 0;//round($this->_density($radius, $mass*$CI->config->item('earth_mass')/1E+17));
-				$this->moons[] = array('star' => $star+$this->current_stars+1, 'position' => $i+1, 'type' => 1, 'planet' => $planet, 'mass' => $mass, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 0);
+				if($i === $max_moons && $max_moons === 1)
+					$distance	= mt_rand(2E+5, $max_distance*10000);
+				else
+					$distance	= round(exp(($titius_m*($i+1) - $titius_n))*10000);
+
+				$distance	= mt_rand(round($distance*0.9), round($distance*1.1))/10000;
+
+				if($distance > $max_distance) break;
+
+				$radius		= mt_rand(10000, $max_radius);
+				$density	= mt_rand(150000, 700000);
+				$mass		= round(volume($radius)*$density/100);
+				$mass		= $mass > $max_mass ? mt_rand(round($max_mass*0.95), round($max_mass)) : $mass;
+				$mass		= round($mass/1E+17)*1E+17;
+
+				if($radius && $mass && $distance && $planet)
+				{
+					$habitable	= $this->_is_habitable($planet_distance, $radius, $mass, $star);
+					$water		= $habitable ? mt_rand(1,10000) : 0;
+					$habitable	= $water > 1000 && $water < 9500;
+					$density	= round($this->_density($radius, $mass*$CI->config->item('earth_mass')/1E+17));
+					$this->moons[] = array('star' => $star+$this->current_stars+1, 'position' => $i+1, 'type' => 1, 'planet' => $planet, 'mass' => $mass, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 0);
+				}
 			}
-		}*/
+		}
 	}
 	/**
 	 * Create a star

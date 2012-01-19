@@ -170,10 +170,10 @@ class User
 		$CI->load->helper('email');
 
 		if( ! valid_email($email))
-			$this->register_errors	.= lang('login.mail_not_valid').'<br />';
+			$this->register_errors	.= lang('login.email_not_valid').'<br />';
 
 		if($this->exists_email($email))
-			$this->register_errors	.= lang('login.mail_exists').'<br />';
+			$this->register_errors	.= lang('login.email_exists').'<br />';
 
 		if( ! is_alnum($username))
 			$this->register_errors	.= lang('login.user_not_alnum').'<br />';
@@ -212,7 +212,18 @@ class User
 		$query = $CI->db->get('users');
 		foreach ($query->result() as $user) $user = $user->id;
 
-		return $CI->db->update('bodies', array('owner' => $user), array('id' => $planet));
+		if($CI->db->update('bodies', array('owner' => $user), array('id' => $planet)))
+		{
+			$CI->email->from('space-settler@razican.com', 'Space Settler');
+			$CI->email->reply_to('noreply@razican.com', 'Space Settler');
+			$CI->email->to($email);
+			$CI->email->subject(lang('login.reg_message'));
+			$data		= array('%game_name%', '%password%', '%username%');
+			$replace	= array($CI->config->item('game_name'), $password, $username);
+			$CI->email->message(str_replace($data, $replace, lang('login.reg_email_message')));
+			return $CI->email->send();
+		}
+		return FALSE;
 	}
 
 	/**

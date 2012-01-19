@@ -21,9 +21,9 @@ class Register extends CI_Controller {
 			{
 				$referrer	= $this->session->flashdata('referrer');
 				if(( ! $this->input->post('username')) OR ( ! $this->input->post('email')))
-					message(lang('login.register_incomplete'), 'register'. ($referrer ? '/'.$referrer : ''));
+					message(lang('login.reg_incomplete'), 'register'. ($referrer ? '/'.$referrer : ''));
 				elseif($this->user->register($this->input->post('username'), $this->input->post('email'), $referrer))
-					message(lang('login.register_correct'));
+					message(lang('login.reg_correct'));
 				else
 					message($this->user->register_errors, 'register'. ($referrer ? '/'.$referrer : ''));
 			}

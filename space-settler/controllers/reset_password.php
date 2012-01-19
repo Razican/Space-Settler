@@ -35,17 +35,17 @@ class Reset_password extends CI_Controller {
 						$this->email->from('space-settler@razican.com', 'Space Settler');
 						$this->email->reply_to('noreply@razican.com', 'Space Settler');
 						$this->email->to($email);
-						$this->email->subject(lang('login.email_title'));
-						$this->email->message(lang('login.email_text').$password);
+						$this->email->subject(lang('login.reset_email_title'));
+						$this->email->message(lang('login.reset_email_text').$password);
 						$this->email->send();
 
 						$this->user->reset_password($email, $password);
-						message(lang('login.mail_sended'));
+						message(lang('login.reset_email_sended'));
 					}
 				}
 				else
 				{
-					message(lang('login.mail_not_valid'), 'reset_password');
+					message(lang('login.email_not_valid'), 'reset_password');
 				}
 			}
 			else

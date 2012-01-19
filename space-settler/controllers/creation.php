@@ -5,7 +5,7 @@ class Creation extends CI_Controller {
 	public function index()
 	{
 		ini_set('memory_limit','10G');
-		ini_set('max_execution_time', 900);
+		ini_set('max_execution_time', 3600);
 		$this->output->enable_profiler($this->config->item('debug'));
 		$this->output->set_profiler_sections(array('queries' => FALSE));
 		$this->load->library('bigbang');

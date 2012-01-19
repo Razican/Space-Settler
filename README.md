@@ -41,18 +41,6 @@ se añadirán más planetas pequeños al final de cada sistema solar, sin cumpli
 Con las lunas pasará lo mismo.
 * Falta para un futuro la temperatura superficial del planeta/luna.
 
-Unidades en la base de datos:
------------------------------
-
-* Masas planetarias: Kg (Hay que multiplicarlo por 10¹⁹)
-* Radios planetarios: m
-* Densidad planetaria: Kg/m³ (Hay que dividirlo entre 100)
-* Masas de satélites: Por determinar.
-* Radios de satélites: m
-* Densidad de satélites: Kg/m³ (Hay que dividirlo entre 100)
-* Masas estelares: Masas solares (Hay que dividirlo entre 100)
-* Radios estelares: Radios solares (Hay que dividirlo entre 100)
-
 Cosas por hacer:
 ----------------
 

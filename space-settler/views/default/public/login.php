@@ -8,7 +8,7 @@
 				<span><?php echo lang('login.pass'); ?> <input title="<?php echo lang('login.pass'); ?>" name="password" size="20" maxlength="20" value="" type="password" /></span>
 				<span><?php echo lang('login.remember_pass'); ?> <input title="<?php echo lang('login.remember_pass'); ?>" name="rememberme" type="checkbox" /><br /></span>
 				<span><p><input style="margin: 5px;" name="submit" value="<?php echo lang('login.login'); ?>" type="submit" /></p></span>
-				<span><?php echo anchor('reset_password', lang('login.lostpassword')); ?></span>
+				<span><?php echo anchor('reset_password', lang('login.lost_password')); ?></span>
 			</form>
 		</div>
 	</div>
