@@ -91,7 +91,7 @@ class Bigbang
 		{
 			$mass			= IS_64 ? mt_rand(round($planet_mass/1E+11), round($planet_mass/2E+10))*1E+10 : mt_rand(round($planet_mass/1E+21), round($planet_mass/2E+20))*1E+20;
 			$density		= mt_rand(15E+4, 2E+5)/100;
-			$distance		= round(mt_rand(15E+6, (25E+6 > $max_distance ? $max_distance*$planet['radius'] : 25E+6))/$planet['radius']*10000)/10000;
+			$distance		= round(mt_rand(15E+6, (25E+6 > $max_distance*$planet['radius'] ? round($max_distance*$planet['radius']) : 25E+6))/$planet['radius']*10000)/10000;
 
 			if($mass && $density && $distance)
 			{
@@ -107,7 +107,7 @@ class Bigbang
 			}
 		}
 
-		$max_moons			= round(pow($planet_mass/$CI->config->item('earth_mass'), 0.06))-25;
+		/*$max_moons			= round(pow($planet_mass/$CI->config->item('earth_mass'), 0.06))-25;
 		$max_moons			= $max_moons < 0 ? 0 : $max_moons;
 		$max_radius			= $planet['radius']/3.5 > 3000000 ? 3000000 : round($planet['radius']/3.5);
 		$max_mass			= $planet_mass > (1E+2/3)*$CI->config->item('earth_mass') ? 1/30*$CI->config->item('earth_mass') : $planet_mass/1E+6;
@@ -140,7 +140,7 @@ class Bigbang
 					$this->moons[] = array('star' => $star+$this->current_stars+1, 'position' => $i+1, 'type' => 1, 'planet' => $planet, 'mass' => $mass, 'radius' => $radius, 'density' => $density, 'distance' => $distance, 'habitable' => $habitable, 'water' => $water, 'double_planet' => 0);
 				}
 			}
-		}
+		}*/
 	}
 	/**
 	 * Create a star

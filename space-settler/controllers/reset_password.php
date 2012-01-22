@@ -21,9 +21,9 @@ class Reset_password extends CI_Controller {
 				$email	= $this->input->post('email');
 				if(valid_email($email))
 				{
-					if($this->user->exists_email($email))
+					if( ! $this->user->exists_email($email))
 					{
-						message(lang('login.mail_not_exist'), 'reset_password');
+						message(lang('login.email_not_exist'), 'reset_password');
 					}
 					else
 					{
@@ -32,6 +32,8 @@ class Reset_password extends CI_Controller {
 
 						$password	= random_string('alnum', 8);
 
+						$this->user->reset_password($email, $password);
+
 						$this->email->from('space-settler@razican.com', 'Space Settler');
 						$this->email->reply_to('noreply@razican.com', 'Space Settler');
 						$this->email->to($email);
@@ -39,7 +41,6 @@ class Reset_password extends CI_Controller {
 						$this->email->message(lang('login.reset_email_text').$password);
 						$this->email->send();
 
-						$this->user->reset_password($email, $password);
 						message(lang('login.reset_email_sended'));
 					}
 				}

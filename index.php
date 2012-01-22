@@ -184,7 +184,7 @@ if (defined('ENVIRONMENT'))
 	// Name of the "system folder"
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
 
-	// Wheder the server is 64 bits or not
+	// Whether the server is 64 bits or not
 	define('IS_64', (intval('9223372036854775807') == 9223372036854775807));
 
 

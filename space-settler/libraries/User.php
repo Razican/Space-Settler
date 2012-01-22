@@ -168,6 +168,7 @@ class User
 		$CI						=& get_instance();
 
 		$CI->load->helper('email');
+		$CI->load->library('email');
 
 		if( ! valid_email($email))
 			$this->register_errors	.= lang('login.email_not_valid').'<br />';
@@ -313,7 +314,7 @@ class User
 
 		if($query->num_rows()) foreach($query->result() as $body) $bodies[] = $body->id;
 
-		$body			= isset($boddies) ? $bodies[mt_rand(0, count($bodies))] : FALSE;
+		$body			= isset($bodies) ? $bodies[mt_rand(0, count($bodies))] : FALSE;
 
 		return $body;
 	}

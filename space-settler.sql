@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 04-01-2012 a las 22:47:39
+-- Tiempo de generación: 19-01-2012 a las 14:28:23
 -- Versión del servidor: 5.1.58
 -- Versión de PHP: 5.3.6-13ubuntu3.3
 
@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 -- Creación: 03-12-2011 a las 15:47:22
 --
 
+DROP TABLE IF EXISTS `sps_aks`;
 CREATE TABLE IF NOT EXISTS `sps_aks` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
@@ -49,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `sps_aks` (
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_alliances`;
 CREATE TABLE IF NOT EXISTS `sps_alliances` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
@@ -76,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `sps_alliances` (
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_banned`;
 CREATE TABLE IF NOT EXISTS `sps_banned` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `who` varchar(32) NOT NULL DEFAULT '',
@@ -93,10 +96,11 @@ CREATE TABLE IF NOT EXISTS `sps_banned` (
 --
 -- Estructura de tabla para la tabla `sps_bodies`
 --
--- Creación: 04-01-2012 a las 21:43:04
--- Última actualización: 04-01-2012 a las 21:43:04
+-- Creación: 08-01-2012 a las 12:04:40
+-- Última actualización: 08-01-2012 a las 12:04:40
 --
 
+DROP TABLE IF EXISTS `sps_bodies`;
 CREATE TABLE IF NOT EXISTS `sps_bodies` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `star` int(8) unsigned NOT NULL,
@@ -107,8 +111,8 @@ CREATE TABLE IF NOT EXISTS `sps_bodies` (
   `planet` bigint(20) unsigned DEFAULT NULL,
   `mass` bigint(17) unsigned NOT NULL,
   `radius` int(8) unsigned NOT NULL,
-  `density` smallint(5) unsigned NOT NULL,
-  `distance` mediumint(5) unsigned NOT NULL,
+  `density` mediumint(7) unsigned NOT NULL,
+  `distance` mediumint(8) unsigned NOT NULL,
   `habitable` tinyint(1) unsigned NOT NULL,
   `water` smallint(5) unsigned NOT NULL,
   `owner` int(10) unsigned DEFAULT NULL,
@@ -123,6 +127,7 @@ CREATE TABLE IF NOT EXISTS `sps_bodies` (
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_errors`;
 CREATE TABLE IF NOT EXISTS `sps_errors` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `sender` varchar(32) NOT NULL DEFAULT '0',
@@ -140,6 +145,7 @@ CREATE TABLE IF NOT EXISTS `sps_errors` (
 -- Creación: 03-12-2011 a las 15:47:59
 --
 
+DROP TABLE IF EXISTS `sps_fleets`;
 CREATE TABLE IF NOT EXISTS `sps_fleets` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `owner` int(11) NOT NULL DEFAULT '0',
@@ -175,6 +181,7 @@ CREATE TABLE IF NOT EXISTS `sps_fleets` (
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_friends`;
 CREATE TABLE IF NOT EXISTS `sps_friends` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `sender` int(11) NOT NULL DEFAULT '0',
@@ -192,6 +199,7 @@ CREATE TABLE IF NOT EXISTS `sps_friends` (
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_messages`;
 CREATE TABLE IF NOT EXISTS `sps_messages` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `owner` int(11) NOT NULL DEFAULT '0',
@@ -209,10 +217,11 @@ CREATE TABLE IF NOT EXISTS `sps_messages` (
 --
 -- Estructura de tabla para la tabla `sps_moons`
 --
--- Creación: 02-01-2012 a las 23:15:45
--- Última actualización: 02-01-2012 a las 23:15:45
+-- Creación: 08-01-2012 a las 12:04:40
+-- Última actualización: 08-01-2012 a las 12:04:40
 --
 
+DROP TABLE IF EXISTS `sps_moons`;
 CREATE TABLE IF NOT EXISTS `sps_moons` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `distance` int(10) NOT NULL,
@@ -231,6 +240,7 @@ CREATE TABLE IF NOT EXISTS `sps_moons` (
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_notes`;
 CREATE TABLE IF NOT EXISTS `sps_notes` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `owner` int(11) DEFAULT NULL,
@@ -246,10 +256,11 @@ CREATE TABLE IF NOT EXISTS `sps_notes` (
 --
 -- Estructura de tabla para la tabla `sps_plugins`
 --
--- Creación: 02-01-2012 a las 23:15:45
--- Última actualización: 02-01-2012 a las 23:15:45
+-- Creación: 08-01-2012 a las 12:04:40
+-- Última actualización: 08-01-2012 a las 12:04:40
 --
 
+DROP TABLE IF EXISTS `sps_plugins`;
 CREATE TABLE IF NOT EXISTS `sps_plugins` (
   `plugin` varchar(32) NOT NULL,
   `status` tinyint(3) NOT NULL DEFAULT '0',
@@ -261,10 +272,11 @@ CREATE TABLE IF NOT EXISTS `sps_plugins` (
 --
 -- Estructura de tabla para la tabla `sps_rw`
 --
--- Creación: 02-01-2012 a las 23:15:45
--- Última actualización: 02-01-2012 a las 23:15:45
+-- Creación: 08-01-2012 a las 12:04:40
+-- Última actualización: 08-01-2012 a las 12:04:40
 --
 
+DROP TABLE IF EXISTS `sps_rw`;
 CREATE TABLE IF NOT EXISTS `sps_rw` (
   `owners` varchar(255) NOT NULL,
   `rid` varchar(72) NOT NULL,
@@ -283,6 +295,7 @@ CREATE TABLE IF NOT EXISTS `sps_rw` (
 -- Creación: 16-10-2011 a las 14:39:50
 --
 
+DROP TABLE IF EXISTS `sps_sessions`;
 CREATE TABLE IF NOT EXISTS `sps_sessions` (
   `session_id` char(32) NOT NULL,
   `ip_address` varchar(15) NOT NULL,
@@ -298,10 +311,11 @@ CREATE TABLE IF NOT EXISTS `sps_sessions` (
 --
 -- Estructura de tabla para la tabla `sps_stars`
 --
--- Creación: 02-01-2012 a las 23:15:46
--- Última actualización: 02-01-2012 a las 23:15:46
+-- Creación: 08-01-2012 a las 12:04:40
+-- Última actualización: 08-01-2012 a las 12:04:40
 --
 
+DROP TABLE IF EXISTS `sps_stars`;
 CREATE TABLE IF NOT EXISTS `sps_stars` (
   `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `galaxy` tinyint(3) unsigned NOT NULL,
@@ -322,6 +336,7 @@ CREATE TABLE IF NOT EXISTS `sps_stars` (
 -- Creación: 25-11-2011 a las 17:46:09
 --
 
+DROP TABLE IF EXISTS `sps_statpoints`;
 CREATE TABLE IF NOT EXISTS `sps_statpoints` (
   `id_owner` int(10) unsigned NOT NULL DEFAULT '0',
   `id_ally` int(10) unsigned NOT NULL DEFAULT '0',
@@ -363,6 +378,7 @@ CREATE TABLE IF NOT EXISTS `sps_statpoints` (
 -- Creación: 02-01-2012 a las 21:39:55
 --
 
+DROP TABLE IF EXISTS `sps_users`;
 CREATE TABLE IF NOT EXISTS `sps_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL,
