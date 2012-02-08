@@ -34,8 +34,13 @@ class Main extends CI_Controller {
 		}
 		else
 		{
-			echo show_date();
-			//ShowOverviewPage
+			$this->lang->load('ingame');
+
+			$data['head']		= $this->load->view('head', '', TRUE);
+			$data['footer']		= $this->load->view('footer', '', TRUE);
+			$data['menu']		= $this->load->view('ingame/menu', '', TRUE);
+
+			$this->load->view('ingame/overview', $data);
 		}
 	}
 }
