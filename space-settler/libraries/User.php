@@ -128,7 +128,6 @@ class User
 
 			$userdata	= array(
 				'user_id'			=> $user->id,
-				'current_planet'	=> $user->planet_id,
 				'logged_in'			=> TRUE
 				);
 

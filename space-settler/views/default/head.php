@@ -17,7 +17,6 @@
 	<?php elseif (defined('LOGIN')) : ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/login.css"); ?>" />
 	<?php else : ?>
-	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/ingame.css"); ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/".skin()."/style.css"); ?>" />
 	<?php endif; ?>
 	<!-- <link href="http://x-batle.razican.com/" title="<?php echo lang('overal.title'); ?>" rel="index" />

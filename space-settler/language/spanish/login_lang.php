@@ -27,7 +27,7 @@ $lang['login.user_not_alnum']		= '¡El campo de usuario sólo puede contener car
 $lang['login.user_exists']			= '¡El nombre de usuario elegido ya existe!';
 $lang['login.no_planet']			= 'Lo sentimos, en estos momentos no hay planetas disponibles para el registro.';
 $lang['login.reg_correct']			= '¡Registro completo!<br />Se te ha enviado un email con tu nueva contraseña. Por motivos de seguridad, por favor, cámbiala.';
-$lang['login.reg_email_message']	= '¡Bienvenido a %game_name%!<br />Tu usuario es: %username%<br />Tu contraseña es: %password%<br />Te aconsejamos cambiar la contraseña cuando entres por prinera vez.';
+$lang['login.reg_email_message']	= '¡Bienvenido a %game_name%!<br />Tu usuario es: %username%<br />Tu contraseña es: %password%<br />Te aconsejamos cambiar la contraseña cuando entres por primera vez.';
 
 
 /* End of file login_lang.php */
