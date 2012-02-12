@@ -14,7 +14,6 @@ class Register extends CI_Controller {
 
 		if( ! $this->session->userdata('logged_in'))
 		{
-			define('LOGIN', TRUE);
 			$this->lang->load('login');
 
 			if ($this->input->server('REQUEST_METHOD') === 'POST')

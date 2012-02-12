@@ -192,6 +192,7 @@ class User
 
 		$password	= random_string('alnum', 8);
 		$IP			= ip2int($CI->input->ip_address());
+		$code		= random_string('alnum', 15);
 		$time		= now();
 
 		$data		= array(
@@ -199,6 +200,7 @@ class User
 					'password'		=> sha1($password),
 					'email'			=> $email,
 					'reg_email'		=> $email,
+					'validation'	=> $code,
 					'name'			=> $username,
 					'last_ip'		=> $IP,
 					'reg_ip'		=> $IP,
@@ -218,13 +220,15 @@ class User
 			$CI->email->reply_to('noreply@razican.com', 'Space Settler');
 			$CI->email->to($email);
 			$CI->email->subject(lang('login.reg_message'));
-			$data		= array('%game_name%', '%password%', '%username%');
-			$replace	= array($CI->config->item('game_name'), $password, $username);
+			$data		= array('%game_name%', '%password%', '%username%', '%validation_link%');
+			$replace	= array($CI->config->item('game_name'), $password, $username, site_url('validation/'.$code));
 			$CI->email->message(str_replace($data, $replace, lang('login.reg_email_message')));
 
 			if( ! $CI->email->send())
 			{
-				$this->register_errors	.= lang('login.reg_email_send_error').': '.$password;
+				$this->validate($code);
+				log_message('error', 'Email could not be sended');
+				$this->register_errors	.= str_replace('%password%', $password, lang('login.reg_email_send_error'));
 				return FALSE;
 			}
 			else
@@ -251,6 +255,23 @@ class User
 		$CI->db->where('email', $email);
 
 		return $CI->db->update('users', array('password' => $password));
+	}
+
+	/**
+	 * Validate user's email address
+	 *
+	 * @access	public
+	 * @param	string
+	 * @return	bool
+	 */
+	public function validate($code)
+	{
+		$CI			=& get_instance();
+
+		$CI->db->where('validation', $code);
+		$CI->db->update('users', array('validation' => NULL));
+
+		return ($CI->db->affected_rows() != 0);
 	}
 
 	/**
