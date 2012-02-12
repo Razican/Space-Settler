@@ -67,7 +67,9 @@ El sistema de plugins será adaptado a CodeIgniter, de manera que se usen librer
 Cosas por hacer
 ---------------
 
-Crear una función reset_password más completa, para que el controlador haga algo como *if reset_password message else message*.
+* Crear una función reset_password más completa, para que el controlador haga algo como *if reset_password message else message*.
+* El registro, si no se envía el email, muestra un mensaje en el que el link te devuelve al registro, en lugar de a la página principal.
+Hay que tener en cuenta que el usuario ya se ha registrado, así que no debería volver al registro.
 
 Selección de Planetas en el Registro
 ------------------------------------
