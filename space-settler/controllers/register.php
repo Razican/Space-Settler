@@ -29,12 +29,7 @@ class Register extends CI_Controller {
 			}
 			else
 			{
-				$data['game_name']	= $this->config->item('game_name');
-				$data['forum_url']	= $this->config->item('forum_url');
-				$data['head']		= $this->load->view('head', '', TRUE);
-				$data['footer']		= $this->load->view('footer', '', TRUE);
-
-				$this->load->view('public/register', $data);
+				$this->load->view('public/register');
 			}
 		}
 		else

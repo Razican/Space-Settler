@@ -23,21 +23,13 @@ class Main extends CI_Controller {
 			}
 			else
 			{
-				$data['version']	= $this->config->item('version');
-				$data['forum_url']	= $this->config->item('forum_url');
-				$data['game_name']	= $this->config->item('game_name');
-				$data['head']		= $this->load->view('head', '', TRUE);
-				$data['footer']		= $this->load->view('footer', '', TRUE);
-
-				$this->load->view('public/login', $data);
+				$this->load->view('public/login');
 			}
 		}
 		else
 		{
 			$this->lang->load('ingame');
 
-			$data['head']		= $this->load->view('head', '', TRUE);
-			$data['footer']		= $this->load->view('footer', '', TRUE);
 			$data['menu']		= $this->load->view('ingame/menu', '', TRUE);
 
 			$this->load->view('ingame/overview', $data);

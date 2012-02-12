@@ -13,7 +13,31 @@ class SPS_Loader extends CI_Loader {
 
 	function view($view, $vars = array(), $return = FALSE)
 	{
-		return $this->_ci_load(array('_ci_view' => skin().'/'.$view, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => $return));
+		$vars = $this->_ci_object_to_array($vars);
+
+		if(file_exists(APPPATH.'views/overal/'.$view.'.php'))
+		{
+			if(file_exists(APPPATH.'views/skins/'.skin().'/'.$view.'.php'))
+				$skin	= $this->_ci_load(array('_ci_view' => 'skins/'.skin().'/'.$view, '_ci_vars' => $vars, '_ci_return' => TRUE));
+			else
+				$skin	= '';
+
+			$array = array('skin' => $skin);
+
+			$page		= $this->_ci_load(array('_ci_view' => 'overal/'.$view, '_ci_vars' => $array, '_ci_return' => $return));
+		}
+		elseif( ! $return)
+		{
+			$this->view('head');
+			$page	= $this->_ci_load(array('_ci_view' => 'skins/'.skin().'/'.$view, '_ci_vars' => $vars, '_ci_return' => FALSE));
+			$this->view('footer');
+		}
+		else
+		{
+			$page	= $this->_ci_load(array('_ci_view' => 'skins/'.skin().'/'.$view, '_ci_vars' => $vars, '_ci_return' => TRUE));
+		}
+
+		return $page;
 	}
 }
 

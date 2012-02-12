@@ -51,11 +51,7 @@ class Reset_password extends CI_Controller {
 			}
 			else
 			{
-				$data['forum_url']	= $this->config->item('forum_url');
-				$data['head']		= $this->load->view('head', '', TRUE);
-				$data['footer']		= $this->load->view('footer', '', TRUE);
-
-				$this->load->view('public/reset_password', $data);
+				$this->load->view('public/reset_password');
 			}
 		}
 		else

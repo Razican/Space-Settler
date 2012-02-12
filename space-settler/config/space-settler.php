@@ -76,6 +76,20 @@ $config['min_pass_lenght']	= 6;
 */
 $config['date_format']	= '%WEEKDAY% %DAY-0% %OF% %MONTHNAME% %OF% %YEAR% - %HOUR%:%MINUTE%'; //Jueves 1 de Diciembre de 2011 - 18:50
 
+/*
+|--------------------------------------------------------------------------
+| Game's name, description and keywords
+|--------------------------------------------------------------------------
+|
+| These variables will add a description, a name and some keywords for the
+| game.
+|
+*/
+$config['game_name']	= 'Space Settler';
+$config['keywords']		= 'juego, online, multijugador, online, espacio, realista, naves, planetas, universo';
+$config['description']	= 'Juego online multijugador de colonización realista';
+$config['long_descr']	= 'Space Settler es un juego online multijugador, en el que controlarás un imperio con el que podrás colonizar otros mundos, entrar en guerra con otros usuarios y descubrir las sorprendentes cosas que te deparará un universo casi infinito.';
+
 
 /* End of file space-settler.php */
 /* Location: ./application/config/space-settler.php */

@@ -7,6 +7,7 @@ $lang['ingame.menu.tecnology'] 		= '<strike>Tecnollogía</strike>';
 $lang['ingame.menu.construction'] 	= '<strike>Construcción</strike>';
 $lang['ingame.menu.hangar'] 		= '<strike>Hangar</strike>';
 $lang['ingame.menu.settings'] 		= '<strike>Configuración</strike>';
+$lang['ingame.menu.support'] 		= '<strike>Soporte</strike>';
 $lang['ingame.menu.logout'] 		= 'Salir';
 
 

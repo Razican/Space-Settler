@@ -221,7 +221,16 @@ class User
 			$data		= array('%game_name%', '%password%', '%username%');
 			$replace	= array($CI->config->item('game_name'), $password, $username);
 			$CI->email->message(str_replace($data, $replace, lang('login.reg_email_message')));
-			return $CI->email->send();
+
+			if( ! $CI->email->send())
+			{
+				$this->register_errors	.= lang('login.reg_email_send_error').': '.$password;
+				return FALSE;
+			}
+			else
+			{
+				return TRUE;
+			}
 		}
 		return FALSE;
 	}

@@ -19,8 +19,6 @@ function message($message, $dest = '/', $topnav = FALSE, $menu = FALSE)
 {
 	$CI					=& get_instance();
 
-	$data['head']		= $CI->load->view('head', '', TRUE);
-	$data['footer']		= $CI->load->view('footer', '', TRUE);
 	$data['message']	= $message;
 	$data['dest']		= anchor($dest, lang('overal.go_back'), 'title="'.lang('overal.go_back').'"');
 
@@ -92,6 +90,20 @@ function gravity($mass, $distance)
 {
 	$CI =& get_instance();
 	return $CI->config->item('G')*$mass/pow($distance, 2);
+}
+
+/**
+ * Return the current languaje key
+ *
+ * @return	string
+ */
+function current_lang()
+{
+	$CI =& get_instance();
+	require_once(APPPATH.'language/'.$CI->config->item('language').'/config.php');
+	if( ! isset($key)) show_error('ERROR! language not configured correctly!');
+
+	return $key;
 }
 
 
