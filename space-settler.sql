@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 19-01-2012 a las 14:28:23
+-- Tiempo de generación: 12-02-2012 a las 17:04:57
 -- Versión del servidor: 5.1.58
--- Versión de PHP: 5.3.6-13ubuntu3.3
+-- Versión de PHP: 5.3.6-13ubuntu3.5
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -96,8 +96,8 @@ CREATE TABLE IF NOT EXISTS `sps_banned` (
 --
 -- Estructura de tabla para la tabla `sps_bodies`
 --
--- Creación: 08-01-2012 a las 12:04:40
--- Última actualización: 08-01-2012 a las 12:04:40
+-- Creación: 21-01-2012 a las 18:39:07
+-- Última actualización: 12-02-2012 a las 16:03:57
 --
 
 DROP TABLE IF EXISTS `sps_bodies`;
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `sps_bodies` (
   `water` smallint(5) unsigned NOT NULL,
   `owner` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=360314 ;
 
 -- --------------------------------------------------------
 
@@ -311,8 +311,8 @@ CREATE TABLE IF NOT EXISTS `sps_sessions` (
 --
 -- Estructura de tabla para la tabla `sps_stars`
 --
--- Creación: 08-01-2012 a las 12:04:40
--- Última actualización: 08-01-2012 a las 12:04:40
+-- Creación: 21-01-2012 a las 18:39:07
+-- Última actualización: 21-01-2012 a las 18:40:05
 --
 
 DROP TABLE IF EXISTS `sps_stars`;
@@ -326,7 +326,7 @@ CREATE TABLE IF NOT EXISTS `sps_stars` (
   `luminosity` bigint(19) unsigned NOT NULL,
   `temperature` mediumint(7) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100013 ;
 
 -- --------------------------------------------------------
 
@@ -375,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `sps_statpoints` (
 --
 -- Estructura de tabla para la tabla `sps_users`
 --
--- Creación: 02-01-2012 a las 21:39:55
+-- Creación: 12-02-2012 a las 16:04:03
 --
 
 DROP TABLE IF EXISTS `sps_users`;
@@ -385,6 +385,7 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
   `password` char(40) NOT NULL,
   `email` varchar(50) NOT NULL,
   `reg_email` varchar(50) NOT NULL,
+  `validation` char(15) DEFAULT NULL,
   `name` varchar(20) NOT NULL,
   `last_ip` int(10) unsigned NOT NULL,
   `reg_ip` int(10) unsigned NOT NULL,
@@ -393,7 +394,8 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
   `darkmatter` int(10) unsigned NOT NULL DEFAULT '0',
   `warnings` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `ban_finish` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `validation` (`validation`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
