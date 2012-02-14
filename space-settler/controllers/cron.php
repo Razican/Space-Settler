@@ -10,16 +10,18 @@ class Cron extends CI_Controller {
 
 	public function inactives()
 	{
-	/*	if( ! $this->input->is_cli_request())
+		if( ! $this->input->is_cli_request())
 		{
 			log_message('error', 'User with IP '.$this->input->server('REMOTE_ADDR').' has tried to access Cron controller.');
 			redirect('/');
-		}*/
+		}
 
-		$this->load->library('user');
-		$this->user->finish_hibernations();
-		$this->user->delete_inactives();
-		//$this->user->warn_inactives();
+		$this->load->library(array('user', 'email'));
+		$this->lang->load('cron');
+
+		if($this->user->finish_hibernations()) echo 'Hibernations Finished'.PHP_EOL;
+		if($this->user->delete_inactives()) echo 'Inactives deleted'.PHP_EOL;
+		if($this->user->warn_inactives()) echo 'Inactives warned'.PHP_EOL;
 	}
 }
 
