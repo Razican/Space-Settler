@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-02-2012 a las 17:04:57
+-- Tiempo de generación: 14-02-2012 a las 18:09:53
 -- Versión del servidor: 5.1.58
--- Versión de PHP: 5.3.6-13ubuntu3.5
+-- Versión de PHP: 5.3.6-13ubuntu3.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `sps_banned` (
 -- Estructura de tabla para la tabla `sps_bodies`
 --
 -- Creación: 21-01-2012 a las 18:39:07
--- Última actualización: 12-02-2012 a las 16:03:57
+-- Última actualización: 12-02-2012 a las 16:07:57
 --
 
 DROP TABLE IF EXISTS `sps_bodies`;
@@ -375,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `sps_statpoints` (
 --
 -- Estructura de tabla para la tabla `sps_users`
 --
--- Creación: 12-02-2012 a las 16:04:03
+-- Creación: 12-02-2012 a las 18:58:43
 --
 
 DROP TABLE IF EXISTS `sps_users`;
@@ -390,13 +390,14 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
   `last_ip` int(10) unsigned NOT NULL,
   `reg_ip` int(10) unsigned NOT NULL,
   `register_time` int(10) unsigned NOT NULL,
-  `online_time` int(10) unsigned NOT NULL,
+  `last_active` int(10) unsigned NOT NULL,
   `darkmatter` int(10) unsigned NOT NULL DEFAULT '0',
+  `hibernating` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `warnings` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `ban_finish` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `validation` (`validation`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
