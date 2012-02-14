@@ -1,11 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-function update_config( $config_name, $config_value )
-{
-/*	global $game_config;
-	doquery("UPDATE {{table}} SET `config_value` = '".$config_value."' WHERE `config_name` = '".$config_name."';",'config');*/
-}
-
 /**
  * Show message
  *

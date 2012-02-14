@@ -205,7 +205,7 @@ class User
 					'last_ip'		=> $IP,
 					'reg_ip'		=> $IP,
 					'register_time'	=> $time,
-					'online_time'	=> $time
+					'last_active'	=> $time
 					);
 
 		$CI->db->insert('users', $data);
@@ -261,7 +261,6 @@ class User
 	 * Validate user's email address
 	 *
 	 * @access	public
-	 * @param	string
 	 * @return	bool
 	 */
 	public function validate($code)
@@ -272,6 +271,93 @@ class User
 		$CI->db->update('users', array('validation' => NULL));
 
 		return ($CI->db->affected_rows() != 0);
+	}
+
+	/**
+	 * Finish hibernations that have been active since more
+	 * than the stablished time.
+	 *
+	 * @access	public
+	 * @param	string
+	 * @return	bool
+	 */
+	public function finish_hibernations()
+	{
+		$CI			=& get_instance();
+		$time		= now();
+
+		$CI->db->where('hibernating', TRUE);
+		$CI->db->where('last_active <', $time-$CI->config->item('hib_inactive'));
+		$query		= $CI->db->get('users');
+
+		if ($query->num_rows() > 0)
+		{
+			$CI->lang->load('cron');
+			$update	= array();
+			$emails	= array();
+			foreach ($query->result() as $user)
+			{
+				$emails[]	= $user->email;
+				$update[]	= array(
+							'id' => $user->id,
+							'hibernating' => FALSE,
+							'last_active' => $time
+							);
+			}
+			$CI->db->update_batch('users', $update, 'id');
+
+			$CI->email->to($emails);
+		    $CI->email->from('space-settler@razican.com', 'Space Settler');
+			$CI->email->reply_to('noreply@razican.com', 'Space Settler');
+		    $CI->email->subject(str_replace('%game_name%', $CI->config->item('game_name'), lang('cron.hibernation_title')));
+			$CI->email->message(str_replace(array('%link%', '%days%'), array(site_url('/'), floor($CI->config->item('inactive')/86400)), lang('cron.hibernation_text')));
+		    $CI->email->send();
+		}
+		return TRUE;
+	}
+
+	/**
+	 * Deletes all the inactive users
+	 *
+	 * @access	public
+	 * @return	bool
+	 */
+	public function delete_inactives()
+	{
+		$CI			=& get_instance();
+		$time		= now();
+		$CI->lang->load('cron');
+		$users	= array();
+		$emails	= array();
+
+		/* FALTAN LOS GRUPOS Y LA ADAPTACIÓN A CI 3
+		$CI->db->where('validation !=', NULL);
+		$CI->db->where('last_active <', $time-$CI->config->item('reg_inactive'));
+		$CI->db->or_where('hibernating', FALSE);
+		$CI->db->where('last_active <', $time-$CI->config->item('inactive'));*/
+		$CI->db->where('(`validation` IS NOT NULL AND `last_active` < '.($time-$CI->config->item('reg_inactive')).') OR (`hibernating` = 0 AND `last_active` < '.($time-$CI->config->item('inactive')).')');
+		$query		= $CI->db->get('users');
+
+		if ($query->num_rows() > 0)
+		{
+			$CI->load->library('email');
+			foreach ($query->result() as $user)
+			{
+				$emails[]	= $user->email;
+				$users[]	= $user->id;
+			}
+			$CI->db->where_in('owner', $users);
+			$CI->db->update('bodies', array('owner' => NULL));
+
+			$CI->email->to($emails);
+		    $CI->email->from('space-settler@razican.com', 'Space Settler');
+			$CI->email->reply_to('noreply@razican.com', 'Space Settler');
+		    $CI->email->subject(str_replace('%game_name%', $CI->config->item('game_name'), lang('cron.delete_title')));
+			$CI->email->message(str_replace('%link%', site_url('/'), lang('cron.inactive_del_text')));
+		    $CI->email->send();
+		}
+		log_message('debug', 'Inactives deleted correctly');
+		return TRUE;
 	}
 
 	/**

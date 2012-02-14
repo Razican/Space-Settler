@@ -10,5 +10,6 @@ class Check_updates extends CI_Controller {
 	}
 }
 
+
 /* End of file check_updates.php */
 /* Location: ./application/controllers/check_updates.php */
