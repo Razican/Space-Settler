@@ -1,2 +1,2 @@
 Error 404 - Página no encontrada<br />
-<?php anchor('/', 'Volver'); ?>
+<?php echo anchor('/', 'Volver'); ?>
