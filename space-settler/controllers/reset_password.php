@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Reset_password extends CI_Controller {
+class Reset_password extends SPS_Controller {
 
 	public function index()
 	{

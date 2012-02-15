@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Validate extends CI_Controller {
+class Validate extends SPS_Controller {
 
 	public function _remap($code)
 	{

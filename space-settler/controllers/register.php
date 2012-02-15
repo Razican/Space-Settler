@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Register extends CI_Controller {
+class Register extends SPS_Controller {
 
 	public function _remap($referrer)
 	{

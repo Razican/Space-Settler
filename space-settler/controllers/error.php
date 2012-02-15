@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Error extends CI_Controller {
+class Error extends SPS_Controller {
 
 	public function _remap($error)
 	{

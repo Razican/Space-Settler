@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * User Class
@@ -11,95 +11,6 @@
 
 class User
 {
-	/**
-	 * Load user data
-	 *
-	 * @access	public
-	 * @param	numeric
-	 * @return	bool
-	 */
-	public function load_data($id)
-	{
-	/*	Código
-	 	$CI							=& get_instance();
-
-		$user_id					= $CI->session->userdata('user_id');
-		$id							= is_null($id) ? $user_id : $id;
-		if ( ! $id)
-		{
-			$this->logged_in		= FALSE;
-			return FALSE;
-		}
-		else
-		{
-			$query					= $CI->db->get_where('users', array('id' => $id));
-
-			if ($query->num_rows() === 1)
-			{
-				foreach ($query->result() as $user)
-				{
-					foreach ($user as $key => $value)
-					{
-						if ($current === TRUE)
-						{
-							$this->$key				= $value;
-							if ($CI->session->userdata('logged_in'))
-								$this->logged_in	= TRUE;
-						}
-						else
-						{
-							$this->$id->$key		= $value;
-						}
-					}
-				}
-
-				if ($current === TRUE)
-				{
-					if ($this->experience == 0)
-					{
-						$this->level	= 1;
-					}
-					else
-					{
-						$this->level	=& floor(log($this->experience/$CI->config->item('first_level'),$CI->config->item('exp_multiplier'))+2);
-					}
-
-					$this->money		= unserialize($this->money);
-
-					foreach($this->money as $currency => $money){ $this->money[$currency]	= $money/100; }
-
-					$this->country		= $this->current_country($this->location);
-					$states				= $CI->config->item('states');
-					$this->timezone		= $states[$this->location]['timezone'];
-				}
-				else
-				{
-					if ($this->experience == 0)
-					{
-						$this->$id->level	= 1;
-					}
-					else
-					{
-						$this->$id->level	=& floor(log($this->experience/$CI->config->item('first_level'),$CI->config->item('exp_multiplier'))+2);
-					}
-
-					$this->$id->money		= unserialize($this->money);
-
-					foreach($this->$id->money as $currency => $money){ $this->$id->money[$currency]	= $money/100; }
-
-					$this->$id->country		= $this->current_country($this->location);
-					$states					= $CI->config->item('states');
-					$this->$id->timezone	= $states[$this->location]['timezone'];
-				}
-			}
-			else
-			{
-				log_message('error', 'Function load_data() in /megapublik/libraries/User.php has not received a valid id.');
-				return FALSE;
-			}
-		}*/
-	}
-
 	/**
 	 * Log in user
 	 *
@@ -127,8 +38,12 @@ class User
 			foreach($query->result() as $user){}
 
 			$userdata	= array(
-				'user_id'			=> $user->id,
-				'logged_in'			=> TRUE
+				'id'			=> $user->id,
+				'username'		=> $user->username,
+				'email'			=> $user->email,
+				'hibernating'	=> $user->hibernating,
+				'skin'			=> $user->skin,
+				'logged_in'		=> TRUE
 				);
 
 			$CI->session->set_userdata($userdata);

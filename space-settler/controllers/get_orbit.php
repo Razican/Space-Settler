@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Get_orbit extends CI_Controller {
+class Get_orbit extends SPS_Controller {
 
 	public function index($major_mass, $orbiting_mass, $semimajor_axis, $eccentricity, $time)
 	{
