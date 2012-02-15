@@ -5,6 +5,7 @@ $lang['overal.register']			= 'Registrarse';
 $lang['overal.forum']				= 'Foro';
 $lang['overal.go_back']				= 'Volver';
 $lang['overal.of']					= 'de';
+$lang['overal.server_time']			= 'Hora del servidor';
 
 
 /* End of file overal_lang.php */

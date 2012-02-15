@@ -336,6 +336,50 @@ class User
 	}
 
 	/**
+	 * Count user's planets
+	 *
+	 * @access	public
+	 * @param	int
+	 * @return	bool
+	 */
+	public function count_planets($id = NULL)
+	{
+		return $this->_count_bodies($id);
+	}
+
+	/**
+	 * Count user's mooons
+	 *
+	 * @access	public
+	 * @param	int
+	 * @return	bool
+	 */
+	public function count_moons($id = NULL)
+	{
+		return $this->_count_bodies($id, 1);
+	}
+
+	/**
+	 * Count user's bodies
+	 *
+	 * @access	public
+	 * @param	int
+	 * @param	int
+	 * @return	bool
+	 */
+	private function _count_bodies($id, $type = 0)
+	{
+		$CI			=& get_instance();
+		$id			= is_null($id) ? $CI->session->userdata('id') : $id;
+
+		$CI->db->where('owner', $id);
+		$CI->db->where('type', $type);
+		$CI->db->from('bodies');
+
+		return $CI->db->count_all_results();
+	}
+
+	/**
 	 * Check if it's banned
 	 *
 	 * @access	public

@@ -27,9 +27,12 @@ class Main extends SPS_Controller {
 		}
 		else
 		{
-			$this->lang->load('ingame');
+			$this->lang->load('menu');
+			$this->lang->load('overview');
 
 			$data['menu']		= $this->load->view('ingame/menu', '', TRUE);
+			$data['planets']	= $this->user->count_planets();
+			$data['moons']		= $this->user->count_moons();
 
 			$this->load->view('ingame/overview', $data);
 		}
