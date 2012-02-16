@@ -39,7 +39,7 @@ function skin($view = FALSE)
 {
 	$CI		=& get_instance();
 
-	$skin	=  $CI->session->userdata('logged_in') ? $CI->session->userdata('skin') : $CI->$CI->config->item('skin');
+	$skin	=  $CI->session->userdata('logged_in') ? $CI->session->userdata('skin') : $CI->config->item('skin');
 	$skin	= ( ! empty($skin)) ? $skin : 'default';
 
 	return $skin;
