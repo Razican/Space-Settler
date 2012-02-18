@@ -18,5 +18,6 @@ class Error extends SPS_Controller {
 	}
 }
 
+
 /* End of file creation.php */
 /* Location: ./space_settler/controllers/creation.php */

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-02-2012 a las 18:13:52
+-- Tiempo de generación: 18-02-2012 a las 18:58:14
 -- Versión del servidor: 5.1.58
 -- Versión de PHP: 5.3.6-13ubuntu3.6
 
@@ -19,6 +19,26 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `space-settler`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `sps_admin`
+--
+-- Creación: 16-02-2012 a las 15:55:55
+-- Última actualización: 16-02-2012 a las 15:55:55
+--
+
+DROP TABLE IF EXISTS `sps_admin`;
+CREATE TABLE IF NOT EXISTS `sps_admin` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(10) NOT NULL,
+  `password` char(40) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `authlevel` tinyint(1) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -92,9 +112,28 @@ CREATE TABLE IF NOT EXISTS `sps_stars` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `sps_support`
+--
+-- Creación: 18-02-2012 a las 16:52:07
+--
+
+DROP TABLE IF EXISTS `sps_support`;
+CREATE TABLE IF NOT EXISTS `sps_support` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `type` tinyint(1) unsigned NOT NULL,
+  `subject` varchar(25) NOT NULL,
+  `text` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `sps_users`
 --
--- Creación: 14-02-2012 a las 17:13:25
+-- Creación: 15-02-2012 a las 18:56:40
 --
 
 DROP TABLE IF EXISTS `sps_users`;
@@ -111,11 +150,12 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
   `register_time` int(10) unsigned NOT NULL,
   `last_active` int(10) unsigned NOT NULL,
   `hibernating` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `skin` varchar(15) NOT NULL DEFAULT 'default',
   `warnings` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `ban_finish` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `validation` (`validation`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

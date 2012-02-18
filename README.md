@@ -48,17 +48,6 @@ Cosas por hacer:
 * Cálculo de distancias con el nuevo algoritmo.
 * Satélites.
 
-Cambios en el Juego
--------------------
-
-* Todos los nombres de usuario/alianza/planeta tendrán una máxima longitud de 20 caracteres. Los emails de 50, las webs de 100 y las imágenes externas de 150.
-* Se implanta el uso de Sha-1 en vez de Md5.
-* Las contraseñas deberán tener un mínimo de 6 carateres, configurable en el futuro desde el panel de administración.
-* Se ha añadido un nuevo campo en la tabla planets: distance, ahora, si el planeta es 0, será el sol. Con una nueva variable, luminosidad, todavía por implantar.
-* Si en la tabla planets, en id_owner es 0, es un planeta no habitado.
-* 1 Campo +/- 75 km de diametro. {10 - 3250} (diametro-> mt_rand((campos-1)*75, (campos+1)*75))
-* Probabilidades: mt_rand(1,100) if (<=x && >y), siendo x el mínimo de porcentaje e y el máximo.
-
 Más Datos
 ---------
 
@@ -71,11 +60,6 @@ Cosas por hacer
 * El registro, si no se envía el email, muestra un mensaje en el que el link te devuelve al registro, en lugar de a la página principal.
 Hay que tener en cuenta que el usuario ya se ha registrado, así que no debería volver al registro.
 
-Selección de Planetas en el Registro
-------------------------------------
-
-* Se seleccionan uno entre los planetas habitables
-
 Distancias y velocidades:
 -------------------------
 
@@ -86,19 +70,14 @@ Hay que tener en cuenta que con el mínimo de tecnología para viajar se conside
 
 * Para calcular la distancia entre planeta_origen y planeta_destino se usará la siguiente fórmula:
 |(distancia del planeta_origen a la estrella)-(distancia del planeta_destino a la estrella)|
-* El tiempo que se tarda en recorrer la distancia (en UA) será el siguiente: distancia*499s +/- 1%, redondeado hacia arriba.
 
 **Distancias entre estrellas cercanas**
 
 * La fórmula que se usará a la hora de crear un sistema cercano será la siguiente: distancia = raiz_quinta{(ID_sistema_origen-ID_sistema_destino)^2}*aleatorio(40,45)/10 (en años luz)
-* la velocidad será la misma, de manera que para viajar de un planeta de un sistema a otro, se tardará
-distancia*63.200 +/- (distancia del planeta origen a su estrella) +/- (distancia del planeta destino a su estrella) +/- 1%, redondeado hacia arriba, en segundos.
 
 **Distancias entre galaxias cercanas**
 
 * La fórmula que se usará a la hora de crear una galaxia cercana será la siguiente: distancia = raiz_cuarta{|(ID_galaxia_origen-ID_galaxia_destino)^3|}*aleatorio(225,250)/100 (en millones de años luz)
-* la velocidad será la misma, de manera que para viajar de un planeta de un sistema a otro, se tardará
-distancia*63.200.000.000 +/- (distancia de la estrella a la estrella 1 de la galaxia)*63200 +/- (distancia del planeta origen a su estrella) +/- (distancia del planeta destino a su estrella), redondeado hacia arriba, en segundos.
 
 Exploración del Universo:
 -------------------------
@@ -119,11 +98,6 @@ Tamaños, masas...:
 * Si planeta doble, distancia mínima: r*(2M/m)^(1/3) //Límite de Roche, donde M es la masa del planeta,
 m la del satélite y r el rádio del satélite.
 
-Constantes:
------------
-
-* Luz: 299792458 m/s
-
 Tiempo:
 -------
 
@@ -140,3 +114,24 @@ tecnologías de motores Warp, que permitirían viajes superlumínicos, comprimie
 * Es por esto último que se considera que dos galaxias no tendrán interacción entre ellas, aunque podría haber mensajes entre ellas, pero tardarían muchísimo en llegar.
 Se considerarían casi dos universos separados. También es verdad que se podrá usar tecnología subespacial para las comunicaciones, que permitiran hacerlas en un muy corto tiempo, casi equiparable
 a la comunicación con una estrella de la misma galaxia.
+
+Sistema de Soporte:
+-------------------
+
+Se ha creado un nuevo sistema de soporte, en el que se deben especificar algunas cosas:
+
+**Tipo de incidencia**:
+* 1->Error/Bug
+* 2->Mejora
+* 3->Nueva Característica/Proposición
+
+**Estado de la incidencia**:
+* 1->Nueva
+* 2->Aceptada (Proposición/Mejora)
+* 3->Confirmada (Error)
+* 4->En proceso
+* 5->Duplicado
+* 6->No es una incidencia (Error)
+* 7->No se implantará (Proposición/Mejora)
+* 8->Implantado (Proposición/Mejora)
+* 9->Solucionado (Error)

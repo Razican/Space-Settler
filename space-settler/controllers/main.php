@@ -6,8 +6,7 @@ class Main extends SPS_Controller {
 	{
 		$this->output->enable_profiler($this->config->item('debug'));
 
-		if($this->uri->segment(1))
-			redirect('/');
+		if($this->uri->segment(1)) redirect('/');
 
 		if( ! $this->session->userdata('logged_in'))
 		{
