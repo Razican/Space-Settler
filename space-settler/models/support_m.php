@@ -12,7 +12,7 @@ class Support_m extends CI_Model {
 	public function load_all_tickets($id = NULL)
 	{
 
-		if($id) $this->db->where('id', $id);
+		if($id) $this->db->where('user_id', $id);
 		$query	= $this->db->get('support');
 
 		if($query->num_rows() > 0)
@@ -55,15 +55,13 @@ class Support_m extends CI_Model {
 	 * Create a new support ticket
 	 *
 	 * @access	public
-	 * @param	int
+	 * @param	int|string (numeric)
 	 * @param	string
 	 * @param	string
 	 * @return	boolean
 	 */
 	public function new_ticket($type, $title, $text)
 	{
-		settype($type, 'integer');
-
 		$text	= serialize(array(array(
 					'user_id'	=> $this->session->userdata('id'),
 					'text'		=> $text

@@ -32,11 +32,18 @@ class Support extends SPS_Controller {
 
 		if($this->input->server('REQUEST_METHOD') === 'POST')
 		{
-			//Hay que comprobar si type está dentro de los parámetros posibles
 			if( ! $this->input->post('type') OR
 				! $this->input->post('title') OR
 				! $this->input->post('text'))
+			{
 				message(lang('support.no_data'), 'support/new_ticket', TRUE);
+			}
+			else if ($this->input->post('type') > 3 OR $this->input->post('type') < 1)
+			{
+				log_message('error', 'User with ID '.$this->session->userdata('id').
+							' and IP '.$this->input->ip_address().' has tried to send an invalid type at support/new_ticket.');
+				message(lang('overal.hacking_attempt'), 'support/new_ticket', TRUE);
+			}
 			else
 			{
 				$this->load->model('support_m');
