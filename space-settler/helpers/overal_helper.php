@@ -107,6 +107,20 @@ function current_lang()
 	return $key;
 }
 
+/**
+ * It gets the name for a given user ID (Alias of $this->user->get_name)
+ *
+ * @param	int
+ * @param	boolean
+ * @return	string
+ */
+function get_name($id, $is_admin = FALSE)
+{
+	$CI =& get_instance();
+
+	return $CI->user->get_name($id, $is_admin);
+}
+
 
 /* End of file overal_helper.php */
 /* Location: ./application/helpers/overal_helper.php */

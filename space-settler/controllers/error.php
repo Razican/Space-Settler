@@ -19,5 +19,5 @@ class Error extends SPS_Controller {
 }
 
 
-/* End of file creation.php */
-/* Location: ./space_settler/controllers/creation.php */
+/* End of file error.php */
+/* Location: ./space_settler/controllers/error.php */

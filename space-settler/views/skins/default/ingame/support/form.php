@@ -1,4 +1,6 @@
 <?php echo $menu; ?>
+
+<div id="content">
 <div id="support_form">
 <?php
 	echo form_open('support/new_ticket');
@@ -16,4 +18,5 @@
 
 	echo form_close();
 ?>
+</div>
 </div>

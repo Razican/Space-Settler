@@ -26,6 +26,7 @@ class Main extends SPS_Controller {
 		}
 		else
 		{
+			define('INGAME', TRUE);
 			$this->lang->load('menu');
 			$this->lang->load('overview');
 

@@ -1,0 +1,21 @@
+@charset "utf8";
+
+/* Support section */
+#support_table
+{
+	display:	table;
+	border:		2px solid #000;
+}
+
+.support_table-row
+{
+	display:	table-row;
+}
+
+.support_table-cell
+{
+	display:	table-cell;
+	text-align:	center;
+	padding:	5px;
+	border:		1px solid #000;
+}

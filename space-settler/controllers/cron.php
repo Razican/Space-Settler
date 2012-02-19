@@ -16,12 +16,12 @@ class Cron extends SPS_Controller {
 			redirect('/');
 		}
 
-		$this->load->library(array('user', 'email'));
+		$this->load->library(array('email', 'crons'));
 		$this->lang->load('cron');
 
-		if($this->user->finish_hibernations()) echo 'Hibernations Finished'.PHP_EOL;
-		if($this->user->delete_inactives()) echo 'Inactives deleted'.PHP_EOL;
-		if($this->user->warn_inactives()) echo 'Inactives warned'.PHP_EOL;
+		if($this->crons->finish_hibernations()) echo 'Hibernations Finished'.PHP_EOL;
+		if($this->crons->delete_inactives()) echo 'Inactives deleted'.PHP_EOL;
+		if($this->crons->warn_inactives()) echo 'Inactives warned'.PHP_EOL;
 	}
 }
 

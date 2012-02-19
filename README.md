@@ -2,7 +2,7 @@ Requisitos Mínimos
 ==================
 
 * Se recomienda siempre usar UTF-8 en su variante *general_ci* en la base de datos y en la codificación de todos los archivos del juego.
-* Necesario **PHP >= 5.2.0**
+* Necesario **PHP >= 5.3.0** (Puede que hagamos un retroceso a PHP 5.2, pero como el proyecto saldrá de aquí a varios años, para entonces no creo que haya problemas)
 * Necesario **MySQL >= 4.1**
 * También soporta MySQLi, MS SQL, Postgres, Oracle, SQLite y ODBC.
 

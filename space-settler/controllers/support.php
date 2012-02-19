@@ -13,13 +13,14 @@ class Support extends SPS_Controller {
 	public function show($id = NULL)
 	{
 		if( ! $this->session->userdata('logged_in')) redirect('/');
+		define('INGAME', TRUE);
 
 		$this->load->model('support_m');
 		$this->lang->load('menu');
 		$this->lang->load('support');
 
-		$data['tickets']	= $this->support_m->load_all_tickets($id);
 		$data['menu']		= $this->load->view('ingame/menu', '', TRUE);
+		$data['tickets']	= $this->support_m->load_all_tickets($id);
 
 		$this->load->view('ingame/support/table', $data);
 	}
@@ -27,6 +28,7 @@ class Support extends SPS_Controller {
 	public function new_ticket()
 	{
 		if( ! $this->session->userdata('logged_in')) redirect('/');
+		define('INGAME', TRUE);
 
 		$this->lang->load('support');
 
@@ -92,8 +94,16 @@ class Support extends SPS_Controller {
 	{
 		if( ! $this->session->userdata('logged_in')) redirect('/');
 		if(is_null($id)) redirect('support');
+		define('INGAME', TRUE);
 
-		echo 'Ticket '.$id;
+		$this->load->model('support_m');
+		$this->lang->load('menu');
+		$this->lang->load('support');
+
+		$data['menu']		= $this->load->view('ingame/menu', '', TRUE);
+		$data['ticket']		= $this->support_m->load_ticket($id);
+
+		$this->load->view('ingame/support/ticket', $data);
 	}
 }
 

@@ -9,10 +9,11 @@ class Support_m extends CI_Model {
 	 * @param	int
 	 * @return	object|boolean
 	 */
-	public function load_all_tickets($id = NULL)
+	public function load_all_tickets($id = NULL, $start_ticket = 0)
 	{
 
 		if($id) $this->db->where('user_id', $id);
+		$this->db->limit(20, $start_ticket);
 		$query	= $this->db->get('support');
 
 		if($query->num_rows() > 0)
@@ -64,7 +65,7 @@ class Support_m extends CI_Model {
 	{
 		$text	= serialize(array(array(
 					'user_id'	=> $this->session->userdata('id'),
-					'text'		=> $text
+					'text'		=> nl2br($text, TRUE)
 				)));
 
 		$data	= array(
@@ -75,6 +76,42 @@ class Support_m extends CI_Model {
 		);
 
 		return $this->db->insert('support', $data);
+	}
+
+	/**
+	 * Load the desired ticket
+	 *
+	 * @access	public
+	 * @param	int
+	 * @return	object|boolean
+	 */
+	public function load_ticket($id)
+	{
+		$this->db->where('id', $id);
+		$this->db->limit(1);
+		$query	= $this->db->get('support');
+
+		if($query->num_rows() > 0)
+		{
+			foreach($query->result() as $ticket);
+
+			$this->db->where('id', $ticket->user_id);
+			$this->db->select('name');
+			$this->db->limit(1);
+			$query	= $this->db->get('users');
+
+			if($query->num_rows() > 0)
+				foreach($query->result() as $user);
+
+			$ticket->text	= unserialize($ticket->text);
+			$ticket->user	= $user->name;
+
+			return $ticket;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 }
 
