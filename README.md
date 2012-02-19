@@ -120,18 +120,18 @@ Sistema de Soporte:
 
 Se ha creado un nuevo sistema de soporte, en el que se deben especificar algunas cosas:
 
-**Tipo de incidencia**:
-* 1->Error/Bug
-* 2->Mejora
-* 3->Nueva Característica/Proposición
+* **Tipo de ticket**:
+	* 1->Error/Bug
+	* 2->Mejora
+	* 3->Nueva Característica/Proposición
 
-**Estado de la incidencia**:
-* 1->Nueva
-* 2->Aceptada (Proposición/Mejora)
-* 3->Confirmada (Error)
-* 4->En proceso
-* 5->Duplicado
-* 6->No es una incidencia (Error)
-* 7->No se implantará (Proposición/Mejora)
-* 8->Implantado (Proposición/Mejora)
-* 9->Solucionado (Error)
+* **Estado del ticket**:
+	* 0->Nuevo
+	* 1->Aceptado (Proposición/Mejora)
+	* 2->Confirmado (Error)
+	* 3->En proceso
+	* 4->Duplicado
+	* 5->No es un error (Error)
+	* 6->No se implantará (Proposición/Mejora)
+	* 7->Implantado (Proposición/Mejora)
+	* 8->Solucionado (Error)

@@ -9,9 +9,16 @@
  * @param	bool
  * @return	void
  */
-function message($message, $dest = '/', $topnav = FALSE, $menu = FALSE)
+function message($message, $dest = '/', $menu = FALSE)
 {
 	$CI					=& get_instance();
+
+	$data['menu']		= '';
+	if($menu)
+	{
+		$CI->lang->load('menu');
+		$data['menu']		= $CI->load->view('ingame/menu', '', TRUE);
+	}
 
 	$data['message']	= $message;
 	$data['dest']		= anchor($dest, lang('overal.go_back'), 'title="'.lang('overal.go_back').'"');

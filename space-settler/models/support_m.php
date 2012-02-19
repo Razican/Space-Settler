@@ -7,9 +7,9 @@ class Support_m extends CI_Model {
 	 *
 	 * @access	public
 	 * @param	int
-	 * @return	object
+	 * @return	object|boolean
 	 */
-	public function load_tickets($id = NULL)
+	public function load_all_tickets($id = NULL)
 	{
 
 		if($id) $this->db->where('id', $id);
@@ -23,9 +23,10 @@ class Support_m extends CI_Model {
 			foreach ($query->result() as $ticket)
 			{
 				$users[$ticket->user_id]	= $ticket->user_id;
-				$ticket->status	= lang('support.status_'.$ticket->status);
-				$ticket->type	= lang('support.type_'.$ticket->type);
-				$tickets[]		= $ticket;
+				$ticket->status				= lang('support.status_'.$ticket->status);
+				$ticket->type				= lang('support.type_'.$ticket->type);
+				$ticket->replies			= count(unserialize($ticket->text))-1;
+				$tickets[]					= $ticket;
 			}
 
 			$this->db->where_in('id', $users);
@@ -48,6 +49,34 @@ class Support_m extends CI_Model {
 		}
 
 		return FALSE;
+	}
+
+	/**
+	 * Create a new support ticket
+	 *
+	 * @access	public
+	 * @param	int
+	 * @param	string
+	 * @param	string
+	 * @return	boolean
+	 */
+	public function new_ticket($type, $title, $text)
+	{
+		settype($type, 'integer');
+
+		$text	= serialize(array(array(
+					'user_id'	=> $this->session->userdata('id'),
+					'text'		=> $text
+				)));
+
+		$data	= array(
+			'user_id'	=> $this->session->userdata('id'),
+			'type'		=> $type,
+			'title'		=> $title,
+			'text'		=> $text
+		);
+
+		return $this->db->insert('support', $data);
 	}
 }
 
