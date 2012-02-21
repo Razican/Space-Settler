@@ -19,3 +19,24 @@
 	padding:	5px;
 	border:		1px solid #000;
 }
+
+#support_replies
+{
+	background-color: gray;	
+}
+
+/* MENU */
+#menu
+{
+	min-width:	150px;
+	max-width:	200px;
+	width:		30%;
+	float:		left;
+}
+
+/* CONTENT */
+#content
+{
+	float:		left;
+	width:		70%;
+}

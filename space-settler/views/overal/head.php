@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo current_lang(); ?>">
 <head>
 	<title><?php echo config_item('game_name'); ?></title>
-	<link rel="shortcut icon" href="<?php echo site_url("images/".skin()."/favicon.ico"); ?>" />
+	<link rel="shortcut icon" href="<?php //echo site_url("images/".skin()."/favicon.ico"); ?>" />
 	<meta http-equiv="content-script-type" content="text/javascript" />
 	<meta http-equiv="content-style-type" content="text/css" />
 	<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>

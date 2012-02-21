@@ -42,7 +42,7 @@ function ip2int($ip_address)
  *
  * @return	string
  */
-function skin($view = FALSE)
+function skin()
 {
 	$CI		=& get_instance();
 

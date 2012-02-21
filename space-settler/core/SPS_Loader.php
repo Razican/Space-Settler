@@ -17,8 +17,8 @@ class SPS_Loader extends CI_Loader {
 
 		if(file_exists(APPPATH.'views/overal/'.$view.'.php'))
 		{
-			if(file_exists(APPPATH.'views/skins/'.skin(TRUE).'/'.$view.'.php'))
-				$skin	= $this->_ci_load(array('_ci_view' => 'skins/'.skin(TRUE).'/'.$view, '_ci_vars' => $vars, '_ci_return' => TRUE));
+			if(file_exists(APPPATH.'views/skins/'.skin().'/'.$view.'.php'))
+				$skin	= $this->_ci_load(array('_ci_view' => 'skins/'.skin().'/'.$view, '_ci_vars' => $vars, '_ci_return' => TRUE));
 			else
 				$skin	= '';
 
@@ -29,12 +29,12 @@ class SPS_Loader extends CI_Loader {
 		elseif( ! $return)
 		{
 			$this->view('head');
-			$page	= $this->_ci_load(array('_ci_view' => 'skins/'.skin(TRUE).'/'.$view, '_ci_vars' => $vars, '_ci_return' => FALSE));
+			$page	= $this->_ci_load(array('_ci_view' => 'skins/'.skin().'/'.$view, '_ci_vars' => $vars, '_ci_return' => FALSE));
 			$this->view('footer');
 		}
 		else
 		{
-			$page	= $this->_ci_load(array('_ci_view' => 'skins/'.skin(TRUE).'/'.$view, '_ci_vars' => $vars, '_ci_return' => TRUE));
+			$page	= $this->_ci_load(array('_ci_view' => 'skins/'.skin().'/'.$view, '_ci_vars' => $vars, '_ci_return' => TRUE));
 		}
 
 		return $page;

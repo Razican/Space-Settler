@@ -113,6 +113,42 @@ class Support_m extends CI_Model {
 			return FALSE;
 		}
 	}
+
+	/**
+	 * Insert a reply into one ticket
+	 *
+	 * @access	public
+	 * @param	int
+	 * @param	string
+	 * @return	boolean
+	 */
+	public function insert_reply($id, $reply)
+	{
+		$this->db->where('id', $id);
+		$this->db->select('text');
+		$this->db->limit(1);
+		$query	= $this->db->get('support');
+
+		if($query->num_rows() > 0)
+		{
+			foreach($query->result() as $ticket);
+
+			$text	= unserialize($ticket->text);
+
+			$text[]	= array(
+						'user_id'	=> $this->session->userdata('id'),
+						'text'		=> $reply
+						);
+
+			$this->db->where('id', $id);
+			$this->db->set('text', serialize($text));
+			return $this->db->update('support');
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
 }
 
 

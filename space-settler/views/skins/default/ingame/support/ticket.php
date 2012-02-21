@@ -15,12 +15,15 @@
 	</div>
 	<?php if(count($ticket->text) > 0): ?>
 	<div id="support_replies">
+		<div><?php echo lang('support.replies'); ?>:</div>
 		<?php
 			foreach($ticket->text as $key => $reply):
 			if($key):
 		?>
-		<div class="support_reply_creator"><?php echo (isset($reply['user_id']) ? get_name($reply['user_id']) : get_name($reply['admin_id'], TRUE)); ?></div>
-		<div class="support_reply"><?php echo $reply['text']; ?></div>
+		<div class="sypport_reply">
+			<span class="support_reply_creator"><?php echo (isset($reply['user_id']) ? get_name($reply['user_id']) : get_name($reply['admin_id'], TRUE)); ?>: </span>
+			<span class="support_reply"><?php echo $reply['text']; ?></span>
+		</div>
 		<?php
 			endif;
 			endforeach;
@@ -28,9 +31,15 @@
 	</div>
 	<?php endif; ?>
 	<div id="support_reply">
-	<?php echo form_open('support/reply/'.$ticket->id); ?>
+	<?php
+			echo form_open('support/ticket/');
 
-	<?php echo form_close(); ?>
+			echo '<div>'.form_label(lang('support.reply'), 'form_reply').':<br />';
+			echo form_textarea($reply_textarea).'</div>';
+
+			echo '<div>'.form_submit('submit', lang('support.submit')).'</div>';
+
+			echo form_close(); ?>
 	</div>
 </div>
 </div>

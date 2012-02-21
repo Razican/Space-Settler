@@ -7,12 +7,15 @@ $lang['support.type']			= 'Tipo';
 $lang['support.title']			= 'Resumen';
 $lang['support.replies']		= 'Respuestas';
 $lang['support.text']			= 'Texto';
-$lang['support.submit']			= 'Enviar ticket';
+$lang['support.submit']			= 'Enviar';
 $lang['support.new_ticket']		= 'Crear nuevo ticket';
 $lang['support.no_tickets']		= 'No hay ningún ticket';
 $lang['support.no_data']		= 'Debe introducir todos los campos';
 $lang['support.new_success']	= 'Ticket guardado con éxito';
 $lang['support.new_error']		= 'Ha ocurrido un error al guardar el ticket';
+$lang['support.reply_error']	= 'Ha ocurrido un error al guardar la respuesta';
+$lang['support.reply_success']	= 'Respuesta guardada con éxito';
+$lang['support.reply']			= 'Responder';
 
 //Ticket types:
 $lang['support.type_1']			= 'Error';

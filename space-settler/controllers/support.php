@@ -93,17 +93,41 @@ class Support extends SPS_Controller {
 	public function ticket($id = NULL)
 	{
 		if( ! $this->session->userdata('logged_in')) redirect('/');
-		if(is_null($id)) redirect('support');
 		define('INGAME', TRUE);
-
 		$this->load->model('support_m');
 		$this->lang->load('menu');
 		$this->lang->load('support');
 
-		$data['menu']		= $this->load->view('ingame/menu', '', TRUE);
-		$data['ticket']		= $this->support_m->load_ticket($id);
+		if($this->input->server('REQUEST_METHOD') != 'POST')
+		{
+			if(is_null($id)) redirect('support');
+			$this->session->set_flashdata('ticket_id', $id);
 
-		$this->load->view('ingame/support/ticket', $data);
+
+
+			$data['menu']			= $this->load->view('ingame/menu', '', TRUE);
+			$data['ticket']			= $this->support_m->load_ticket($id);
+			$data['reply_textarea']	= array(
+									'name'		=> 'reply',
+									'id'		=> 'form_reply',
+									'rows'		=> '10',
+									'cols'		=> '75'
+									);
+
+			$this->load->view('ingame/support/ticket', $data);
+		}
+		else
+		{
+			$ticket_id	= $this->session->flashdata('ticket_id');
+
+			if( ! $this->input->post('reply'))
+				message(lang('support.no_data'), 'support/ticket/'.$ticket_id, TRUE);
+
+			if( ! $this->support_m->insert_reply($ticket_id, $this->input->post('reply')))
+				message(lang('support.reply_error'), 'support/ticket/'.$ticket_id, TRUE);
+			else
+				message(lang('support.reply_success'), 'support/ticket/'.$ticket_id, TRUE);
+		}
 	}
 }
 
