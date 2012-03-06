@@ -1,5 +1,6 @@
 .project
 .settings
+.metadata
 *redcar*
 *geany*
 *error_log*
