@@ -11,23 +11,17 @@
 		<span class="support_creator_name"><?php echo $ticket->user; ?></span>
 	</div>
 	<div id="suport_text">
-		<?php echo $ticket->text[0]['text']; ?>
+		<?php echo $ticket->text; ?>
 	</div>
-	<?php if(count($ticket->text) > 0): ?>
+	<?php if(count($ticket->replies) > 0): ?>
 	<div id="support_replies">
 		<div><?php echo lang('support.replies'); ?>:</div>
-		<?php
-			foreach($ticket->text as $key => $reply):
-			if($key):
-		?>
+		<?php foreach($ticket->replies as $key => $reply): ?>
 		<div class="sypport_reply">
 			<span class="support_reply_creator"><?php echo (isset($reply['user_id']) ? get_name($reply['user_id']) : get_name($reply['admin_id'], TRUE)); ?>: </span>
 			<span class="support_reply"><?php echo $reply['text']; ?></span>
 		</div>
-		<?php
-			endif;
-			endforeach;
-		?>
+		<?php endforeach; ?>
 	</div>
 	<?php endif; ?>
 	<div id="support_reply">

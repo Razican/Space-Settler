@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-02-2012 a las 18:58:14
+-- Tiempo de generación: 07-03-2012 a las 13:53:00
 -- Versión del servidor: 5.1.58
 -- Versión de PHP: 5.3.6-13ubuntu3.6
 
@@ -25,8 +25,8 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `sps_admin`
 --
--- Creación: 16-02-2012 a las 15:55:55
--- Última actualización: 16-02-2012 a las 15:55:55
+-- Creación: 07-03-2012 a las 12:52:36
+-- Última actualización: 07-03-2012 a las 12:52:36
 --
 
 DROP TABLE IF EXISTS `sps_admin`;
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `sps_admin` (
 -- Estructura de tabla para la tabla `sps_bodies`
 --
 -- Creación: 21-01-2012 a las 18:39:07
--- Última actualización: 12-02-2012 a las 16:07:57
+-- Última actualización: 19-02-2012 a las 10:24:02
 --
 
 DROP TABLE IF EXISTS `sps_bodies`;
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `sps_bodies` (
   `water` smallint(5) unsigned NOT NULL,
   `owner` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=360314 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -107,14 +107,14 @@ CREATE TABLE IF NOT EXISTS `sps_stars` (
   `luminosity` bigint(19) unsigned NOT NULL,
   `temperature` mediumint(7) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100013 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `sps_support`
 --
--- Creación: 18-02-2012 a las 16:52:07
+-- Creación: 07-03-2012 a las 12:31:30
 --
 
 DROP TABLE IF EXISTS `sps_support`;
@@ -123,8 +123,9 @@ CREATE TABLE IF NOT EXISTS `sps_support` (
   `user_id` int(10) unsigned NOT NULL,
   `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `type` tinyint(1) unsigned NOT NULL,
-  `subject` varchar(25) NOT NULL,
-  `text` text NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `text` tinytext NOT NULL,
+  `replies` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

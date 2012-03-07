@@ -26,7 +26,7 @@ class Support_m extends CI_Model {
 				$users[$ticket->user_id]	= $ticket->user_id;
 				$ticket->status				= lang('support.status_'.$ticket->status);
 				$ticket->type				= lang('support.type_'.$ticket->type);
-				$ticket->replies			= count(unserialize($ticket->text))-1;
+				$ticket->replies			= is_null($ticket->replies) ? 0 : count(unserialize($ticket->replies));
 				$tickets[]					= $ticket;
 			}
 
@@ -63,16 +63,11 @@ class Support_m extends CI_Model {
 	 */
 	public function new_ticket($type, $title, $text)
 	{
-		$text	= serialize(array(array(
-					'user_id'	=> $this->session->userdata('id'),
-					'text'		=> nl2br($text, TRUE)
-				)));
-
 		$data	= array(
 			'user_id'	=> $this->session->userdata('id'),
 			'type'		=> $type,
 			'title'		=> $title,
-			'text'		=> $text
+			'text'		=> nl2br($text, TRUE)
 		);
 
 		return $this->db->insert('support', $data);
@@ -93,7 +88,8 @@ class Support_m extends CI_Model {
 
 		if($query->num_rows() > 0)
 		{
-			foreach($query->result() as $ticket);
+			foreach($query->result() as $ticket)
+				$ticket->replies	= is_null($ticket->replies) ? array() : unserialize($ticket->replies);
 
 			$this->db->where('id', $ticket->user_id);
 			$this->db->select('name');
@@ -103,7 +99,6 @@ class Support_m extends CI_Model {
 			if($query->num_rows() > 0)
 				foreach($query->result() as $user);
 
-			$ticket->text	= unserialize($ticket->text);
 			$ticket->user	= $user->name;
 
 			return $ticket;
@@ -122,10 +117,10 @@ class Support_m extends CI_Model {
 	 * @param	string
 	 * @return	boolean
 	 */
-	public function insert_reply($id, $reply)
+	public function insert_reply($id, $reply, $is_admin = FALSE)
 	{
 		$this->db->where('id', $id);
-		$this->db->select('text');
+		$this->db->select('replies');
 		$this->db->limit(1);
 		$query	= $this->db->get('support');
 
@@ -133,15 +128,16 @@ class Support_m extends CI_Model {
 		{
 			foreach($query->result() as $ticket);
 
-			$text	= unserialize($ticket->text);
+			$text		= is_null($ticket->replies) ? array() : unserialize($ticket->replies);
+			$user_type	= $is_admin ? 'admin' : 'user';
 
 			$text[]	= array(
-						'user_id'	=> $this->session->userdata('id'),
-						'text'		=> $reply
+						$user_type.'_id'	=> $this->session->userdata('id'),
+						'text'				=> nl2br($reply, TRUE)
 						);
 
 			$this->db->where('id', $id);
-			$this->db->set('text', serialize($text));
+			$this->db->set('replies', serialize($text));
 			return $this->db->update('support');
 		}
 		else
