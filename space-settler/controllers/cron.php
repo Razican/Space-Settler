@@ -5,7 +5,7 @@ class Cron extends SPS_Controller {
 	public function index()
 	{
 		log_message('error', 'User with IP '.$this->input->server('REMOTE_ADDR').' has tried to access Cron controller.');
-		redirect('/');
+		redirect('/', 'location', 301);
 	}
 
 	public function inactives()

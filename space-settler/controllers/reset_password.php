@@ -7,7 +7,7 @@ class Reset_password extends SPS_Controller {
 		$this->output->enable_profiler($this->config->item('debug'));
 
 		if($this->uri->segment(2))
-			redirect('reset_password');
+			redirect('reset_password', 'location', 301);
 
 		if( ! $this->session->userdata('logged_in'))
 		{

@@ -4,8 +4,8 @@ class Support extends SPS_Controller {
 
 	public function index()
 	{
+		if($this->uri->segment(2)) redirect('support', 'location', 301);
 		if( ! $this->session->userdata('logged_in')) redirect('/');
-		if($this->uri->segment(2)) redirect('support');
 
 		$this->show($this->session->userdata('id'));
 	}
