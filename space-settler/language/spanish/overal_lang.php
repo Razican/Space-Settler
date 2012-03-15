@@ -3,6 +3,8 @@
 $lang['overal.index']				= 'Inicio';
 $lang['overal.register']			= 'Registrarse';
 $lang['overal.forum']				= 'Foro';
+$lang['overal.contact']				= 'Contacto';
+$lang['overal.copy']				= 'Copyright © 2011-2012 por Razican';
 $lang['overal.go_back']				= 'Volver';
 $lang['overal.of']					= 'de';
 $lang['overal.server_time']			= 'Hora del servidor';

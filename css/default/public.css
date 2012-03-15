@@ -1,1 +1,41 @@
 @charset "utf8";
+
+#content
+{
+	width:				50%;
+	margin:				20px auto;
+	background-color:	#202d8a;
+	border-radius:		10px;
+	padding:			20px;
+	text-align:			center;
+}
+
+#content div
+{
+	padding:			5px;
+}
+
+.menu
+{
+	margin:				5px auto;
+	text-align:			center;
+	background-color:	#1e0d68;
+	width:				60%;
+	border-radius:		5px;
+}
+
+.menu ul
+{
+	padding:			5px;
+}
+
+.menu li
+{
+	display:			inline-block;
+	padding:			0px 5px;
+}
+
+a
+{
+	color:				white;
+}

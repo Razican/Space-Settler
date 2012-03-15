@@ -14,7 +14,6 @@ $lang['login.lost_password']		= '¿Has olvidado tu Contraseña?';
 $lang['login.user']					= 'Usuario';
 $lang['login.pass']					= 'Contraseña';
 $lang['login.login']				= 'Entrar';
-$lang['login.welcome_to']			= 'Bienvenido a';
 $lang['login.remember_pass']		= 'Recordar Contraseña';
 $lang['login.server_register']		= '¡Regístrate!';
 $lang['login.server_message']		= '¡Únete ya y forma parte del fantástico mundo de';

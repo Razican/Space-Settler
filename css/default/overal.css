@@ -1,1 +1,17 @@
 @charset "utf8";
+
+input
+{
+	border-radius:		3px;
+}
+
+body
+{
+	margin:				0px;
+	background-color:	#a5b0ff;
+}
+
+a
+{
+	text-decoration:	none;
+}
