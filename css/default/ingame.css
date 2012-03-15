@@ -3,40 +3,70 @@
 /* Support section */
 #support_table
 {
-	display:	table;
-	border:		2px solid #000;
+	display:			table;
+	border:				2px solid #000;
 }
 
 .support_table-row
 {
-	display:	table-row;
+	display:			table-row;
 }
 
 .support_table-cell
 {
-	display:	table-cell;
-	text-align:	center;
-	padding:	5px;
-	border:		1px solid #000;
+	display:			table-cell;
+	text-align:			center;
+	padding:			5px;
+	border:				1px solid #000;
 }
 
 #support_replies
 {
-	background-color: gray;	
+	background-color:	 gray;	
 }
 
-/* MENU */
+/* Menu */
 #menu
 {
-	min-width:	150px;
-	max-width:	200px;
-	width:		30%;
-	float:		left;
+	margin:				5px;
+	text-align:			center;
+	background-color:	#1e0d68;
+	min-width:			125px;
+	max-width:			175px;
+	width:				30%;
+	float:				left;
+	border-radius:		5px;
 }
 
-/* CONTENT */
+#menu ul
+{
+	padding:			5px;
+}
+
+#menu li
+{
+	display:			block;
+	padding:			0px 5px;
+}
+
+/*Content */
 #content
 {
-	float:		left;
-	width:		70%;
+	width:				70%;
+	float:				left;
+	background-color:	#202d8a;
+	border-radius:		10px;
+	padding:			20px;
+	text-align:			left;
+	margin:				5px;
+}
+
+#content div
+{
+	padding:			5px;
+}
+
+.message
+{
+	text-align:			center;
 }
