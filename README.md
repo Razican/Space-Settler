@@ -2,9 +2,8 @@ Requisitos Mínimos
 ==================
 
 * Se recomienda siempre usar UTF-8 en su variante *general_ci* en la base de datos y en la codificación de todos los archivos del juego.
-* Necesario **PHP >= 5.3.0** (Puede que hagamos un retroceso a PHP 5.2, pero como el proyecto saldrá de aquí a varios años, para entonces no creo que haya problemas)
-* Necesario **MySQL >= 4.1**
-* También soporta MySQLi, MS SQL, Postgres, Oracle, SQLite y ODBC.
+* Necesario **PHP >= 5.3.0**.
+* Soporta MySQL (5.1+), MySQLi, MS SQL, SQLSRV, Oracle, PostgreSQL, SQLite, CUBRID, Interbase, ODBC y PDO.
 
 * El programa ofrecerá un poco más de exactitud al usar un sistema operativo de 64 bits, ya que se ueden usar números más grandes.
 
@@ -41,25 +40,6 @@ se añadirán más planetas pequeños al final de cada sistema solar, sin cumpli
 Con las lunas pasará lo mismo.
 * Falta para un futuro la temperatura superficial del planeta/luna.
 
-Cosas por hacer:
-----------------
-
-* Que en la creación de estrellas se cree la matriz $this->star_p.
-* Cálculo de distancias con el nuevo algoritmo.
-* Satélites.
-
-Más Datos
----------
-
-El sistema de plugins será adaptado a CodeIgniter, de manera que se usen librerías. Pero se debe avanzar más en el desarrollo.
-
-Cosas por hacer
----------------
-
-* Crear una función reset_password más completa, para que el controlador haga algo como *if reset_password message else message*.
-* El registro, si no se envía el email, muestra un mensaje en el que el link te devuelve al registro, en lugar de a la página principal.
-Hay que tener en cuenta que el usuario ya se ha registrado, así que no debería volver al registro.
-
 Distancias y velocidades:
 -------------------------
 
@@ -70,6 +50,9 @@ Hay que tener en cuenta que con el mínimo de tecnología para viajar se conside
 
 * Para calcular la distancia entre planeta_origen y planeta_destino se usará la siguiente fórmula:
 |(distancia del planeta_origen a la estrella)-(distancia del planeta_destino a la estrella)|
+* Es muy probable que esto cambie en un futuro, cuando hagamos un universo 3D, en el que las distancias cambiarán
+en el tiempo. Además, es muy posible que los trayectos, al ser orbitales, tarden más que si fueran en línea recta,
+siempre teniendo en cuenta el Dv disponible.
 
 **Distancias entre estrellas cercanas**
 
@@ -91,11 +74,13 @@ que se podrá encontrar en la sección galaxia. El diámetro no estará corréct
 * Estrellas: distancia(años)/luminosidad(soles) +/- 5% en minutos. Se ha de considerar que la distancia en otra galaxia es la distancia a la galaxia +/- la distancia de la estrella a la estrella 1.
 * Galaxias: distancia(millones de años)/(luminosidad media) +/- 5%, en minutos
 
-Tamaños, masas...:
+* Este algoritmo está abierto a cambios, ya que es muy preliminar, y todavía no está claro como será el universo.
+
+Fórmulas no implementadas:
 ------------------
 
-* Masa de un satélite: planeta doble ? 0.1 - 0.5 : 1E-11 - 0.015;
-* Si planeta doble, distancia mínima: r*(2M/m)^(1/3) //Límite de Roche, donde M es la masa del planeta,
+* Hay que tener en cuenta las esferas de Hill de los cuerpos, y la excentricidad de las órbitas, para que no se salgan: 
+* Muy importante el límite de roche, para que no se rompan los cuerpos: r*(2M/m)^(1/3) //Donde M es la masa del planeta,
 m la del satélite y r el rádio del satélite.
 
 Tiempo:
