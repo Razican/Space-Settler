@@ -21,7 +21,7 @@ class Main extends SPS_Controller {
 			}
 			else
 			{
-				$data['copyright']	= $this->load->view('public/copyright', '', TRUE);
+				$data['license']	= $this->load->view('public/license', '', TRUE);
 				$data['menu']		= $this->load->view('public/menu', '', TRUE);
 				$this->load->view('public/login', $data);
 			}
