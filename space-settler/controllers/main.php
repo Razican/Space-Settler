@@ -21,7 +21,7 @@ class Main extends SPS_Controller {
 			}
 			else
 			{
-				$data['license']	= $this->load->view('public/license', '', TRUE);
+				$data['license']	= $this->load->view('license', '', TRUE);
 				$data['menu']		= $this->load->view('public/menu', '', TRUE);
 				$this->load->view('public/login', $data);
 			}
@@ -32,6 +32,8 @@ class Main extends SPS_Controller {
 			$this->lang->load('menu');
 			$this->lang->load('overview');
 
+			$data['license']	= $this->load->view('license', '', TRUE);
+			$data['topbar']		= $this->load->view('ingame/topbar', '', TRUE);
 			$data['menu']		= $this->load->view('ingame/menu', '', TRUE);
 			$data['planets']	= $this->user->count_planets();
 			$data['moons']		= $this->user->count_moons();

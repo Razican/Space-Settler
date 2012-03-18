@@ -3,18 +3,11 @@
 /* Support section */
 #support_table
 {
-	display:			table;
 	border:				2px solid #000;
-}
-
-.support_table-row
-{
-	display:			table-row;
 }
 
 .support_table-cell
 {
-	display:			table-cell;
 	text-align:			center;
 	padding:			5px;
 	border:				1px solid #000;
@@ -25,21 +18,29 @@
 	background-color:	 gray;	
 }
 
+/* Content */
+#content
+{
+	position:			relative;
+	width:				auto;
+	margin:				15px 0px 0px 140px;
+	background-color:	#202d8a;
+	border-radius:		10px;
+	padding:			20px;
+}
+
 /* Menu */
 #menu
 {
-	margin:				5px;
-	text-align:			center;
-	background-color:	#1e0d68;
-	min-width:			125px;
-	max-width:			175px;
-	width:				30%;
+	width:				130px;
 	float:				left;
-	border-radius:		5px;
+	margin:				0px;
 }
 
 #menu ul
 {
+	background-color:	#1e0d68;
+	border-radius:		0px 5px 5px 0px;
 	padding:			5px;
 }
 
@@ -49,24 +50,33 @@
 	padding:			0px 5px;
 }
 
-/*Content */
-#content
+/* Logo */
+#logo
 {
-	width:				70%;
 	float:				left;
-	background-color:	#202d8a;
-	border-radius:		10px;
-	padding:			20px;
-	text-align:			left;
-	margin:				5px;
-}
-
-#content div
-{
-	padding:			5px;
-}
-
-.message
-{
+	width:				130px;
+	display:			block;
 	text-align:			center;
+}
+
+/* Top Bar */
+#topbar
+{
+	text-align:			right;
+	background-color:	#1e0d68;
+	margin:				0px 0px 0px 140px;
+	border-radius:		0px 0px 5px 5px;
+	display:			block;
+	padding:			10px;
+}
+
+/* License */
+#license
+{
+	margin:				5px auto;
+	text-align:			center;
+	background-color:	#1e0d68;
+	border-radius:		5px;
+	clear:				both;
+	padding:			5px;
 }

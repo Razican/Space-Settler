@@ -19,6 +19,8 @@ class Support extends SPS_Controller {
 		$this->lang->load('menu');
 		$this->lang->load('support');
 
+		$data['license']	= $this->load->view('license', '', TRUE);
+		$data['topbar']		= $this->load->view('ingame/topbar', '', TRUE);
 		$data['menu']		= $this->load->view('ingame/menu', '', TRUE);
 		$data['tickets']	= $this->support_m->load_all_tickets($id);
 
@@ -64,6 +66,8 @@ class Support extends SPS_Controller {
 		{
 			$this->lang->load('menu');
 
+			$data['license']	= $this->load->view('license', '', TRUE);
+			$data['topbar']		= $this->load->view('ingame/topbar', '', TRUE);
 			$data['menu']		= $this->load->view('ingame/menu', '', TRUE);
 
 			$data['title']		= array(
@@ -103,8 +107,8 @@ class Support extends SPS_Controller {
 			if(is_null($id)) redirect('support');
 			$this->session->set_flashdata('ticket_id', $id);
 
-
-
+			$data['license']		= $this->load->view('license', '', TRUE);
+			$data['topbar']			= $this->load->view('ingame/topbar', '', TRUE);
 			$data['menu']			= $this->load->view('ingame/menu', '', TRUE);
 			$data['ticket']			= $this->support_m->load_ticket($id);
 			$data['reply_textarea']	= array(

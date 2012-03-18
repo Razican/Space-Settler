@@ -1,7 +1,10 @@
+<div id="logo">Logo</div>
+<?php echo $topbar; ?>
+<div class="clear"></div>
 <?php echo $menu; ?>
 
 <div id="content">
-<div id="support_ticket"
+<div id="support_ticket">
 	<div id="support_title">
 		<span class="support_title_tag"><?php echo lang('support.title'); ?>: </span>
 		<span class="support_title_text"><?php echo $ticket->title; ?></span>
@@ -37,3 +40,5 @@
 	</div>
 </div>
 </div>
+
+<?php echo $license; ?>

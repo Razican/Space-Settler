@@ -15,7 +15,7 @@
 	padding:			5px;
 }
 
-.menu
+#menu
 {
 	margin:				5px auto;
 	text-align:			center;
@@ -24,13 +24,23 @@
 	border-radius:		5px;
 }
 
-.menu ul
+#menu ul
 {
 	padding:			5px;
 }
 
-.menu li
+#menu li
 {
 	display:			inline-block;
 	padding:			0px 5px;
+}
+
+#license
+{
+	margin:				5px auto;
+	text-align:			center;
+	background-color:	#1e0d68;
+	width:				60%;
+	border-radius:		5px;
+	padding:			5px;
 }

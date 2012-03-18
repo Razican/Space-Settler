@@ -16,3 +16,23 @@ a
 	text-decoration:	none;
 	color:				white;
 }
+
+.table
+{
+	display:			table;
+}
+
+.table-cell
+{
+	display:			table-cell;
+}
+
+.table-row
+{
+	display:			table-row;
+}
+
+.clear
+{
+	clear:				both;
+}

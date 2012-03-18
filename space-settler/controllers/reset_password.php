@@ -51,7 +51,7 @@ class Reset_password extends SPS_Controller {
 			}
 			else
 			{
-				$data['license']	= $this->load->view('public/license', '', TRUE);
+				$data['license']	= $this->load->view('license', '', TRUE);
 				$data['menu']		= $this->load->view('public/menu', '', TRUE);
 				$this->load->view('public/reset_password', $data);
 			}

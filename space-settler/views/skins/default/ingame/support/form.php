@@ -1,3 +1,6 @@
+<div id="logo">Logo</div>
+<?php echo $topbar; ?>
+<div class="clear"></div>
 <?php echo $menu; ?>
 
 <div id="content">
@@ -20,3 +23,5 @@
 ?>
 </div>
 </div>
+
+<?php echo $license; ?>
