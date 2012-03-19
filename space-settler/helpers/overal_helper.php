@@ -9,14 +9,17 @@
  * @param	bool
  * @return	void
  */
-function message($message, $dest = '/', $menu = FALSE)
+function message($message, $dest = '/')
 {
 	$CI					=& get_instance();
 
+	$data['topbar']		= '';
 	$data['menu']		= '';
-	if($menu)
+	$data['license']	= $CI->load->view('license', '', TRUE);
+	if(defined('INGAME'))
 	{
 		$CI->lang->load('menu');
+		$data['topbar']		= $CI->load->view('ingame/topbar', '', TRUE).'<div class="clear"></div>';
 		$data['menu']		= $CI->load->view('ingame/menu', '', TRUE);
 	}
 
@@ -108,7 +111,7 @@ function current_lang()
 }
 
 /**
- * It gets the name for a given user ID (Alias of $this->user->get_name)
+ * It gets the name for a given user ID (Alias of $this->user->get_name())
  *
  * @param	int
  * @param	boolean
@@ -119,6 +122,27 @@ function get_name($id, $is_admin = FALSE)
 	$CI =& get_instance();
 
 	return $CI->user->get_name($id, $is_admin);
+}
+
+/**
+ * It lists all the installed skins
+ *
+ * @return	array
+ */
+function list_skins($config_item = NULL)
+{
+	$skins	= array();
+	foreach(scandir(FCPATH.'skins') as $dir)
+	{
+		if( ! is_dir(FCPATH.'skins/'.$dir)) break;
+		if($dir != '.' && $dir != '..')
+		{
+			require_once(FCPATH.'skins/'.$dir.'/config.php');
+			if( ! isset($config)) show_error(lang('overal.config_error'));
+			$skins[$dir] = is_null($config_item) ? $config : $config[$config_item];
+		}
+	}
+	return $skins;
 }
 
 

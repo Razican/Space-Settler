@@ -40,13 +40,13 @@ class Support extends SPS_Controller {
 				! $this->input->post('title') OR
 				! $this->input->post('text'))
 			{
-				message(lang('support.no_data'), 'support/new_ticket', TRUE);
+				message(lang('support.no_data'), 'support/new_ticket');
 			}
 			else if ($this->input->post('type') > 3 OR $this->input->post('type') < 1)
 			{
 				log_message('error', 'User with ID '.$this->session->userdata('id').
 							' and IP '.$this->input->ip_address().' has tried to send an invalid type at support/new_ticket.');
-				message(lang('overal.hacking_attempt'), 'support/new_ticket', TRUE);
+				message(lang('overal.hacking_attempt'), 'support/new_ticket');
 			}
 			else
 			{
@@ -57,9 +57,9 @@ class Support extends SPS_Controller {
 															$this->input->post('text'));
 
 				if($new_ticket)
-					message(lang('support.new_success'), 'support', TRUE);
+					message(lang('support.new_success'), 'support');
 				else
-					message(lang('support.new_error'), 'support', TRUE);
+					message(lang('support.new_error'), 'support');
 			}
 		}
 		else
@@ -125,12 +125,12 @@ class Support extends SPS_Controller {
 			$ticket_id	= $this->session->flashdata('ticket_id');
 
 			if( ! $this->input->post('reply'))
-				message(lang('support.no_data'), 'support/ticket/'.$ticket_id, TRUE);
+				message(lang('support.no_data'), 'support/ticket/'.$ticket_id);
 
 			if( ! $this->support_m->insert_reply($ticket_id, $this->input->post('reply')))
-				message(lang('support.reply_error'), 'support/ticket/'.$ticket_id, TRUE);
+				message(lang('support.reply_error'), 'support/ticket/'.$ticket_id);
 			else
-				message(lang('support.reply_success'), 'support/ticket/'.$ticket_id, TRUE);
+				message(lang('support.reply_success'), 'support/ticket/'.$ticket_id);
 		}
 	}
 }

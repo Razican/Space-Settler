@@ -1,4 +1,3 @@
-<div id="logo">Logo</div>
 <?php echo $topbar; ?>
 <div class="clear"></div>
 <?php echo $menu; ?>

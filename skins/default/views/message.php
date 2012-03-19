@@ -1,3 +1,4 @@
+<?php echo $topbar; ?>
 <?php echo $menu; ?>
 
 <div id="content">
@@ -6,3 +7,5 @@
 		<p><?php echo $dest; ?></p>
 	</div>
 </div>
+
+<?php echo $license; ?>

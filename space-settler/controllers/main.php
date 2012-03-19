@@ -4,8 +4,6 @@ class Main extends SPS_Controller {
 
 	public function index()
 	{
-		$this->output->enable_profiler($this->config->item('debug'));
-
 		if($this->uri->segment(1)) redirect('/', 'location', 301);
 
 		if( ! $this->session->userdata('logged_in'))

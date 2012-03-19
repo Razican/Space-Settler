@@ -6,7 +6,7 @@ $lang['menu.explore'] 				= '<strike>Exploración</strike>';
 $lang['menu.tecnology'] 			= '<strike>Tecnollogía</strike>';
 $lang['menu.construction'] 			= '<strike>Construcción</strike>';
 $lang['menu.hangar'] 				= '<strike>Hangar</strike>';
-$lang['menu.settings'] 				= '<strike>Configuración</strike>';
+$lang['menu.settings'] 				= 'Configuración';
 $lang['menu.support'] 				= 'Soporte';
 $lang['menu.logout'] 				= 'Salir';
 

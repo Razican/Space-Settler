@@ -6,7 +6,7 @@
 	<li><?php echo anchor('#', lang('menu.tecnology')); ?></li>
 	<li><?php echo anchor('#', lang('menu.construction')); ?></li>
 	<li><?php echo anchor('#', lang('menu.hangar')); ?></li>
-	<li><?php echo anchor('#', lang('menu.settings')); ?></li>
+	<li><?php echo anchor('settings', lang('menu.settings')); ?></li>
 	<li><?php echo anchor('support', lang('menu.support')); ?></li>
 	<li><?php echo anchor('logout', lang('menu.logout')); ?></li>
 </ul>

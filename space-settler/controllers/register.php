@@ -4,8 +4,6 @@ class Register extends SPS_Controller {
 
 	public function _remap($referrer)
 	{
-		$this->output->enable_profiler($this->config->item('debug'));
-
 		$referrer	= $referrer === 'index' ? NULL : $referrer;
 		$this->session->set_flashdata('referrer', $referrer);
 

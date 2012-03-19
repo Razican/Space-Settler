@@ -173,6 +173,41 @@ class User
 	}
 
 	/**
+	 * Save user's configuration
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	string
+	 * @param	string
+	 * @param	bool
+	 * @return	bool
+	 */
+	public function save_config($name, $email, $password, $hibernate)
+	{
+		$CI			=& get_instance();
+
+		$current	= $this->get_settings();
+		$password	= sha1($password);
+
+		if($current->email != $email && $current->password != $password)
+			message('settings.changing_mail_pass', 'settings');
+		else
+		{
+			//@TODO: Avisar por email de los cambios y en el caso de cambiar email, confirmar
+			$CI->db->where('id', $CI->session->userdata('id'));
+
+			$data		= array(
+							'name'			=> $name,
+							'email'			=> $email,
+							'password'		=> $password,
+							'hibernating'	=> $hibernate
+						);
+
+			return $CI->db->update('users', $data);
+		}
+	}
+
+	/**
 	 * Validate user's email address
 	 *
 	 * @access	public
@@ -186,6 +221,27 @@ class User
 		$CI->db->update('users', array('validation' => NULL));
 
 		return ($CI->db->affected_rows() != 0);
+	}
+
+	/**
+	 * Get User's settings
+	 *
+	 * @access	public
+	 * @return	object
+	 */
+	public function get_settings()
+	{
+		$CI			=& get_instance();
+		$settings	= array();
+
+		$CI->db->where('id', $CI->session->userdata('id'));
+		$CI->db->select('email, name, hibernating, skin');
+		$query		= $CI->db->get('users');
+
+		foreach($query->result() as $settings);
+		$settings->hibernating = (bool) $settings->hibernating;
+
+		return $settings;
 	}
 
 	/**

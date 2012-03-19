@@ -4,8 +4,6 @@ class Validate extends SPS_Controller {
 
 	public function _remap($code)
 	{
-		$this->output->enable_profiler($this->config->item('debug'));
-
 		$code	= $code === 'index' ? '' : $code;
 
 		if(strlen($code) != 15) redirect('/');
