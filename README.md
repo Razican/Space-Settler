@@ -120,3 +120,9 @@ Se ha creado un nuevo sistema de soporte, en el que se deben especificar algunas
 	* 6->No se implantará (Proposición/Mejora)
 	* 7->Implantado (Proposición/Mejora)
 	* 8->Solucionado (Error)
+
+Cosas por Hacer:
+================
+
+* Contadores para no poder cambiar la contraseña tras haber cambiado el email en los últimos días
+* Contadores para evitar cambios fraudulentos en la configuración en general

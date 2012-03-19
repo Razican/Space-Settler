@@ -67,21 +67,28 @@ class Settings extends SPS_Controller {
 		$this->lang->load('settings');
 		$this->load->helper('email');
 
-		if(( ! $this->input->post('name')) OR ( ! $this->input->post('email')))
-			message('settings.no_data', 'settings');
-		else if(($this->input->post('password')) && ( ! $this->input->post('passconf')))
-			message('settings.confirm_pass', 'settings');
-		else if( ! valid_email($this->input->post('email')))
-			message('settings.email_not_valid', 'settings');
+		if(($this->input->post('password')) && ( ! $this->input->post('passconf')))
+			message(lang('settings.confirm_pass'), 'settings');
+		else if($this->input->post('email') && ( ! valid_email($this->input->post('email'))))
+			message(lang('settings.email_not_valid'), 'settings');
 		else if ($this->input->post('password') != $this->input->post('passconf'))
-			message('settings.passconf_dif', 'settings');
+			message(lang('settings.passconf_dif'), 'settings');
+		else if ( ! in_array($this->input->post('skin'), list_skins()))
+		{
+			log_message('error', 'User with ID '.$this->session->userdata('id').
+							' and IP '.$this->input->ip_address().' has tried to use a skin that does not exist.');
+			message(lang('overal.hacking_attempt'), 'settings');
+		}
+		else
+		{
+			$save	= $this->user->save_config(	$this->input->post('name'),
+												$this->input->post('email'),
+												$this->input->post('password'),
+												$this->input->post('skin'),
+												(bool) $this->input->post('hibernate'));
 
-		$save	= $this->user->save_config(	$this->input->post('name'),
-											$this->input->post('email'),
-											$this->input->post('password'),
-											(bool) $this->input->post('hibernate'));
-
-		if($save)	message(lang('settings.save_ok'), 'settings');
-		else		message(lang('settings.save_error'), 'settings');
+			if($save)	message(lang('settings.save_ok'), 'settings');
+			else		message(lang('settings.save_error'), 'settings');
+		}
 	}
 }

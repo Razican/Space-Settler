@@ -179,15 +179,16 @@ class User
 	 * @param	string
 	 * @param	string
 	 * @param	string
+	 * @param	string
 	 * @param	bool
 	 * @return	bool
 	 */
-	public function save_config($name, $email, $password, $hibernate)
+	public function save_config($name, $email, $password, $skin, $hibernate)
 	{
 		$CI			=& get_instance();
 
-		$current	= $this->get_settings();
-		$password	= sha1($password);
+		$current	= $this->get_settings(TRUE);
+		$password	= $password ? sha1($password) : NULL;
 
 		if($current->email != $email && $current->password != $password)
 			message('settings.changing_mail_pass', 'settings');
@@ -197,10 +198,11 @@ class User
 			$CI->db->where('id', $CI->session->userdata('id'));
 
 			$data		= array(
-							'name'			=> $name,
-							'email'			=> $email,
-							'password'		=> $password,
-							'hibernating'	=> $hibernate
+							'name'			=> $name ? $name : $current->name,
+							'email'			=> $email ? $email : $current->email,
+							'password'		=> $password ? $password : $current->password,
+							'hibernating'	=> $hibernate,
+							'skin'			=> $skin
 						);
 
 			return $CI->db->update('users', $data);
@@ -229,13 +231,13 @@ class User
 	 * @access	public
 	 * @return	object
 	 */
-	public function get_settings()
+	public function get_settings($password = FALSE)
 	{
 		$CI			=& get_instance();
 		$settings	= array();
 
 		$CI->db->where('id', $CI->session->userdata('id'));
-		$CI->db->select('email, name, hibernating, skin');
+		$CI->db->select('email, name, '.($password ? 'password, ' : '').'hibernating, skin');
 		$query		= $CI->db->get('users');
 
 		foreach($query->result() as $settings);

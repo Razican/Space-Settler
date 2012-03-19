@@ -7,7 +7,6 @@ $lang['settings.email'] 				= 'Correo Electrónico';
 $lang['settings.skin'] 					= 'Paquete gráfico';
 $lang['settings.hibernate'] 			= 'Activar / Desactivar el modo hibernación';
 $lang['settings.submit'] 				= 'Guardar configuración';
-$lang['settings.no_data'] 				= 'Debes introducir todos los campos';
 $lang['settings.confirm_pass'] 			= 'Debes confirmar la contraseña introduciendola dos veces';
 $lang['settings.email_not_valid']		= 'El correo electrónico introducido no es válido';
 $lang['settings.passconf_dif'] 			= 'Las contraseñas no coinciden';
