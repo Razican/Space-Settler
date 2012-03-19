@@ -192,20 +192,40 @@ class User
 
 		if($current->email != $email && $current->password != $password)
 			message('settings.changing_mail_pass', 'settings');
+		if($current->skin != $skin)
+			$CI->session->set_userdata('skin', $skin);
+		else if(($current->name === $name OR ( ! $name)) && ($current->email === $email OR ( ! $email)) &&
+				($current->password === $password OR ( ! $password)) &&
+				($current->skin === $skin OR ( ! $skin)) && $current->hibernating === $hibernate)
+			return TRUE;
 		else
 		{
-			//@TODO: Avisar por email de los cambios y en el caso de cambiar email, confirmar
 			$CI->db->where('id', $CI->session->userdata('id'));
 
+			$validation	= $current->email != $email ? random_string('alnum', 15) : NULL;
 			$data		= array(
 							'name'			=> $name ? $name : $current->name,
 							'email'			=> $email ? $email : $current->email,
+							'validation'	=> $validation,
 							'password'		=> $password ? $password : $current->password,
 							'hibernating'	=> $hibernate,
 							'skin'			=> $skin
 						);
 
-			return $CI->db->update('users', $data);
+			if(($current->email != $email) OR ($current->password != $password))
+			{
+				$CI->load->library('email');
+				$CI->email->from('space-settler@razican.com', 'Space Settler');
+				$CI->email->reply_to('noreply@razican.com', 'Space Settler');
+				$CI->email->to($email);
+				$CI->email->subject(lang('settings.email_title'));
+				$array		= array('%password%', '%name%', '%validation_link%');
+				$replace	= array($password, $name, site_url('validation/'.$validation));
+				$message	= ($current->email != $email) ? lang('settings.email_change') : lang('settings.pass_change');
+				$CI->email->message(str_replace($array, $replace, $message));
+			}
+
+			return ($CI->db->update('users', $data) && $CI->email->send());
 		}
 	}
 
@@ -220,7 +240,7 @@ class User
 		$CI			=& get_instance();
 
 		$CI->db->where('validation', $code);
-		$CI->db->update('users', array('validation' => NULL));
+		$CI->db->update('users', array('validation' => NULL, 'validated' => TRUE));
 
 		return ($CI->db->affected_rows() != 0);
 	}

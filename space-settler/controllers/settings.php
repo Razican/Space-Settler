@@ -73,7 +73,7 @@ class Settings extends SPS_Controller {
 			message(lang('settings.email_not_valid'), 'settings');
 		else if ($this->input->post('password') != $this->input->post('passconf'))
 			message(lang('settings.passconf_dif'), 'settings');
-		else if ( ! in_array($this->input->post('skin'), list_skins()))
+		else if ( ! array_key_exists($this->input->post('skin'), list_skins()))
 		{
 			log_message('error', 'User with ID '.$this->session->userdata('id').
 							' and IP '.$this->input->ip_address().' has tried to use a skin that does not exist.');
