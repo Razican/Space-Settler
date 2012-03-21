@@ -1,5 +1,10 @@
 @charset "utf8";
 
+/* Logo */
+#logo img
+{
+	padding-top:			5px;
+}
 /* Support section */
 #support_table
 {

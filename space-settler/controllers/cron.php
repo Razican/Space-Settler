@@ -8,7 +8,7 @@ class Cron extends SPS_Controller {
 		redirect('/', 'location', 301);
 	}
 
-	public function inactives()
+	public function daily()
 	{
 		if( ! $this->input->is_cli_request())
 		{
@@ -22,6 +22,7 @@ class Cron extends SPS_Controller {
 		if($this->crons->finish_hibernations()) echo 'Hibernations Finished'.PHP_EOL;
 		if($this->crons->delete_inactives()) echo 'Inactives deleted'.PHP_EOL;
 		if($this->crons->warn_inactives()) echo 'Inactives warned'.PHP_EOL;
+		if($this->crons->warn_emails()) echo 'Inactive emails warned'.PHP_EOL;
 	}
 }
 

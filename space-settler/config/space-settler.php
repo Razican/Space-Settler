@@ -108,12 +108,13 @@ $config['long_descr']	= 'Space Settler es un juego online multijugador, en el qu
 | warn_inact:   The time before deleting an account when a user gets warned.
 |
 */
-$config['reg_inactive']	= 259200; //60*60*24*3
-$config['hib_inactive']	= 2592000; //60*60*24*30
-$config['inactive']		= 604800; //60*60*24*7
-//$config['min_points']	= 0;
-//$config['min_p_time']	= 432000; //60*60*24*5
-$config['warn_inact']	= 86400; //60*60*24
+$config['reg_inactive']		= 259200; //60*60*24*3
+$config['email_inactive']	= 604800; //60*60*24*7
+$config['hib_inactive']		= 2592000; //60*60*24*30
+$config['inactive']			= 604800; //60*60*24*7
+//$config['min_points']		= 0;
+//$config['min_p_time']		= 432000; //60*60*24*5
+$config['warn_inact']		= 86400; //60*60*24
 
 
 /* End of file space-settler.php */

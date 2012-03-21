@@ -14,6 +14,7 @@ $lang['settings.changing_mail_pass']	= 'No se pueden cambiar el correo electrón
 $lang['settings.save_ok'] 				= 'La configuración se ha guardado correctamente';
 $lang['settings.save_error'] 			= 'Ha ocurrido un error al guardar la configuración en la base de datos';
 
+//Mensajes de email
 
 /* End of file settings_lang.php */
 /* Location: ./application/language/spanish/settings_lang.php */
