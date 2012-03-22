@@ -41,6 +41,7 @@ class User
 				'id'			=> $user->id,
 				'username'		=> $user->username,
 				'email'			=> $user->email,
+				'homeworld'		=> $user->homeworld,
 				'hibernating'	=> $user->hibernating,
 				'skin'			=> $user->skin,
 				'logged_in'		=> TRUE
@@ -120,6 +121,7 @@ class User
 					'last_ip'		=> $IP,
 					'reg_ip'		=> $IP,
 					'register_time'	=> $time,
+					'homeworld'		=> $planet,
 					'last_active'	=> $time
 					);
 
@@ -264,6 +266,43 @@ class User
 		$settings->hibernating = (bool) $settings->hibernating;
 
 		return $settings;
+	}
+
+	/**
+	 * Get user's planet
+	 *
+	 * @access	public
+	 * @param	int
+	 * @return	object
+	 */
+	public function get_planet($id = NULL)
+	{
+		$CI			=& get_instance();
+		$id			= is_null($id) ? $CI->session->userdata('homeworld') : $id;
+
+		$CI->db->where('id', $id);
+		$query		= $CI->db->get('bodies');
+
+		if($query->num_rows() > 0)
+		{
+			foreach($query->result() as $body);
+			$body->type				= (int) $body->type;
+			$body->terrestrial		= (bool) $body->terrestrial;
+			$body->double_planet	= (bool) $body->double_planet;
+			$body->planet			= is_null($body->planet) ? NULL : $this->get_planet($body->planet);
+			$body->mass				= $body->mass*1E-19;
+			$body->density			= $body->density/100;
+			$body->distance			= ($body->type === 0) ? $body->distance/10000 : $body->planet->radius*$body->distance/100000;
+			$body->habitable		= (bool) $body->habitable;
+			$body->water			= $body->water/100;
+
+			return $body;
+		}
+		else
+		{
+			log_message('error', 'Did not find the homeworld planet for user with ID '.$CI->session->userdata('id'));
+			return FALSE;
+		}
 	}
 
 	/**

@@ -33,8 +33,8 @@ class Main extends SPS_Controller {
 			$data['license']	= $this->load->view('license', '', TRUE);
 			$data['topbar']		= $this->load->view('ingame/topbar', '', TRUE);
 			$data['menu']		= $this->load->view('ingame/menu', '', TRUE);
-			$data['planets']	= $this->user->count_planets();
-			$data['moons']		= $this->user->count_moons();
+			$data['planet']		= $this->user->get_planet();
+
 
 			$this->load->view('ingame/overview', $data);
 		}
