@@ -1,13 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Reset_password extends CI_Controller {
+class Reset_password extends SPS_Controller {
 
 	public function index()
 	{
-		$this->output->enable_profiler($this->config->item('debug'));
-
 		if($this->uri->segment(2))
-			redirect('reset_password');
+			redirect('reset_password', 'location', 301);
 
 		if( ! $this->session->userdata('logged_in'))
 		{
@@ -51,10 +49,8 @@ class Reset_password extends CI_Controller {
 			}
 			else
 			{
-				$data['forum_url']	= $this->config->item('forum_url');
-				$data['head']		= $this->load->view('head', '', TRUE);
-				$data['footer']		= $this->load->view('footer', '', TRUE);
-
+				$data['license']	= $this->load->view('license', '', TRUE);
+				$data['menu']		= $this->load->view('public/menu', '', TRUE);
 				$this->load->view('public/reset_password', $data);
 			}
 		}

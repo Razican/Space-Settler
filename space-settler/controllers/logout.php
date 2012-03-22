@@ -1,11 +1,11 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Logout extends CI_Controller {
+class Logout extends SPS_Controller {
 
 	public function index()
 	{
 		if($this->uri->segment(2))
-			redirect('reset_password');
+			redirect('logout', 'location', 301);
 
 		if($this->session->userdata('logged_in'))
 			$this->user->logout();

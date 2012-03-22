@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Check_updates extends CI_Controller {
+class Check_updates extends SPS_Controller {
 
 	public function index()
 	{
@@ -9,6 +9,7 @@ class Check_updates extends CI_Controller {
 		echo 'CodeIgniter : '.($this->update->check_codeigniter() ? 'OK' : 'Desactualizado').' ['.CI_VERSION.']<br />';
 	}
 }
+
 
 /* End of file check_updates.php */
 /* Location: ./application/controllers/check_updates.php */

@@ -1,17 +1,13 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Main extends CI_Controller {
+class Main extends SPS_Controller {
 
 	public function index()
 	{
-		$this->output->enable_profiler($this->config->item('debug'));
-
-		if($this->uri->segment(1))
-			redirect('/');
+		if($this->uri->segment(1)) redirect('/', 'location', 301);
 
 		if( ! $this->session->userdata('logged_in'))
 		{
-			define('LOGIN', TRUE);
 			$this->lang->load('login');
 
 			if ($this->input->server('REQUEST_METHOD') === 'POST')
@@ -23,19 +19,24 @@ class Main extends CI_Controller {
 			}
 			else
 			{
-				$data['version']	= $this->config->item('version');
-				$data['forum_url']	= $this->config->item('forum_url');
-				$data['game_name']	= $this->config->item('game_name');
-				$data['head']		= $this->load->view('head', '', TRUE);
-				$data['footer']		= $this->load->view('footer', '', TRUE);
-
+				$data['license']	= $this->load->view('license', '', TRUE);
+				$data['menu']		= $this->load->view('public/menu', '', TRUE);
 				$this->load->view('public/login', $data);
 			}
 		}
 		else
 		{
-			echo show_date();
-			//ShowOverviewPage
+			define('INGAME', TRUE);
+			$this->lang->load('menu');
+			$this->lang->load('overview');
+
+			$data['license']	= $this->load->view('license', '', TRUE);
+			$data['topbar']		= $this->load->view('ingame/topbar', '', TRUE);
+			$data['menu']		= $this->load->view('ingame/menu', '', TRUE);
+			$data['planet']		= $this->user->get_planet();
+
+
+			$this->load->view('ingame/overview', $data);
 		}
 	}
 }

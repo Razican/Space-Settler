@@ -2,9 +2,8 @@ Requisitos Mínimos
 ==================
 
 * Se recomienda siempre usar UTF-8 en su variante *general_ci* en la base de datos y en la codificación de todos los archivos del juego.
-* Necesario **PHP >= 5.2.0**
-* Necesario **MySQL >= 4.1**
-* También soporta MySQLi, MS SQL, Postgres, Oracle, SQLite y ODBC.
+* Necesario **PHP >= 5.3.0**.
+* Soporta MySQL (5.1+), MySQLi, MS SQL, SQLSRV, Oracle, PostgreSQL, SQLite, CUBRID, Interbase, ODBC y PDO.
 
 * El programa ofrecerá un poco más de exactitud al usar un sistema operativo de 64 bits, ya que se ueden usar números más grandes.
 
@@ -41,39 +40,6 @@ se añadirán más planetas pequeños al final de cada sistema solar, sin cumpli
 Con las lunas pasará lo mismo.
 * Falta para un futuro la temperatura superficial del planeta/luna.
 
-Cosas por hacer:
-----------------
-
-* Que en la creación de estrellas se cree la matriz $this->star_p.
-* Cálculo de distancias con el nuevo algoritmo.
-* Satélites.
-
-Cambios en el Juego
--------------------
-
-* Todos los nombres de usuario/alianza/planeta tendrán una máxima longitud de 20 caracteres. Los emails de 50, las webs de 100 y las imágenes externas de 150.
-* Se implanta el uso de Sha-1 en vez de Md5.
-* Las contraseñas deberán tener un mínimo de 6 carateres, configurable en el futuro desde el panel de administración.
-* Se ha añadido un nuevo campo en la tabla planets: distance, ahora, si el planeta es 0, será el sol. Con una nueva variable, luminosidad, todavía por implantar.
-* Si en la tabla planets, en id_owner es 0, es un planeta no habitado.
-* 1 Campo +/- 75 km de diametro. {10 - 3250} (diametro-> mt_rand((campos-1)*75, (campos+1)*75))
-* Probabilidades: mt_rand(1,100) if (<=x && >y), siendo x el mínimo de porcentaje e y el máximo.
-
-Más Datos
----------
-
-El sistema de plugins será adaptado a CodeIgniter, de manera que se usen librerías. Pero se debe avanzar más en el desarrollo.
-
-Cosas por hacer
----------------
-
-Crear una función reset_password más completa, para que el controlador haga algo como *if reset_password message else message*.
-
-Selección de Planetas en el Registro
-------------------------------------
-
-* Se seleccionan uno entre los planetas habitables
-
 Distancias y velocidades:
 -------------------------
 
@@ -84,19 +50,17 @@ Hay que tener en cuenta que con el mínimo de tecnología para viajar se conside
 
 * Para calcular la distancia entre planeta_origen y planeta_destino se usará la siguiente fórmula:
 |(distancia del planeta_origen a la estrella)-(distancia del planeta_destino a la estrella)|
-* El tiempo que se tarda en recorrer la distancia (en UA) será el siguiente: distancia*499s +/- 1%, redondeado hacia arriba.
+* Es muy probable que esto cambie en un futuro, cuando hagamos un universo 3D, en el que las distancias cambiarán
+en el tiempo. Además, es muy posible que los trayectos, al ser orbitales, tarden más que si fueran en línea recta,
+siempre teniendo en cuenta el Dv disponible.
 
 **Distancias entre estrellas cercanas**
 
 * La fórmula que se usará a la hora de crear un sistema cercano será la siguiente: distancia = raiz_quinta{(ID_sistema_origen-ID_sistema_destino)^2}*aleatorio(40,45)/10 (en años luz)
-* la velocidad será la misma, de manera que para viajar de un planeta de un sistema a otro, se tardará
-distancia*63.200 +/- (distancia del planeta origen a su estrella) +/- (distancia del planeta destino a su estrella) +/- 1%, redondeado hacia arriba, en segundos.
 
 **Distancias entre galaxias cercanas**
 
 * La fórmula que se usará a la hora de crear una galaxia cercana será la siguiente: distancia = raiz_cuarta{|(ID_galaxia_origen-ID_galaxia_destino)^3|}*aleatorio(225,250)/100 (en millones de años luz)
-* la velocidad será la misma, de manera que para viajar de un planeta de un sistema a otro, se tardará
-distancia*63.200.000.000 +/- (distancia de la estrella a la estrella 1 de la galaxia)*63200 +/- (distancia del planeta origen a su estrella) +/- (distancia del planeta destino a su estrella), redondeado hacia arriba, en segundos.
 
 Exploración del Universo:
 -------------------------
@@ -110,17 +74,14 @@ que se podrá encontrar en la sección galaxia. El diámetro no estará corréct
 * Estrellas: distancia(años)/luminosidad(soles) +/- 5% en minutos. Se ha de considerar que la distancia en otra galaxia es la distancia a la galaxia +/- la distancia de la estrella a la estrella 1.
 * Galaxias: distancia(millones de años)/(luminosidad media) +/- 5%, en minutos
 
-Tamaños, masas...:
+* Este algoritmo está abierto a cambios, ya que es muy preliminar, y todavía no está claro como será el universo.
+
+Fórmulas no implementadas:
 ------------------
 
-* Masa de un satélite: planeta doble ? 0.1 - 0.5 : 1E-11 - 0.015;
-* Si planeta doble, distancia mínima: r*(2M/m)^(1/3) //Límite de Roche, donde M es la masa del planeta,
+* Hay que tener en cuenta las esferas de Hill de los cuerpos, y la excentricidad de las órbitas, para que no se salgan: 
+* Muy importante el límite de roche, para que no se rompan los cuerpos: r*(2M/m)^(1/3) //Donde M es la masa del planeta,
 m la del satélite y r el rádio del satélite.
-
-Constantes:
------------
-
-* Luz: 299792458 m/s
 
 Tiempo:
 -------
@@ -138,3 +99,30 @@ tecnologías de motores Warp, que permitirían viajes superlumínicos, comprimie
 * Es por esto último que se considera que dos galaxias no tendrán interacción entre ellas, aunque podría haber mensajes entre ellas, pero tardarían muchísimo en llegar.
 Se considerarían casi dos universos separados. También es verdad que se podrá usar tecnología subespacial para las comunicaciones, que permitiran hacerlas en un muy corto tiempo, casi equiparable
 a la comunicación con una estrella de la misma galaxia.
+
+Sistema de Soporte:
+-------------------
+
+Se ha creado un nuevo sistema de soporte, en el que se deben especificar algunas cosas:
+
+* **Tipo de ticket**:
+	* 1->Error/Bug
+	* 2->Mejora
+	* 3->Nueva Característica/Proposición
+
+* **Estado del ticket**:
+	* 0->Nuevo
+	* 1->Aceptado (Proposición/Mejora)
+	* 2->Confirmado (Error)
+	* 3->En proceso
+	* 4->Duplicado
+	* 5->No es un error (Error)
+	* 6->No se implantará (Proposición/Mejora)
+	* 7->Implantado (Proposición/Mejora)
+	* 8->Solucionado (Error)
+
+Cosas por Hacer:
+================
+
+* Contadores para no poder cambiar la contraseña tras haber cambiado el email en los últimos días
+* Contadores para evitar cambios fraudulentos en la configuración en general

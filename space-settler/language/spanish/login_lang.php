@@ -14,8 +14,6 @@ $lang['login.lost_password']		= '¿Has olvidado tu Contraseña?';
 $lang['login.user']					= 'Usuario';
 $lang['login.pass']					= 'Contraseña';
 $lang['login.login']				= 'Entrar';
-$lang['login.game_description']		= 'es un <strong>juego de simulacion estratégica espacial</strong> con <strong>miles de jugadores</strong> a lo largo del mundo compitiendo por ser el mejor <strong>simultáneamente</strong>. Todo lo que necesitas para jugar, es un navegador web estándar.';
-$lang['login.welcome_to']			= 'Bienvenido a';
 $lang['login.remember_pass']		= 'Recordar Contraseña';
 $lang['login.server_register']		= '¡Regístrate!';
 $lang['login.server_message']		= '¡Únete ya y forma parte del fantástico mundo de';
@@ -27,7 +25,10 @@ $lang['login.user_not_alnum']		= '¡El campo de usuario sólo puede contener car
 $lang['login.user_exists']			= '¡El nombre de usuario elegido ya existe!';
 $lang['login.no_planet']			= 'Lo sentimos, en estos momentos no hay planetas disponibles para el registro.';
 $lang['login.reg_correct']			= '¡Registro completo!<br />Se te ha enviado un email con tu nueva contraseña. Por motivos de seguridad, por favor, cámbiala.';
-$lang['login.reg_email_message']	= '¡Bienvenido a %game_name%!<br />Tu usuario es: %username%<br />Tu contraseña es: %password%<br />Te aconsejamos cambiar la contraseña cuando entres por prinera vez.';
+$lang['login.reg_email_message']	= '¡Bienvenido a %game_name%!<br />Tu usuario es: %username%<br />Tu contraseña es: %password%<br />Te aconsejamos cambiar la contraseña cuando entres por primera vez.<br />Para poder jugar debes validar tu cuenta haciendo click <a href="%validation_link%">aquí</a>';
+$lang['login.reg_email_send_error']	= 'Ha ocurrido un error al enviar el email, esta es tu contraseña: %password%';
+$lang['login.val_complete']			= '¡Email validado correctamente!';
+$lang['login.val_no_complete']		= '¡Código no válido!';
 
 
 /* End of file login_lang.php */

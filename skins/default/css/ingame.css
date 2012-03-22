@@ -1,0 +1,87 @@
+@charset "utf8";
+
+/* Logo */
+#logo img
+{
+	padding-top:			5px;
+}
+/* Support section */
+#support_table
+{
+	border:				2px solid #000;
+}
+
+.support_table-cell
+{
+	text-align:			center;
+	padding:			5px;
+	border:				1px solid #000;
+}
+
+#support_replies
+{
+	background-color:	 gray;	
+}
+
+/* Content */
+#content
+{
+	position:			relative;
+	width:				auto;
+	margin:				15px 0px 0px 140px;
+	background-color:	#202d8a;
+	border-radius:		10px;
+	padding:			20px;
+}
+
+/* Menu */
+#menu
+{
+	width:				130px;
+	float:				left;
+	margin:				0px;
+}
+
+#menu ul
+{
+	background-color:	#1e0d68;
+	border-radius:		0px 5px 5px 0px;
+	padding:			5px;
+}
+
+#menu li
+{
+	display:			block;
+	padding:			0px 5px;
+}
+
+/* Logo */
+#logo
+{
+	float:				left;
+	width:				130px;
+	display:			block;
+	text-align:			center;
+}
+
+/* Top Bar */
+#topbar
+{
+	text-align:			right;
+	background-color:	#1e0d68;
+	margin:				0px 0px 0px 140px;
+	border-radius:		0px 0px 5px 5px;
+	display:			block;
+	padding:			10px;
+}
+
+/* License */
+#license
+{
+	margin:				5px auto;
+	text-align:			center;
+	background-color:	#1e0d68;
+	border-radius:		5px;
+	clear:				both;
+	padding:			5px;
+}

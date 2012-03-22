@@ -1,11 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-function update_config( $config_name, $config_value )
-{
-/*	global $game_config;
-	doquery("UPDATE {{table}} SET `config_value` = '".$config_value."' WHERE `config_name` = '".$config_name."';",'config');*/
-}
-
 /**
  * Show message
  *
@@ -15,12 +9,20 @@ function update_config( $config_name, $config_value )
  * @param	bool
  * @return	void
  */
-function message($message, $dest = '/', $topnav = FALSE, $menu = FALSE)
+function message($message, $dest = '/')
 {
 	$CI					=& get_instance();
 
-	$data['head']		= $CI->load->view('head', '', TRUE);
-	$data['footer']		= $CI->load->view('footer', '', TRUE);
+	$data['topbar']		= '';
+	$data['menu']		= '';
+	$data['license']	= $CI->load->view('license', '', TRUE);
+	if(defined('INGAME'))
+	{
+		$CI->lang->load('menu');
+		$data['topbar']		= $CI->load->view('ingame/topbar', '', TRUE).'<div class="clear"></div>';
+		$data['menu']		= $CI->load->view('ingame/menu', '', TRUE);
+	}
+
 	$data['message']	= $message;
 	$data['dest']		= anchor($dest, lang('overal.go_back'), 'title="'.lang('overal.go_back').'"');
 
@@ -47,7 +49,7 @@ function skin()
 {
 	$CI		=& get_instance();
 
-	$skin	=  $CI->config->item('skin');
+	$skin	=  $CI->session->userdata('logged_in') ? $CI->session->userdata('skin') : $CI->config->item('skin');
 	$skin	= ( ! empty($skin)) ? $skin : 'default';
 
 	return $skin;
@@ -92,6 +94,55 @@ function gravity($mass, $distance)
 {
 	$CI =& get_instance();
 	return $CI->config->item('G')*$mass/pow($distance, 2);
+}
+
+/**
+ * Return the current languaje key
+ *
+ * @return	string
+ */
+function current_lang()
+{
+	$CI =& get_instance();
+	require_once(APPPATH.'language/'.$CI->config->item('language').'/config.php');
+	if( ! isset($key)) show_error('ERROR! language not configured correctly!');
+
+	return $key;
+}
+
+/**
+ * It gets the name for a given user ID (Alias of $this->user->get_name())
+ *
+ * @param	int
+ * @param	boolean
+ * @return	string
+ */
+function get_name($id, $is_admin = FALSE)
+{
+	$CI =& get_instance();
+
+	return $CI->user->get_name($id, $is_admin);
+}
+
+/**
+ * It lists all the installed skins
+ *
+ * @return	array
+ */
+function list_skins($config_item = NULL)
+{
+	$skins	= array();
+	foreach(scandir(FCPATH.'skins') as $dir)
+	{
+		if( ! is_dir(FCPATH.'skins/'.$dir)) break;
+		if($dir != '.' && $dir != '..')
+		{
+			require_once(FCPATH.'skins/'.$dir.'/config.php');
+			if( ! isset($config)) show_error(lang('overal.config_error'));
+			$skins[$dir] = is_null($config_item) ? $config : $config[$config_item];
+		}
+	}
+	return $skins;
 }
 
 

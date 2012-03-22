@@ -344,5 +344,6 @@ class Bigbang
 	}
 }
 
+
 /* End of file Bigbang.php */
 /* Location: ./space_settler/libraries/Bigbang.php */
