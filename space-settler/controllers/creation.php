@@ -51,7 +51,7 @@ class Creation extends SPS_Controller {
 			$this->db->insert_batch('bodies', $this->bigbang->moons) OR die('Error! no se han podido crear los satélites');
 			$this->benchmark->mark($moons.' Moon insertion_end');
 
-			echo 'Se ha creado el universo';
+			echo 'Se ha creado el universo'.PHP_EOL;
 		}
 		else
 		{

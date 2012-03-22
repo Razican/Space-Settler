@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-03-2012 a las 13:53:00
--- Versión del servidor: 5.1.58
+-- Tiempo de generación: 22-03-2012 a las 19:55:53
+-- Versión del servidor: 5.1.61
 -- Versión de PHP: 5.3.6-13ubuntu3.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
@@ -25,9 +25,6 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `sps_admin`
 --
--- Creación: 07-03-2012 a las 12:52:36
--- Última actualización: 07-03-2012 a las 12:52:36
---
 
 DROP TABLE IF EXISTS `sps_admin`;
 CREATE TABLE IF NOT EXISTS `sps_admin` (
@@ -45,14 +42,11 @@ CREATE TABLE IF NOT EXISTS `sps_admin` (
 --
 -- Estructura de tabla para la tabla `sps_bodies`
 --
--- Creación: 21-01-2012 a las 18:39:07
--- Última actualización: 19-02-2012 a las 10:24:02
---
 
 DROP TABLE IF EXISTS `sps_bodies`;
 CREATE TABLE IF NOT EXISTS `sps_bodies` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `star` int(8) unsigned NOT NULL,
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `star` mediumint(8) unsigned NOT NULL,
   `position` tinyint(2) unsigned DEFAULT NULL,
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `terrestrial` tinyint(1) unsigned NOT NULL,
@@ -66,14 +60,12 @@ CREATE TABLE IF NOT EXISTS `sps_bodies` (
   `water` smallint(5) unsigned NOT NULL,
   `owner` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `sps_sessions`
---
--- Creación: 16-10-2011 a las 14:39:50
 --
 
 DROP TABLE IF EXISTS `sps_sessions`;
@@ -92,13 +84,10 @@ CREATE TABLE IF NOT EXISTS `sps_sessions` (
 --
 -- Estructura de tabla para la tabla `sps_stars`
 --
--- Creación: 21-01-2012 a las 18:39:07
--- Última actualización: 21-01-2012 a las 18:40:05
---
 
 DROP TABLE IF EXISTS `sps_stars`;
 CREATE TABLE IF NOT EXISTS `sps_stars` (
-  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `galaxy` tinyint(3) unsigned NOT NULL,
   `system` mediumint(6) unsigned NOT NULL,
   `type` char(1) NOT NULL,
@@ -107,14 +96,12 @@ CREATE TABLE IF NOT EXISTS `sps_stars` (
   `luminosity` bigint(19) unsigned NOT NULL,
   `temperature` mediumint(7) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `sps_support`
---
--- Creación: 07-03-2012 a las 12:31:30
 --
 
 DROP TABLE IF EXISTS `sps_support`;
@@ -134,8 +121,6 @@ CREATE TABLE IF NOT EXISTS `sps_support` (
 --
 -- Estructura de tabla para la tabla `sps_users`
 --
--- Creación: 15-02-2012 a las 18:56:40
---
 
 DROP TABLE IF EXISTS `sps_users`;
 CREATE TABLE IF NOT EXISTS `sps_users` (
@@ -145,10 +130,12 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
   `email` varchar(50) NOT NULL,
   `reg_email` varchar(50) NOT NULL,
   `validation` char(15) DEFAULT NULL,
+  `validated` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `name` varchar(20) NOT NULL,
   `last_ip` int(10) unsigned NOT NULL,
   `reg_ip` int(10) unsigned NOT NULL,
   `register_time` int(10) unsigned NOT NULL,
+  `homeworld` mediumint(8) unsigned NOT NULL,
   `last_active` int(10) unsigned NOT NULL,
   `hibernating` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `skin` varchar(15) NOT NULL DEFAULT 'default',
