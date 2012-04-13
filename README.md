@@ -21,25 +21,6 @@ Instalación:
 Información de cambios:
 =======================
 
-Nuevo Algoritmo:
-----------------
-
-Dado que actualmente el Big Bang no tiene un algoritmo sólido, y es un problema para el cálculo de unidades etc,
-se creará un nuevo algoritmo con las siguientes bases, para que todo funcione mejor:
-
-* Se usará el sistema internacional de unidades (IS).
-* La base de datos contendrá los parámetros principales de los objetos:
-	* Incluso aunque los calculos como los de la densidad se puedan hacer a posteriori, se incluirán para ahorrar
-	recursos.
-	* La densidad no será incluida en la tabla de estrellas
-* En el overal_helper solo se incluirán las funciones de cálculo de gravedad y volumen, de momento.
-* Habrá un a media de entre 8 y 10 planetas en el sistema solar. con una probabilidad del 10% de que en una posición dada no haya planeta.
-En una versión posterior esos huevos tendrán una probabilidad del 50% de contener un cinturon de asteroides.
-* Este algoritmo creará una media de 100.000 estrellas y 76.400 planetas por galaxia. No obstante, en un futuro
-se añadirán más planetas pequeños al final de cada sistema solar, sin cumplir la ley de Titius-Bode, y se crearán cinturones de asteroides.
-Con las lunas pasará lo mismo.
-* Falta para un futuro la temperatura superficial del planeta/luna.
-
 Distancias y velocidades:
 -------------------------
 
@@ -126,3 +107,14 @@ Cosas por Hacer:
 
 * Contadores para no poder cambiar la contraseña tras haber cambiado el email en los últimos días
 * Contadores para evitar cambios fraudulentos en la configuración en general
+
+Tipos de Objetos:
+=================
+
+* Estrella: Tabla stars y type = Char(tipo de estrella)
+* Estrella de neutrones: Tabla stars y type = 0 (Char)
+* Agujero negro: Tabla stars y type = 1 (Char)
+* Planeta: Tabla bodies y type = 0
+* Planeta enano: Tabla bodies y type = 1
+* Luna: Tabla bodies y type = 2
+* Cinturón de asteroides: Tabla bodies y type = 3

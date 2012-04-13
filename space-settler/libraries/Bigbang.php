@@ -26,13 +26,15 @@ class Bigbang
 		$this->current_galaxies	= $this->_count_galaxies();
 		$this->current_stars	= $this->_count_stars();
 		$this->current_bodies	= $this->_count_bodies();
-		$this->stats			= array('stars' => 0, 'belts' => 0, 'planets' => 0, 'moons' => 0);
+		$this->stats			= array('1_stars' => 0, '2_stars' => 0, '3_stars' => 0, '4_stars' =>0,
+										'O_stars' => 0, 'B_stars' => 0, 'A_stars' => 0, 'F_stars' => 0, 'G_stars' => 0,
+										'K_stars' => 0, 'M_stars' => 0, 'belts' => 0, 'planets' => 0, 'moons' => 0);
 
-		require_once(APPATH.'entities/body.php');
-		require_once(APPATH.'entities/bodies/star.php');
-		require_once(APPATH.'entities/bodies/belt.php');
-		require_once(APPATH.'entities/bodies/planet.php');
-		require_once(APPATH.'entities/bodies/moon.php');
+		require_once(APPPATH.'entities/body.php');
+		require_once(APPPATH.'entities/bodies/star.php');
+		require_once(APPPATH.'entities/bodies/belt.php');
+		require_once(APPPATH.'entities/bodies/planet.php');
+		require_once(APPPATH.'entities/bodies/moon.php');
 	}
 
 	/**
@@ -42,51 +44,53 @@ class Bigbang
 	 * @param	int
 	 * @return	boolean
 	 */
-	public function create_galaxy($stars)
+	public function create_galaxy($solar_systems)
 	{
-		for($i = 1; $i <= $stars; $i++)
+		for($i = 1; $i <= $solar_systems; $i++)
 		{
 			/* Star Creation */
 			$star			= new Star($this->current_stars, $this->current_galaxies);
-			$this->stars[]	=& $star;
-			$this->stats['stars']++;
+			$this->stats[$star->type.'_stars']++;
+
+			$this->stars[]	= $star;
 			$this->current_stars++;
 
 			/* Planets and asteroid belts creation */
 			$star_bodies	= $star->num_bodies(TRUE);
-			for($h = 1; $h <= $star_bodies; $h++)
-			{
-				if(mt_rand(1,10) === 1)
-				{
-					/* Asteroid Belt */
-					$this->belts[]		= new Belt($star, $this->current_bodies(), $h);
-					$this->stats['belts']++;
-					$this->current_bodies++;
-				}
-				else
-				{
-					/* Planet */
-					$planet				= new Planet($star, $this->current_bodies(), $h);
-					$this->planets[]	=& $planet;
-					$this->stats['planets']++;
-					$this->current_bodies++;
+		//	for($h = 1; $h <= $star_bodies; $h++)
+		//	{
+		//		if(mt_rand(1,10) === 1)
+		//		{
+		//			/* Asteroid Belt */
+		//			$this->belts[]		= new Belt($star, $this->current_bodies(), $h);
+		//			$this->stats['belts']++;
+		//			$this->current_bodies++;
+		//		}
+		//		else
+		//		{
+		//			/* Planet */
+		//			$planet				= new Planet($star, $this->current_bodies(), $h);
+		//			$this->planets[]	=& $planet;
+		//			$this->stats['planets']++;
+		//			$this->current_bodies++;
 
-					$planet_moons		= $planet->num_moons(TRUE);
-					for($g = 1; $g <= $planet_moons; $g++)
-					{
-						/* Moons */
-						$this->moons[]		= new Moon($planet, $this->current_bodies(), $g);
-						$this->stats['moons']++;
-						$this->current_bodies++;
-					}
+		//			$planet_moons		= $planet->num_moons(TRUE);
+		//			for($g = 1; $g <= $planet_moons; $g++)
+		//			{
+		//				/* Moons */
+		//				$this->moons[]		= new Moon($planet, $this->current_bodies(), $g);
+		//				$this->stats['moons']++;
+		//				$this->current_bodies++;
+		//			}
 
-					$planet->finish();
-				}
-			}
+		//			$planet->finish();
+		//		}
+		//	}
 
 			$star->finish();
 		}
 		$this->current_galaxies++;
+		return TRUE;
 	}
 
 	/**
@@ -100,18 +104,18 @@ class Bigbang
 		$CI		=& get_instance();
 
 		/* Star Insertion */
-		$stars		= $CI->db->insert_batch('stars', $this->stars);
+		//$stars		= $CI->db->insert_batch('stars', $this->stars);
 
 		/* Planet Insertion */
-		$planets	= $CI->db->insert_batch('bodies', $this->planets);
+	//	$planets	= $CI->db->insert_batch('bodies', $this->planets);
 
 		/* Asteroid belt insertion */
-		$belts		= $CI->db->insert_batch('bodies', $this->belts);
+	//	$belts		= $CI->db->insert_batch('bodies', $this->belts);
 
 		/* Moon insertion */
-		$moons		= $CI->db->insert_batch('bodies', $this->moons);
+	//	$moons		= $CI->db->insert_batch('bodies', $this->moons);
 
-		return ($stars && $planets && $belts && $moons);
+		return TRUE;//$stars;//($stars && $planets && $belts && $moons);
 	}
 
 	/**

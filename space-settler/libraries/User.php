@@ -290,7 +290,7 @@ class User
 			$body->terrestrial		= (bool) $body->terrestrial;
 			$body->double_planet	= (bool) $body->double_planet;
 			$body->planet			= is_null($body->planet) ? NULL : $this->get_planet($body->planet);
-			$body->mass				= $body->mass*1E-19;
+			$body->mass				= $body->mass*1E+19;
 			$body->density			= $body->density/100;
 			$body->distance			= ($body->type === 0) ? $body->distance/10000 : $body->planet->radius*$body->distance/100000;
 			$body->habitable		= (bool) $body->habitable;

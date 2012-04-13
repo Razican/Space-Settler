@@ -1,14 +1,14 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Moon class
+ * Dwarf Planet class
  *
  * @subpackage	Entities
  * @author		Razican
  * @category	Bodies
  * @link		http://www.razican.com/
  */
-final class Moon extends Body
+final class Dwarf_planet extends Body
 {
 	public $star;
 	public $position;
@@ -24,5 +24,5 @@ final class Moon extends Body
 }
 
 
-/* End of file moon.php */
-/* Location: ./space_settler/entities/bodies/moon.php */
+/* End of file dwarf_planet.php */
+/* Location: ./space_settler/entities/bodies/dwarf_planet.php */

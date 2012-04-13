@@ -8,9 +8,19 @@
  * @category	Bodies
  * @link		http://www.razican.com/
  */
-class Planet
+final class Planet extends Body
 {
-
+	public $star;
+	public $position;
+	public $terrestrial;
+	public $double_planet;
+	public $atmosphere;
+	public $albedo;
+	public $habitable;
+	public $water;
+	public $constructions;
+	public $ground;
+	public $owner;
 }
 
 

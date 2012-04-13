@@ -73,17 +73,6 @@ function is_alnum($string, $space = FALSE)
 }
 
 /**
- * Return the volume of a body
- *
- * @param	int
- * @return	float	Volume in m³
- */
-function volume($radius)
-{
-	return 4/3*M_PI*pow($radius, 3);
-}
-
-/**
  * Return the gravity sufffered of a body at a distance from the main body.
  *
  * @param	int		Mass in Kg
