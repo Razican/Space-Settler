@@ -118,3 +118,13 @@ Tipos de Objetos:
 * Planeta enano: Tabla bodies y type = 1
 * Luna: Tabla bodies y type = 2
 * Cinturón de asteroides: Tabla bodies y type = 3
+
+Datos sobre las estrellas:
+==========================
+
+* Los radios de las que no sean estrellas normales serán en metros
+	* En el caso de las enanas blancas será en kilometros
+* La luminosidad de las estrellas se inserta en la base de datos en el orden de 1E+12
+* La densidad de las estrellas se inserta en la base de datos del orden de 10¹
+* La masa y el radio de las estrellas se inserta en la base de datos en el orden de 10²
+* Si la densidad de una estrella es cero, se considera densidad infinita (∞), es un agujero negro

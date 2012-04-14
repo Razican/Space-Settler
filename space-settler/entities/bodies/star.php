@@ -15,7 +15,7 @@ final class Star extends Body
 
 	public function __construct()
 	{
-		$args	= func_num_args();
+		$args	= func_get_args();
 		if(func_num_args() === 1)
 		{
 			//$this->_load($args[0]);
@@ -25,6 +25,7 @@ final class Star extends Body
 			parent::__construct();
 
 			$this->id					= $args[0]+1;
+			$this->system				= $args[0];
 			$this->_orbit();
 			$this->_type();
 			$this->_properties();
@@ -66,24 +67,24 @@ final class Star extends Body
 		switch($this->type)
 		{
 			case '1':
-				$this->mass			= mt_rand(0,1) ? mt_rand(5E+2, 10E+2)/100 : mt_rand(3E+2, 20E+2);
+				$this->mass			= mt_rand(0,1) ? mt_rand(5E+2, 10E+2)/100 : mt_rand(3E+2, 20E+2)/100;
 				$this->temperature	= 0;
-				$this->radius		= (2*$CI->config->item('G')*$this->mass*$CI->config->item('sun_mass'))/(pow($CI->config->item('c'), 2)); //CUIDADOOOO En m
+				$this->radius		= (2*$CI->config->item('G')*$this->mass*$CI->config->item('sun_mass'))/(pow($CI->config->item('c'), 2));
 			break;
 			case '2':
 				$this->mass			= mt_rand(138, 2E+2)/100;
 				$this->temperature	= 0;
-				$this->radius		= mt_rand(11000, 13000); //CUIDADOOOO EN m
+				$this->radius		= mt_rand(11000, 13000);
 			break;
 			case '3':
-				$this->mass			= mt_rand(15E+2, 90E+2)/100;
+				$this->mass			= mt_rand(200, 300)/100;
 				$this->temperature	= 0;
-				$this->radius		= mt_rand(11000, 13000); //CUIDADOOOO EN m
+				$this->radius		= mt_rand(11000, 13000);
 			break;
 			case '4':
 				$this->mass			= mt_rand(50, 800)/100;
 				$this->temperature	= mt_rand(0,3) ? mt_rand(8E+3, 12E+3) : mt_rand(6E+3, 5E+4);
-				$this->radius		= (3*$this->mass*$CI->config->item('sun_mass'))/(4E+9*M_PI); //CUIDADOOO en m
+				$this->radius		= pow((3*$this->mass*$CI->config->item('sun_mass'))/(4E+9*M_PI), 1/3);
 			break;
 			case 'O':
 				$this->mass			= mt_rand(15E+2, 90E+2)/100;
@@ -145,7 +146,7 @@ final class Star extends Body
 	private function _density()
 	{
 		$CI					=& get_instance();
-		$this->density		= $this->mass*$CI->config->item('sun_mass')/$this->volume();
+		$this->density		= ($this->type === '1') ? 0 : $this->mass*$CI->config->item('sun_mass')/$this->volume();
 	}
 
 	/**
@@ -192,6 +193,14 @@ final class Star extends Body
 	public function finish()
 	{
 		unset($this->bodies);
+		$this->luminosity	= round($this->luminosity*1E+12);
+
+		if($this->type === '1' OR $this->type === '2' OR $this->type === '3') $this->radius = round($this->radius);
+		else if($this->type === '4') $this->radius = round($this->radius/1000);
+		else $this->radius = $this->radius*100;
+
+		$this->mass			= $this->mass*100;
+		$this->density		= round($this->density*10);
 	}
 
 	private function _titius_bode()

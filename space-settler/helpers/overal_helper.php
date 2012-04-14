@@ -94,9 +94,9 @@ function current_lang()
 {
 	$CI =& get_instance();
 	require_once(APPPATH.'language/'.$CI->config->item('language').'/config.php');
-	if( ! isset($key)) show_error('ERROR! language not configured correctly!');
+	if( ! defined('LANG_KEY')) show_error('ERROR! language not configured correctly!');
 
-	return $key;
+	return LANG_KEY;
 }
 
 /**
@@ -111,6 +111,23 @@ function get_name($id, $is_admin = FALSE)
 	$CI =& get_instance();
 
 	return $CI->user->get_name($id, $is_admin);
+}
+
+/**
+ * It gets the name for a given user ID (Alias of $this->user->get_name())
+ *
+ * @param	int
+ * @param	int
+ * @return	string
+ */
+function format_number($number, $decimals = 0)
+{
+	$CI =& get_instance();
+
+	require_once(APPPATH.'language/'.$CI->config->item('language').'/config.php');
+	if( ! defined('LANG_DEC') OR ( ! defined('LANG_THO'))) show_error('ERROR! language not configured correctly!');
+
+	return number_format($number, $decimals, LANG_DEC, LANG_THO);
 }
 
 /**

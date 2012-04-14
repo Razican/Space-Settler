@@ -46,6 +46,9 @@ class Bigbang
 	 */
 	public function create_galaxy($solar_systems)
 	{
+		$CI =& get_instance();
+		$CI->benchmark->mark('galaxy_start');
+
 		for($i = 1; $i <= $solar_systems; $i++)
 		{
 			/* Star Creation */
@@ -90,6 +93,9 @@ class Bigbang
 			$star->finish();
 		}
 		$this->current_galaxies++;
+
+		$CI->benchmark->mark('galaxy_end');
+
 		return TRUE;
 	}
 
@@ -104,7 +110,9 @@ class Bigbang
 		$CI		=& get_instance();
 
 		/* Star Insertion */
-		//$stars		= $CI->db->insert_batch('stars', $this->stars);
+		$CI->benchmark->mark('stars_start');
+		$stars		= $CI->db->insert_batch('stars', $this->stars);
+		$CI->benchmark->mark('stars_end');
 
 		/* Planet Insertion */
 	//	$planets	= $CI->db->insert_batch('bodies', $this->planets);
@@ -115,7 +123,7 @@ class Bigbang
 		/* Moon insertion */
 	//	$moons		= $CI->db->insert_batch('bodies', $this->moons);
 
-		return TRUE;//$stars;//($stars && $planets && $belts && $moons);
+		return $stars;//($stars && $planets && $belts && $moons);
 	}
 
 	/**
@@ -133,7 +141,7 @@ class Bigbang
 
 		foreach($query->result() as $total);
 
-		return is_null($total) ? 0 : $total;
+		return is_null($total->galaxy) ? 0 : $total->galaxy;
 	}
 
 	/**

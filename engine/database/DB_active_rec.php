@@ -58,7 +58,7 @@ class CI_DB_active_record extends CI_DB_driver {
 	var $ar_cache_having		= array();
 	var $ar_cache_orderby		= array();
 	var $ar_cache_set			= array();
-	
+
 	var $ar_no_escape 			= array();
 	var $ar_cache_no_escape     = array();
 
@@ -426,7 +426,7 @@ class CI_DB_active_record extends CI_DB_driver {
 
 					$v = ' '.$this->escape($v);
 				}
-				
+
 				if ( ! $this->_has_operator($k))
 				{
 					$k .= ' = ';
@@ -1106,11 +1106,12 @@ class CI_DB_active_record extends CI_DB_driver {
 			$key = array($key => $value);
 		}
 
-		$keys = array_keys(current($key));
+		$keys = array_keys($this->_object_to_array(current($key)));
 		sort($keys);
 
 		foreach ($key as $row)
 		{
+			$row = $this->_object_to_array($row);
 			if (count(array_diff($keys, array_keys($row))) > 0 OR count(array_diff(array_keys($row), $keys)) > 0)
 			{
 				// batch function above returns an error on an empty array
