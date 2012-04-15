@@ -2,19 +2,10 @@
 
 class Error extends SPS_Controller {
 
-	public function _remap($error)
+	public function error_404()
 	{
-		if($this->uri->segment(1) != 'error') redirect('error/'.$error);
-
-		switch($error)
-		{
-			case '404':
-				header('HTTP/1.1 404 Not Found');
-				$this->load->view('404');
-			break;
-			default:
-				redirect('error/404');
-		}
+		header('HTTP/1.1 404 Not Found');
+		$this->load->view('404');
 	}
 }
 

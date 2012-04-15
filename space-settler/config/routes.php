@@ -39,7 +39,7 @@
 */
 
 $route['default_controller'] = "main";
-$route['404_override'] = 'error/404';
+$route['404_override'] = 'error/error_404';
 
 // URI like '/en/about' -> use controller 'about'
 $route['^es/(.+)$'] = "$1";
