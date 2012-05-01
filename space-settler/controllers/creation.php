@@ -34,9 +34,9 @@ class Creation extends SPS_Controller {
 				echo 'Lunas: '.number_format($this->bigbang->stats['moons'], 0, ',', ' ').PHP_EOL;*/
 
 				if( ! $this->bigbang->save_galaxy())
-					echo 'Ocurrió un error al guardar la galaxia'.PHP_EOL.PHP_EOL;
+					echo 'Ocurrió un error al guardar la galaxia'.PHP_EOL;
 				else
-					echo 'Galaxia guardada'.PHP_EOL.PHP_EOL;
+					echo 'Galaxia guardada'.PHP_EOL;
 			}
 			else
 			{
@@ -48,6 +48,11 @@ class Creation extends SPS_Controller {
 				echo 'Tiempo tardado en crear la galaxia: '.format_number($this->benchmark->elapsed_time('galaxy_start', 'galaxy_end'), 4).' segundos'.PHP_EOL;
 				echo 'Tiempo tardado en guardar las '.format_number($stars).' estrellas: '.format_number($this->benchmark->elapsed_time('stars_start', 'stars_end'), 4).' segundos'.PHP_EOL;
 			}
+
+			if( ! $this->bigbang->finish())
+				echo 'El Big Bang no ha podido acabarse con éxito'.PHP_EOL.PHP_EOL;
+			else
+				echo 'Big Bang acabado correctamente'.PHP_EOL.PHP_EOL;
 		}
 		else
 		{

@@ -56,4 +56,4 @@ function show_date($format = NULL)
 
 
 /* End of file SPS_date_helper.php */
-/* Location: ./megapublik/helpers/SPS_date_helper.php */
+/* Location: ./sapce-settler/helpers/SPS_date_helper.php */

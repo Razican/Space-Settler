@@ -24,19 +24,17 @@ final class Star extends Body
 		{
 			parent::__construct();
 
-			$this->id					= $args[0]+1;
-			$this->system				= $args[0];
+			$this->id				= $args[0]+1;
+			$this->system			= $args[0];
 			$this->_orbit();
 			$this->_type();
 			$this->_properties();
 			$this->_density();
-			$this->galaxy				= $args[1]+1;
+			$this->galaxy			= $args[1]+1;
 			$this->_luminosity();
 
 			$this->_titius_bode();
 		}
-
-
 	}
 
 	private function _orbit()
@@ -193,6 +191,7 @@ final class Star extends Body
 	public function finish()
 	{
 		unset($this->bodies);
+		unset($this->tb);
 		$this->luminosity	= round($this->luminosity*1E+12);
 
 		if($this->type === '1' OR $this->type === '2' OR $this->type === '3') $this->radius = round($this->radius);
@@ -205,7 +204,15 @@ final class Star extends Body
 
 	private function _titius_bode()
 	{
-		//calculate params
+		if(isset($this->bodies) && $this->bodies > 1)
+		{
+			$this->tb = array();
+
+			$m				= mt_rand(0, 10) ? mt_rand(35, 2000) : mt_rand(35, 6000);
+			$this->tb['m']	= $m/10000;
+			$n				= sqrt($this->tb['m'])*1.7+0.165;
+			$this->tb['n']	= mt_rand(round($n*0.8*10000), round($n*1.2*10000))/10000;
+		}
 	}
 
 	private function _radius()

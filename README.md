@@ -68,7 +68,7 @@ Tiempo:
 -------
 
 Para que el juego sea "jugable", se debe comprimir el tiempo. La tasa de compresión será 1:100.000
-(1s en el juego equivale a 100,000s en la realidad). Con esto, la luz tardaría lo siguiente:
+(por cada segundo en la realidad pasarán 100.000 en el juego). Con esto, la luz tardaría lo siguiente:
 * Del sol a la Tierra: Real -> 499 segundos, en el juego -> 0.0049 segundos (0).
 * Del sol a la estrella más cercana: Real -> 133,081,920 segundos (4.22 años), en el juego -> 1330.8192 segundos (1331) (22m 11s).
 * Del sol a la galaxia más cercana: Real -> 3.3638E+12 segundos, en el juego -> 33638400 segundos (33638400) (1 año 24 días 8h).

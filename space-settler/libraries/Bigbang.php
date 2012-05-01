@@ -60,22 +60,23 @@ class Bigbang
 
 			/* Planets and asteroid belts creation */
 			$star_bodies	= $star->num_bodies(TRUE);
-		//	for($h = 1; $h <= $star_bodies; $h++)
-		//	{
-		//		if(mt_rand(1,10) === 1)
-		//		{
-		//			/* Asteroid Belt */
+			$last_distance	= 0;
+			for($h = 1; $h <= $star_bodies; $h++)
+			{
+				if(mt_rand(1,10) === 1)
+				{
+					/* Asteroid Belt */
 		//			$this->belts[]		= new Belt($star, $this->current_bodies(), $h);
 		//			$this->stats['belts']++;
 		//			$this->current_bodies++;
-		//		}
-		//		else
-		//		{
-		//			/* Planet */
-		//			$planet				= new Planet($star, $this->current_bodies(), $h);
-		//			$this->planets[]	=& $planet;
-		//			$this->stats['planets']++;
-		//			$this->current_bodies++;
+				}
+				else
+				{
+					/* Planet */
+					$planet				= new Planet($star, $this->current_bodies, $h, $last_distance);
+					$this->planets[]	=& $planet;
+					$this->stats['planets']++;
+					$this->current_bodies++;
 
 		//			$planet_moons		= $planet->num_moons(TRUE);
 		//			for($g = 1; $g <= $planet_moons; $g++)
@@ -86,9 +87,11 @@ class Bigbang
 		//				$this->current_bodies++;
 		//			}
 
+					$last_distance = $planet->distance;
 		//			$planet->finish();
-		//		}
-		//	}
+				}
+			}
+			//Create dwarf-planets
 
 			$star->finish();
 		}
@@ -168,6 +171,36 @@ class Bigbang
 		$CI		=& get_instance();
 
 		return $CI->db->count_all_results('bodies');
+	}
+
+	/**
+	 * Get the number bodies in the current universe
+	 *
+	 * @access	public
+	 * @return	boolean
+	 */
+	public function finish()
+	{
+		if($this->current_galaxies === 1)
+		{
+			$CI =& get_instance();
+			$CI->load->helper('file');
+
+			$path		= APPPATH.'config/universe.php';
+
+			$text		="<?php defined('BASEPATH') OR exit('No direct script access allowed');\n\n/*\n";
+			$text		.= "|--------------------------------------------------------------------------\n";
+			$text		.= "| Big Bang time\n";
+			$text		.= "|--------------------------------------------------------------------------\n|\n";
+			$text		.= "| It tells when occurred the Big Bang (When was the universe started)\n|\n*/\n";
+			$text		.= "\$config['bigbang_time']	= ".now().";\n\n\n";
+			$text		.= "/* End of file universe.php */\n";
+			$text		.= "/* Location: ./application/config/universe.php */";
+
+			return write_file($path, $text);
+		}
+
+		return TRUE;
 	}
 }
 

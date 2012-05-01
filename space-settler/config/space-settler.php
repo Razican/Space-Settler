@@ -31,7 +31,7 @@ $config['timezone']		= 'Europe/Madrid';
 |
 | This determines which set of language files should be used. Make sure
 | there is an available translation if you intend to use something other
-| than english.
+| than spanish.
 |
 */
 $config['language']		= 'spanish';
@@ -45,16 +45,6 @@ $config['language']		= 'spanish';
 |
 */
 $config['forum_url']	= 'http://www.razican.com/';
-
-/*
-|--------------------------------------------------------------------------
-| Game Name
-|--------------------------------------------------------------------------
-|
-| This will be the name used when referring to the game.
-|
-*/
-$config['game_name']	= 'Space Settler';
 
 /*
 |--------------------------------------------------------------------------
@@ -95,17 +85,19 @@ $config['long_descr']	= 'Space Settler es un juego online multijugador, en el qu
 | Inactives management
 |--------------------------------------------------------------------------
 |
-| These are the reasons for considering an user inactive, in seconds:
-| reg_inactive: Once a user is registered, the ammount of time it has
-| 				to validate it's email address.
-| hib_inactive: The max ammount of time an user can hibernate. After this,
-| 				the user will automatically des-hibernate.
-| inactive:		The ammount of time an ordinary user can be without visiting
-| 				the game.
-| min points:	The minimum points an user must have a given time after
-| 				registering to the game.
-| min_p_time:   The time for calculating the minimum points.
-| warn_inact:   The time before deleting an account when a user gets warned.
+| These are the 	reasons for considering an user inactive, in seconds:
+| reg_inactive: 	Once a user is registered, the ammount of time it has
+| 					to validate it's email address.
+| hib_inactive:		The max ammount of time an user can hibernate. After this,
+| 					the user will automatically des-hibernate.
+| email_inactive:	The ammount of time the user has to activate he's email
+|					address after he has changed.
+| inactive:			The ammount of time an ordinary user can be without visiting
+| 					the game.
+| min points:		The minimum points an user must have a given time after
+| 					registering to the game.
+| min_p_time:		The time for calculating the minimum points.
+| warn_inact:		The time before deleting an account when a user gets warned.
 |
 */
 $config['reg_inactive']		= 259200; //60*60*24*3
