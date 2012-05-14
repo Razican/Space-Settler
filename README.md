@@ -114,10 +114,12 @@ Tipos de Objetos:
 * Estrella: Tabla stars y type = Char(tipo de estrella)
 * Estrella de neutrones: Tabla stars y type = 0 (Char)
 * Agujero negro: Tabla stars y type = 1 (Char)
-* Planeta: Tabla bodies y type = 0
-* Planeta enano: Tabla bodies y type = 1
-* Luna: Tabla bodies y type = 2
-* Cinturón de asteroides: Tabla bodies y type = 3
+* Planeta: Tabla bodies y type = 0-5
+	* Planeta rocoso: type = 0
+	* Gigante gaseoso: type = 1
+	* planeta enano: type = 5 (Distinto a todos los demás, con su propia entidad)
+* Luna: Tabla bodies y type = 8
+* Cinturón de asteroides: Tabla bodies y type = 9
 
 Datos sobre las estrellas:
 ==========================
