@@ -8,7 +8,7 @@
 	<meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>
 	<meta name="description" content="<?php echo config_item('description'); ?>" />
 	<meta name="keywords" content="<?php echo config_item('keywords'); ?>" />
-	<?php if ($this->config->item('debug')) : ?>
+	<?php if (config_item('debug')) : ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url("css/profiler.css"); ?>" />
 	<?php endif; ?>
 	<link rel="stylesheet" type="text/css" href="<?php echo site_url("skins/".skin()."/css/overal.css"); ?>" />
