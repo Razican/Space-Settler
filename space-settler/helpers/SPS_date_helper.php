@@ -3,19 +3,31 @@
 /**
  * Get "now" time
  *
- * Returns time() based on the configured timezone.
+ * Returns time() based on the timezone parameter or on the "timezone"
+ * setting
  *
- * @access	public
- * @return	integer
+ * @param	string
+ * @return	int
  */
-function now()
+function now($timezone = NULL)
 {
 	$CI			=& get_instance();
 
-	$timezone	= new DateTimeZone($CI->config->item('timezone'));
-	$now		= new DateTime('now', $timezone);
-	$offset		= $timezone->getOffset($now);
-	$time		= time() + $offset;
+	if (is_null($timezone))
+	{
+		$timezone	= $CI->config->item('timezone');
+	}
+
+	$time			= time();
+	if(strtolower($timezone) != 'local')
+	{
+		$local		= new DateTime(NULL, new DateTimeZone(date_default_timezone_get()));
+		$now		= new DateTime(NULL, new DateTimeZone($timezone));
+		$lcl_offset	= $local->getOffset();
+		$tz_offset	= $now->getOffset();
+		$offset		= $tz_offset - $lcl_offset;
+		$time		= $time + $offset;
+	}
 
 	return $time;
 }
