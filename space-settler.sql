@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.5deb1
+-- version 3.4.10.1deb1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 22-03-2012 a las 19:55:53
--- Versión del servidor: 5.1.61
--- Versión de PHP: 5.3.6-13ubuntu3.6
+-- Tiempo de generación: 13-06-2012 a las 23:36:12
+-- Versión del servidor: 5.5.24
+-- Versión de PHP: 5.3.10-1ubuntu3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -25,6 +25,9 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `sps_admin`
 --
+-- Creación: 16-04-2012 a las 17:56:11
+-- Última actualización: 16-04-2012 a las 17:56:11
+--
 
 DROP TABLE IF EXISTS `sps_admin`;
 CREATE TABLE IF NOT EXISTS `sps_admin` (
@@ -41,6 +44,9 @@ CREATE TABLE IF NOT EXISTS `sps_admin` (
 
 --
 -- Estructura de tabla para la tabla `sps_bodies`
+--
+-- Creación: 16-04-2012 a las 17:56:11
+-- Última actualización: 16-04-2012 a las 17:56:11
 --
 
 DROP TABLE IF EXISTS `sps_bodies`;
@@ -67,11 +73,13 @@ CREATE TABLE IF NOT EXISTS `sps_bodies` (
 --
 -- Estructura de tabla para la tabla `sps_sessions`
 --
+-- Creación: 13-06-2012 a las 21:33:34
+--
 
 DROP TABLE IF EXISTS `sps_sessions`;
 CREATE TABLE IF NOT EXISTS `sps_sessions` (
   `session_id` char(32) NOT NULL,
-  `ip_address` varchar(15) NOT NULL,
+  `ip_address` varchar(45) NOT NULL DEFAULT '0',
   `user_agent` varchar(120) NOT NULL,
   `last_activity` int(10) unsigned NOT NULL,
   `user_data` text,
@@ -84,24 +92,31 @@ CREATE TABLE IF NOT EXISTS `sps_sessions` (
 --
 -- Estructura de tabla para la tabla `sps_stars`
 --
+-- Creación: 16-04-2012 a las 17:56:11
+-- Última actualización: 16-04-2012 a las 17:56:17
+--
 
 DROP TABLE IF EXISTS `sps_stars`;
 CREATE TABLE IF NOT EXISTS `sps_stars` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `galaxy` tinyint(3) unsigned NOT NULL,
   `system` mediumint(6) unsigned NOT NULL,
+  `orbit` smallint(5) unsigned NOT NULL,
   `type` char(1) NOT NULL,
   `mass` smallint(5) unsigned NOT NULL,
   `radius` smallint(5) unsigned NOT NULL,
-  `luminosity` bigint(19) unsigned NOT NULL,
+  `density` bigint(20) unsigned NOT NULL,
+  `luminosity` bigint(20) unsigned NOT NULL,
   `temperature` mediumint(7) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=985 ;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `sps_support`
+--
+-- Creación: 12-06-2012 a las 09:29:34
 --
 
 DROP TABLE IF EXISTS `sps_support`;
@@ -120,6 +135,8 @@ CREATE TABLE IF NOT EXISTS `sps_support` (
 
 --
 -- Estructura de tabla para la tabla `sps_users`
+--
+-- Creación: 12-06-2012 a las 09:29:34
 --
 
 DROP TABLE IF EXISTS `sps_users`;
