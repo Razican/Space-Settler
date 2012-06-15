@@ -130,3 +130,9 @@ Datos sobre las estrellas:
 * La densidad de las estrellas se inserta en la base de datos del orden de 10¹
 * La masa y el radio de las estrellas se inserta en la base de datos en el orden de 10²
 * Si la densidad de una estrella es cero, se considera densidad infinita (∞), es un agujero negro
+
+Rotación planetaria:
+====================
+
+Si un planeta tiene rotación 0 es que no rota respecto a la estrella, es decir, tiene el mismo periodo
+de rotación que de translación. Si el día dura 0, entonces el día es infinito por la misma razón.
