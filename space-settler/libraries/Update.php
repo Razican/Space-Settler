@@ -8,8 +8,8 @@
  * @category	Libraries
  * @link		http://www.razican.com/
  */
-class Update
-{
+class Update {
+
 	/**
 	 * Check if installed PHP version is the latest
 	 *
@@ -19,9 +19,15 @@ class Update
 	public function check_php()
 	{
 		$latest_php	= unserialize(file_get_contents('http://www.php.net/releases/index.php?serialize=1&version=5&max=1'));
-		foreach($latest_php as $latest_version => $array){break;}
-		if (strnatcmp(phpversion(), $latest_version) >= 0) return TRUE;
-		return FALSE;
+		foreach ($latest_php as $latest_version => $array) break;
+		if (strnatcmp(phpversion(), $latest_version) >= 0)
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 
 	/**
@@ -33,8 +39,14 @@ class Update
 	public function check_codeigniter()
 	{
 		$latest_version	= file_get_contents('http://versions.ellislab.com/codeigniter_version.txt');
-		if (strnatcmp(str_replace('-dev', '', CI_VERSION), $latest_version) >= 0) return TRUE;
-		return FALSE;
+		if (strnatcmp(str_replace('-dev', '', CI_VERSION), $latest_version) >= 0)
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 
 

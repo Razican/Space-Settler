@@ -6,6 +6,7 @@ Requisitos Mínimos
 * Soporta MySQL (5.1+), MySQLi, MS SQL, SQLSRV, Oracle, PostgreSQL, SQLite, CUBRID, Interbase, ODBC y PDO.
 
 * El programa ofrecerá un poco más de exactitud al usar un sistema operativo de 64 bits, ya que se ueden usar números más grandes.
+* De momento solo se soporta IPv4 pero se pretende incluir soporte para IPv6 próximamente.
 
 Instalación:
 ============
@@ -136,3 +137,19 @@ Rotación planetaria:
 
 Si un planeta tiene rotación 0 es que no rota respecto a la estrella, es decir, tiene el mismo periodo
 de rotación que de translación. Si el día dura 0, entonces el día es infinito por la misma razón.
+
+Sistemas multiestelares:
+========================
+
+Es posible que en futuras versiones se incluyan sistemas multiestelares. No obstante, estos sistemas
+tendrían las estrellas en el centro, muy juntas, formando un único centro de masas para los planetas.
+Sería un gran problema si tuvieramos que generar aleatóriamente sistemas que cumplieran el problema de
+los n cuerposo con estrellas separadas y planetas entre ellas, ya que las órbitas no serían estables,
+y si lo fueran, no serían elípticas, como en el caso de los 2 cuerpos. No obstante, esta característica
+está en estudio por su dificil implementación.
+
+Referidos
+=========
+
+Esta implementado un sistema no funcional de referidos. Actualmente el sistema de registros acepta referidos
+pero no los usa. En un futuro es previsible que se usen para dar algún beneficio a los usuarios referentes.

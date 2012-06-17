@@ -8,8 +8,8 @@
  * @category	Bodies
  * @link		http://www.razican.com/
  */
-final class Dwarf_planet extends Body
-{
+final class Dwarf_planet extends Body {
+
 	public $star;
 	public $position;
 	public $terrestrial;

@@ -4,18 +4,26 @@ class Main extends SPS_Controller {
 
 	public function index()
 	{
-		if($this->uri->segment(1)) redirect('/', 'location', 301);
+		if ($this->uri->segment(1))
+			redirect('/', 'location', 301);
 
-		if( ! $this->session->userdata('logged_in'))
+		if ( ! $this->session->userdata('logged_in'))
 		{
 			$this->lang->load('login');
 
 			if ($this->input->server('REQUEST_METHOD') === 'POST')
 			{
-				if($this->user->login($this->input->post('username'), $this->input->post('password'), $this->input->post('pass_conf'), $this->input->post('email')))
+				if ($this->user->login($this->input->post('username'),
+					$this->input->post('password'),
+					$this->input->post('pass_conf'),
+					$this->input->post('email')))
+				{
 					redirect('/');
+				}
 				else
+				{
 					message(lang('login.error'));
+				}
 			}
 			else
 			{

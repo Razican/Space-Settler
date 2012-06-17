@@ -6,8 +6,8 @@
  * Returns time() based on the timezone parameter or on the "timezone"
  * setting
  *
- * @param	string
- * @return	int
+ * @param	string	Timezone
+ * @return	int		Unix timestamp
  */
 function now($timezone = NULL)
 {
@@ -32,9 +32,8 @@ function now($timezone = NULL)
  *
  * Shows date based on the format parameter
  *
- * @access	public
- * @param	string
- * @return	integer
+ * @param	string		Format
+ * @return	string		Date
  */
 function show_date($format = NULL)
 {

@@ -8,8 +8,8 @@
  * @category	Bodies
  * @link		http://www.razican.com/
  */
-final class Planet extends Body
-{
+final class Planet extends Body {
+
 	public $star;
 	public $position;
 	public $terrestrial;
@@ -26,7 +26,7 @@ final class Planet extends Body
 	public function __construct()
 	{
 		$args	= func_get_args();
-		if(func_num_args() === 1)
+		if (func_num_args() === 1)
 		{
 			//$this->_load($args[0]);
 		}
@@ -53,6 +53,13 @@ final class Planet extends Body
 		}
 	}
 
+	/**
+	 * Define planet's orbit
+	 *
+	 * @access	private
+	 * @param	int			Las planet's distance to sun
+	 * @return void
+	 */
 	private function _orbit($last_distance)
 	{
 		$CI				=& get_instance();
@@ -81,12 +88,12 @@ final class Planet extends Body
 	private function _atmosphere()
 	{
 		$this->atmosphere = array();
-		if( ! $this->type)
+		if ( ! $this->type)
 		{
 				$this->atmosphere['pressure']		= mt_rand(0, 1) ? mt_rand(0, 100) : mt_rand(0, 1000000);
 				$this->atmosphere['composition']	= array();
 				$total = 0;
-				if(mt_rand(0,1))
+				if (mt_rand(0,1))
 				{
 					$this->atmosphere['composition']['CO2'] = mt_rand(7500, 9900)/100;
 					$total += $this->atmosphere['composition']['CO2'];
@@ -99,7 +106,7 @@ final class Planet extends Body
 				{
 					$this->atmosphere['composition']['N2'] = mt_rand(5000, 9500)/100;
 					$total += $this->atmosphere['composition']['N2'];
-					if(mt_rand(0,1))
+					if (mt_rand(0,1))
 					{
 						$this->atmosphere['composition']['CO2'] = mt_rand(400, (100-$total)*100)/100;
 						$total += $this->atmosphere['composition']['CO2'];
@@ -126,19 +133,28 @@ final class Planet extends Body
 
 	private function _greenhouse()
 	{
-		$this->atmosphere['greenhouse']	= $this->atmosphere['composition']['CO2']*$this->atmosphere['pressure']/35;
-		if($this->atmosphere['greenhouse'] > 1) $this->atmosphere['greenhouse'] = pow($this->atmosphere['greenhouse'], 0.637);
+		if ( ! $this->type)
+		{
+			$this->atmosphere['greenhouse']	= $this->atmosphere['composition']['CO2']*$this->atmosphere['pressure']/35;
+			if ($this->atmosphere['greenhouse'] > 1) $this->atmosphere['greenhouse'] = pow($this->atmosphere['greenhouse'], 0.637);
+		}
 	}
 
 	private function _properties()
 	{
-		switch($this->type)
+		switch ($this->type)
 		{
 			case 0:
 				$this->radius	= mt_rand(2E+6,15E+6);
 
-				if($this->radius < 75E+5)	$density	= mt_rand(27E+2, 65E+2);
-				else						$density	= mt_rand(55E+2, 15E+3);
+				if ($this->radius < 75E+5)
+				{
+					$density	= mt_rand(27E+2, 65E+2);
+				}
+				else
+				{
+					$density	= mt_rand(55E+2, 15E+3);
+				}
 
 				$mass			= (4*M_PI*pow($this->radius, 3)*$density)/3;
 				$mass			= ($mass > 9E+25) ? mt_rand(5E+3, 9E+3)*1E+22 : $mass;
@@ -162,16 +178,20 @@ final class Planet extends Body
 		$this->rotation = array();
 		$tidal_lock		= sqrt($this->star->mass/$CI->config->item('sun_mass'))/2;
 
-		if($this->orbit['sma'] > $tidal_lock)
+		if ($this->orbit['sma'] > $tidal_lock)
 		{
 			$this->rotation['axTilt']	= (mt_rand(0, 1) ? mt_rand(2000, 3000) : mt_rand(0, 18000))/100;
 
-			if($this->rotation['axTilt'] >= 90)
+			if ($this->rotation['axTilt'] >= 90)
+			{
 				$this->rotation['period']	= mt_rand(50000, 25000000);
-			else if($this->rotation['axTilt'] < 90)
+			}
+			else
+			{
 				$this->rotation['period']	= mt_rand(18000, 180000);
+			}
 		}
-		else if($this->orbit['sma'] > $tidal_lock/2)
+		elseif ($this->orbit['sma'] > $tidal_lock/2)
 		{
 			$this->rotation['axTilt']	= mt_rand(0, 100)/100;
 			$this->rotation['period']	= $this->orbit['period']*mt_rand(3, 6)/2;
@@ -182,17 +202,17 @@ final class Planet extends Body
 			$this->rotation['period']	= $this->orbit['period'];
 		}
 
-		if($this->rotation['axTilt'] === 90)
+		if ($this->rotation['axTilt'] === 90)
 		{
 			$day	= $this->orbit['period'];
 		}
 		else
 		{
-			if($this->rotation['period'] > 0)
+			if ($this->rotation['period'] > 0)
 			{
 				$day	= $this->rotation['period']/(1-$this->rotation['period']/$this->orbit['period']);
 			}
-			else if ($this->rotation['period'] > 0)
+			elseif ($this->rotation['period'] > 0)
 			{
 				$day	= $this->rotation['period']/(1+$this->rotation['period']/$this->orbit['period']);
 			}
@@ -205,52 +225,81 @@ final class Planet extends Body
 
 	private function _albedo($look_ground = FALSE)
 	{
-		if($look_ground)
+		if ($look_ground)
 		{
 			//recalcular
 		}
 		else
 		{
-			if($this->type)
+			if ($this->type)
 			{
 				$this->albedo = mt_rand(4000, 6000)/10000;
 			}
 			else
 			{
-				if($this->atmosphere['pressure'] < 100)
+				if ($this->atmosphere['pressure'] < 100)
+				{
 					$this->albedo = mt_rand(0, 1000)/10000;
-				elseif($this->atmosphere['pressure'] < 750)
+				}
+				elseif ($this->atmosphere['pressure'] < 750)
+				{
 					$this->albedo = mt_rand(1000, 2500)/10000;
-				elseif($this->atmosphere['pressure'] < 2500)
+				}
+				elseif ($this->atmosphere['pressure'] < 2500)
+				{
 					$this->albedo = mt_rand(2000, 3500)/10000;
-				elseif($this->atmosphere['pressure'] < 10000)
+				}
+				elseif ($this->atmosphere['pressure'] < 10000)
+				{
 					$this->albedo = mt_rand(3000, 5000)/10000;
-				elseif($this->atmosphere['pressure'] < 100000)
+				}
+				elseif ($this->atmosphere['pressure'] < 100000)
+				{
 					$this->albedo = mt_rand(4500, 7500)/10000;
+				}
+				else
+				{
+					$this->albedo = mt_rand(6000, 9000)/10000;
+				}
 			}
 		}
 	}
 
 	private function _temperature()
 	{
-		$CI		=& get_instance();
-
-		$l		= $this->star->luminosity*$CI->config->item('sun_luminosity');
-		$this->temperature['eff']	= pow(($l*(1-$this->albedo))/(16*M_PI*$CI->config->item('Boltzman_constant')*pow($this->orbit['apa']*$CI->config->item['AU'], 2)),1/4);
-
-		if($this->atmosphere['greenhouse'] <= 1)
+		if ( ! $this->type)
 		{
-			$this->temperature['avg']	= $this->temperature['eff']+$this->atmosphere['greenhouse']*20+mt_rand(0, 15)*$this->atmosphere['greenhouse'];
-		} else
-		{
-			$this->temperature['avg']	= $this->temperature['eff']+pow($this->atmosphere['greenhouse'], 1.225)+25+mt_rand(0, 10);
+			$CI		=& get_instance();
+
+			$l		= $this->star->luminosity*$CI->config->item('sun_luminosity');
+			$this->temperature['eff']	= pow(($l*(1-$this->albedo))/(16*M_PI*$CI->config->item('Boltzman_constant')*pow($this->orbit['apa']*$CI->config->item['AU'], 2)),1/4);
+
+			if ($this->atmosphere['greenhouse'] <= 1)
+			{
+				$this->temperature['avg']	= $this->temperature['eff']+$this->atmosphere['greenhouse']*20+mt_rand(0, 15)*$this->atmosphere['greenhouse'];
+			}
+			else
+			{
+				$this->temperature['avg']	= $this->temperature['eff']+pow($this->atmosphere['greenhouse'], 1.225)+25+mt_rand(0, 10);
+			}
+
+			//Max y min según duración del día y ef. invernadero
+			/*
+			 * Si la inclinación es pequeña solo se tiene en cuenta la duración del día (-10º) Si es grande (+10º)
+			 * se tiene en cuenta también las estaciones y los polos.
+			 *
+			 * Aquí hay problemas a la hora de hacer el cálculo realista, dado que no hay deasiados datos de planetas
+			 * rocosos.
+			 */
 		}
-
-		//Max y min según duración del día y ef. invernadero
 	}
 
 	private function _ground()
 	{
+		if ( ! $this->type)
+		{
+			//Solo tendrán suelo los planetas rocosos.
+		}
 		/*
 		 * -Primero se comprueba la temperatura superficial con el albedo aleatorio
 		 * -Luego se calcula si hay agua líquida o sólida, y si es así, aumenta el albedo

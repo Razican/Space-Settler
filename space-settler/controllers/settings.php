@@ -4,8 +4,11 @@ class Settings extends SPS_Controller {
 
 	public function index()
 	{
-		if($this->uri->segment(2)) redirect('settings', 'location', 301);
-		if( ! $this->session->userdata('logged_in')) redirect('/');
+		if ($this->uri->segment(2))
+			redirect('settings', 'location', 301);
+
+		if ( ! $this->session->userdata('logged_in'))
+			redirect('/');
 
 		define('INGAME', TRUE);
 		$this->lang->load('menu');
@@ -59,24 +62,34 @@ class Settings extends SPS_Controller {
 
 	public function save()
 	{
-		if( ! $this->session->userdata('logged_in')) redirect('/');
-		if($this->input->server('REQUEST_METHOD') != 'POST') redirect('settings');
+		if ( ! $this->session->userdata('logged_in'))
+			redirect('/');
+
+		if ($this->input->server('REQUEST_METHOD') != 'POST')
+			redirect('settings');
 
 		define('INGAME', TRUE);
 		$this->lang->load('menu');
 		$this->lang->load('settings');
 		$this->load->helper('email');
 
-		if(($this->input->post('password')) && ( ! $this->input->post('passconf')))
+		if (($this->input->post('password')) && ( ! $this->input->post('passconf')))
+		{
 			message(lang('settings.confirm_pass'), 'settings');
-		else if($this->input->post('email') && ( ! valid_email($this->input->post('email'))))
+		}
+		elseif ($this->input->post('email') && ( ! valid_email($this->input->post('email'))))
+		{
 			message(lang('settings.email_not_valid'), 'settings');
-		else if ($this->input->post('password') != $this->input->post('passconf'))
+		}
+		elseif ($this->input->post('password') != $this->input->post('passconf'))
+		{
 			message(lang('settings.passconf_dif'), 'settings');
-		else if ( ! array_key_exists($this->input->post('skin'), list_skins()))
+		}
+		elseif ( ! array_key_exists($this->input->post('skin'), list_skins()))
 		{
 			log_message('error', 'User with ID '.$this->session->userdata('id').
 							' and IP '.$this->input->ip_address().' has tried to use a skin that does not exist.');
+
 			message(lang('overal.hacking_attempt'), 'settings');
 		}
 		else
@@ -87,8 +100,14 @@ class Settings extends SPS_Controller {
 												$this->input->post('skin'),
 												(bool) $this->input->post('hibernate'));
 
-			if($save)	message(lang('settings.save_ok'), 'settings');
-			else		message(lang('settings.save_error'), 'settings');
+			if ($save)
+			{
+				message(lang('settings.save_ok'), 'settings');
+			}
+			else
+			{
+				message(lang('settings.save_error'), 'settings');
+			}
 		}
 	}
 }

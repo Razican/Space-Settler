@@ -4,13 +4,17 @@ class Logout extends SPS_Controller {
 
 	public function index()
 	{
-		if($this->uri->segment(2))
+		if ($this->uri->segment(2))
 			redirect('logout', 'location', 301);
 
-		if($this->session->userdata('logged_in'))
+		if ($this->session->userdata('logged_in'))
+		{
 			$this->user->logout();
+		}
 		else
+		{
 			log_message('error', 'User with IP '.$this->input->ip_address().' has tried to enter /logout without loggin in.');
+		}
 
 		redirect('/');
 	}

@@ -8,16 +8,15 @@
  * @category	Libraries
  * @link		http://www.razican.com/
  */
+class User {
 
-class User
-{
 	/**
 	 * Log in user
 	 *
 	 * @access	public
-	 * @param	string
-	 * @param	string
-	 * @param	string
+	 * @param	string	Username
+	 * @param	string	Password
+	 * @param	bool	Remember the user
 	 * @return	bool
 	 */
 	public function login($username, $password, $remember = FALSE)
@@ -71,10 +70,9 @@ class User
 	 * Register user
 	 *
 	 * @access	public
-	 * @param	string
-	 * @param	string
-	 * @param	string
-	 * @param	string
+	 * @param	string	Username
+	 * @param	string	Email
+	 * @param	string	Referrer
 	 * @return	bool
 	 */
 	public function register($username, $email, $referrer)
@@ -129,19 +127,22 @@ class User
 
 		$CI->db->select_max('id');
 		$query = $CI->db->get('users');
-		foreach ($query->result() as $user) $user = $user->id;
+		foreach ($query->result() as $user)
+		{
+			$user = $user->id;
+		}
 
-		if($CI->db->update('bodies', array('owner' => $user), array('id' => $planet)))
+		if ($CI->db->update('bodies', array('owner' => $user), array('id' => $planet)))
 		{
 			$CI->email->from('space-settler@razican.com', 'Space Settler');
 			$CI->email->reply_to('noreply@razican.com', 'Space Settler');
 			$CI->email->to($email);
 			$CI->email->subject(lang('login.reg_message'));
 			$data		= array('%game_name%', '%password%', '%username%', '%validation_link%');
-			$replace	= array($CI->config->item('game_name'), $password, $username, site_url('validation/'.$code));
+			$replace	= array($CI->config->item('game_name'), $password, $username, site_url('register/validate/'.$code));
 			$CI->email->message(str_replace($data, $replace, lang('login.reg_email_message')));
 
-			if( ! $CI->email->send())
+			if ( ! $CI->email->send())
 			{
 				$this->validate($code);
 				log_message('error', 'Email could not be sended');
@@ -160,8 +161,8 @@ class User
 	 * Reset user's password
 	 *
 	 * @access	public
-	 * @param	string
-	 * @param	string
+	 * @param	string	Email
+	 * @param	string	Password
 	 * @return	bool
 	 */
 	public function reset_password($email, $password)
@@ -178,11 +179,11 @@ class User
 	 * Save user's configuration
 	 *
 	 * @access	public
-	 * @param	string
-	 * @param	string
-	 * @param	string
-	 * @param	string
-	 * @param	bool
+	 * @param	string	Name
+	 * @param	string	Email
+	 * @param	string	Password
+	 * @param	string	Skin
+	 * @param	bool	Hibernate
 	 * @return	bool
 	 */
 	public function save_config($name, $email, $password, $skin, $hibernate)
@@ -192,14 +193,20 @@ class User
 		$current	= $this->get_settings(TRUE);
 		$password	= $password ? sha1($password) : NULL;
 
-		if($current->email != $email && $current->password != $password)
+		if ($current->email != $email && $current->password != $password)
+		{
 			message('settings.changing_mail_pass', 'settings');
-		if($current->skin != $skin)
+		}
+		elseif ($current->skin != $skin)
+		{
 			$CI->session->set_userdata('skin', $skin);
-		else if(($current->name === $name OR ( ! $name)) && ($current->email === $email OR ( ! $email)) &&
+		}
+		elseif (($current->name === $name OR ( ! $name)) && ($current->email === $email OR ( ! $email)) &&
 				($current->password === $password OR ( ! $password)) &&
 				($current->skin === $skin OR ( ! $skin)) && $current->hibernating === $hibernate)
+		{
 			return TRUE;
+		}
 		else
 		{
 			$CI->db->where('id', $CI->session->userdata('id'));
@@ -214,7 +221,7 @@ class User
 							'skin'			=> $skin
 						);
 
-			if(($current->email != $email) OR ($current->password != $password))
+			if (($current->email != $email) OR ($current->password != $password))
 			{
 				$CI->load->library('email');
 				$CI->email->from('space-settler@razican.com', 'Space Settler');
@@ -262,7 +269,7 @@ class User
 		$CI->db->select('email, name, '.($password ? 'password, ' : '').'hibernating, skin');
 		$query		= $CI->db->get('users');
 
-		foreach($query->result() as $settings);
+		foreach ($query->result() as $settings);
 		$settings->hibernating = (bool) $settings->hibernating;
 
 		return $settings;
@@ -272,7 +279,7 @@ class User
 	 * Get user's planet
 	 *
 	 * @access	public
-	 * @param	int
+	 * @param	int		Planet's ID
 	 * @return	object
 	 */
 	public function get_planet($id = NULL)
@@ -285,7 +292,7 @@ class User
 
 		if($query->num_rows() > 0)
 		{
-			foreach($query->result() as $body);
+			foreach ($query->result() as $body);
 			$body->type				= (int) $body->type;
 			$body->terrestrial		= (bool) $body->terrestrial;
 			$body->double_planet	= (bool) $body->double_planet;
@@ -309,41 +316,48 @@ class User
 	 * Count user's planets
 	 *
 	 * @access	public
-	 * @param	int
+	 * @param	int		User's ID
 	 * @return	bool
 	 */
 	public function count_planets($id = NULL)
 	{
-		return $this->_count_bodies($id);
+		return $this->_count_bodies($id, array(0, 1, 5));
 	}
 
 	/**
 	 * Count user's mooons
 	 *
 	 * @access	public
-	 * @param	int
+	 * @param	int		User's ID
 	 * @return	bool
 	 */
 	public function count_moons($id = NULL)
 	{
-		return $this->_count_bodies($id, 1);
+		return $this->_count_bodies($id, 8);
 	}
 
 	/**
 	 * Count user's bodies
 	 *
 	 * @access	public
-	 * @param	int
-	 * @param	int
+	 * @param	int			User's ID'
+	 * @param	int|array	Body type
 	 * @return	bool
 	 */
-	private function _count_bodies($id, $type = 0)
+	private function _count_bodies($id, $type)
 	{
 		$CI			=& get_instance();
 		$id			= is_null($id) ? $CI->session->userdata('id') : $id;
 
 		$CI->db->where('owner', $id);
-		$CI->db->where('type', $type);
+		if (is_array($type))
+		{
+			$CI->db->where_in('type', $type);
+		}
+		else
+		{
+			$CI->db->where('type', $type);
+		}
 		$CI->db->from('bodies');
 
 		return $CI->db->count_all_results();
@@ -364,7 +378,7 @@ class User
 	 * Check if an email exists
 	 *
 	 * @access	public
-	 * @param	string
+	 * @param	string	Email
 	 * @return	bool
 	 */
 	public function exists_email($email)
@@ -376,7 +390,7 @@ class User
 	 * Check if an username exists
 	 *
 	 * @access	public
-	 * @param	string
+	 * @param	string	Username
 	 * @return	bool
 	 */
 	public function exists_user($username)
@@ -388,8 +402,8 @@ class User
 	 * It gets the name for a given user ID (Alias of $this->user->get_name)
 	 *
 	 * @access	public
-	 * @param	int
-	 * @param	boolean
+	 * @param	int			User's ID
+	 * @param	boolean		Is admin?
 	 * @return	string
 	 */
 	public function get_name($id, $is_admin)
@@ -402,9 +416,9 @@ class User
 		$CI->db->limit(1);
 		$query	= $CI->db->get($table);
 
-		if($query->num_rows() > 0)
+		if ($query->num_rows() > 0)
 		{
-			foreach($query->result() as $user);
+			foreach ($query->result() as $user);
 			return $user->name;
 		}
 		else
@@ -416,7 +430,9 @@ class User
 	 * Check the given data exists
 	 *
 	 * @access	private
-	 * @param	string
+	 * @param	string		Value to search
+	 * @param	string		Database field
+	 * @param	string		Database table
 	 * @return	bool
 	 */
 	private function _exists($string, $field, $table)
@@ -426,7 +442,7 @@ class User
 		$CI->db->where($field, $string);
 		$CI->db->limit(1);
 
-		return $CI->db->count_all_results($table) ? TRUE : FALSE;
+		return ((bool) $CI->db->count_all_results($table));
 	}
 
 	/**
@@ -444,7 +460,13 @@ class User
 		$CI->db->select('id');
 		$query	= $CI->db->get('bodies');
 
-		if($query->num_rows()) foreach($query->result() as $body) $bodies[] = $body->id;
+		if ($query->num_rows())
+		{
+			foreach ($query->result() as $body)
+			{
+				$bodies[] = $body->id;
+			}
+		}
 
 		$body			= isset($bodies) ? $bodies[mt_rand(0, count($bodies))] : FALSE;
 

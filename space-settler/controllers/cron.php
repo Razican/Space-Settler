@@ -10,7 +10,7 @@ class Cron extends SPS_Controller {
 
 	public function daily()
 	{
-		if( ! $this->input->is_cli_request())
+		if ( ! $this->input->is_cli_request())
 		{
 			log_message('error', 'User with IP '.$this->input->server('REMOTE_ADDR').' has tried to access Cron controller.');
 			redirect('/');
@@ -19,10 +19,10 @@ class Cron extends SPS_Controller {
 		$this->load->library(array('email', 'crons'));
 		$this->lang->load('cron');
 
-		if($this->crons->finish_hibernations()) echo 'Hibernations Finished'.PHP_EOL;
-		if($this->crons->delete_inactives()) echo 'Inactives deleted'.PHP_EOL;
-		if($this->crons->warn_inactives()) echo 'Inactives warned'.PHP_EOL;
-		if($this->crons->warn_emails()) echo 'Inactive emails warned'.PHP_EOL;
+		if ($this->crons->finish_hibernations()) echo 'Hibernations Finished'.PHP_EOL;
+		if ($this->crons->delete_inactives()) echo 'Inactives deleted'.PHP_EOL;
+		if ($this->crons->warn_inactives()) echo 'Inactives warned'.PHP_EOL;
+		if ($this->crons->warn_emails()) echo 'Inactive emails warned'.PHP_EOL;
 	}
 }
 

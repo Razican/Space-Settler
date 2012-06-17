@@ -12,11 +12,14 @@ class Support_m extends CI_Model {
 	public function load_all_tickets($id = NULL, $start_ticket = 0)
 	{
 
-		if($id) $this->db->where('user_id', $id);
+		if ($id)
+		{
+			$this->db->where('user_id', $id);
+		}
 		$this->db->limit(20, $start_ticket);
 		$query	= $this->db->get('support');
 
-		if($query->num_rows() > 0)
+		if ($query->num_rows() > 0)
 		{
 			$tickets	= array();
 			$users		= array();
@@ -36,11 +39,15 @@ class Support_m extends CI_Model {
 
 			$users	= array();
 
-			if($query->num_rows() > 0)
-				foreach($query->result() as $user)
+			if ($query->num_rows() > 0)
+			{
+				foreach ($query->result() as $user)
+				{
 					$users[$user->id]	= $user->name;
+				}
+			}
 
-			foreach($tickets as $key => $ticket)
+			foreach ($tickets as $key => $ticket)
 			{
 				$ticket->user	= isset($users[$ticket->user_id]) ? $users[$ticket->user_id] : 'N/A';
 				$tickets[$key]	= $ticket;
@@ -86,18 +93,22 @@ class Support_m extends CI_Model {
 		$this->db->limit(1);
 		$query	= $this->db->get('support');
 
-		if($query->num_rows() > 0)
+		if ($query->num_rows() > 0)
 		{
-			foreach($query->result() as $ticket)
+			foreach ($query->result() as $ticket)
+			{
 				$ticket->replies	= is_null($ticket->replies) ? array() : unserialize($ticket->replies);
+			}
 
 			$this->db->where('id', $ticket->user_id);
 			$this->db->select('name');
 			$this->db->limit(1);
 			$query	= $this->db->get('users');
 
-			if($query->num_rows() > 0)
-				foreach($query->result() as $user);
+			if ($query->num_rows() > 0)
+			{
+				foreach ($query->result() as $user);
+			}
 
 			$ticket->user	= $user->name;
 
@@ -124,9 +135,9 @@ class Support_m extends CI_Model {
 		$this->db->limit(1);
 		$query	= $this->db->get('support');
 
-		if($query->num_rows() > 0)
+		if ($query->num_rows() > 0)
 		{
-			foreach($query->result() as $ticket);
+			foreach ($query->result() as $ticket);
 
 			$text		= is_null($ticket->replies) ? array() : unserialize($ticket->replies);
 			$user_type	= $is_admin ? 'admin' : 'user';

@@ -8,9 +8,7 @@
  * @category	Libraries
  * @link		http://www.razican.com/
  */
-
- class Crons
-{
+ class Crons {
 
 	/**
 	 * Finish hibernations that have been active since more

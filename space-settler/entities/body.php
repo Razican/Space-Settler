@@ -8,9 +8,8 @@
  * @category	Bodies
  * @link		http://www.razican.com/
  */
+class Body {
 
-class Body
-{
 	public $id;
 	public $orbit;
 	public $type;

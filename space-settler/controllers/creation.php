@@ -4,7 +4,7 @@ class Creation extends SPS_Controller {
 
 	public function index()
 	{
-		if($this->input->is_cli_request())
+		if ($this->input->is_cli_request())
 		{
 			ini_set('memory_limit','10G');
 			ini_set('max_execution_time', 3600);
@@ -13,7 +13,7 @@ class Creation extends SPS_Controller {
 			$this->load->library('bigbang');
 
 			$stars = mt_rand(950, 1050);
-			if($this->bigbang->create_galaxy($stars))
+			if ($this->bigbang->create_galaxy($stars))
 			{
 				echo 'Galaxia creada'.PHP_EOL.PHP_EOL;
 				echo 'Datos:'.PHP_EOL.PHP_EOL;
@@ -29,30 +29,38 @@ class Creation extends SPS_Controller {
 				echo 'Tipo G: '.format_number($this->bigbang->stats['G_stars']).PHP_EOL;
 				echo 'Tipo K: '.format_number($this->bigbang->stats['K_stars']).PHP_EOL;
 				echo 'Tipo M: '.format_number($this->bigbang->stats['M_stars']).PHP_EOL.PHP_EOL;
-			/*	echo 'Cinturones de asteroides: '.number_format($this->bigbang->stats['belts'], 0, ',', ' ').PHP_EOL;
-				echo 'Planetas: '.number_format($this->bigbang->stats['planets'], 0, ',', ' ').PHP_EOL;
-				echo 'Lunas: '.number_format($this->bigbang->stats['moons'], 0, ',', ' ').PHP_EOL;*/
+			/*	echo 'Cinturones de asteroides: '.format_number($this->bigbang->stats['belts']).PHP_EOL;
+				echo 'Planetas: '.format_number($this->bigbang->stats['planets']).PHP_EOL;
+				echo 'Lunas: '.format_number($this->bigbang->stats['moons']).PHP_EOL;*/
 
-				if( ! $this->bigbang->save_galaxy())
+				if ( ! $this->bigbang->save_galaxy())
+				{
 					echo 'Ocurrió un error al guardar la galaxia'.PHP_EOL;
+				}
 				else
+				{
 					echo 'Galaxia guardada'.PHP_EOL;
+				}
 			}
 			else
 			{
 				echo 'Ocurrio un error al crear la galaxia'.PHP_EOL;
 			}
 
-			if($this->config->item('debug'))
+			if ($this->config->item('debug'))
 			{
 				echo 'Tiempo tardado en crear la galaxia: '.format_number($this->benchmark->elapsed_time('galaxy_start', 'galaxy_end'), 4).' segundos'.PHP_EOL;
 				echo 'Tiempo tardado en guardar las '.format_number($stars).' estrellas: '.format_number($this->benchmark->elapsed_time('stars_start', 'stars_end'), 4).' segundos'.PHP_EOL;
 			}
 
-			if( ! $this->bigbang->finish())
+			if ( ! $this->bigbang->finish())
+			{
 				echo 'El Big Bang no ha podido acabarse con éxito'.PHP_EOL.PHP_EOL;
+			}
 			else
+			{
 				echo 'Big Bang acabado correctamente'.PHP_EOL.PHP_EOL;
+			}
 		}
 		else
 		{

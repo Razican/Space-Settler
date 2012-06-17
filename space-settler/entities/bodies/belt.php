@@ -8,8 +8,7 @@
  * @category	Bodies
  * @link		http://www.razican.com/
  */
-final class Belt
-{
+final class Belt {
 
 }
 

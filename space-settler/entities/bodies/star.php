@@ -8,15 +8,15 @@
  * @category	Bodies
  * @link		http://www.razican.com/
  */
-final class Star extends Body
-{
+final class Star extends Body {
+
 	public $galaxy;
 	public $luminosity;
 
 	public function __construct()
 	{
 		$args	= func_get_args();
-		if(func_num_args() === 1)
+		if (func_num_args() === 1)
 		{
 			//$this->_load($args[0]);
 		}
@@ -46,23 +46,23 @@ final class Star extends Body
 	{
 		$probability		= mt_rand(1, 10000000);
 
-		if($probability <= 3333) $this->type = '1';
-		else if($probability <= 6666) $this->type = '2';
-		else if($probability === 6667) $this->type = '3';
-		else if($probability <= 10000) $this->type = '4';
-		else if($probability <= 10003) $this->type = 'O';
-		else if($probability <= 23000) $this->type = 'B';
-		else if($probability <= 83000) $this->type = 'A';
-		else if($probability <= 383000) $this->type = 'F';
-		else if($probability <= 1143000) $this->type = 'G';
-		else if($probability <= 2353000) $this->type = 'K';
+		if ($probability <= 3333) $this->type = '1';
+		elseif($probability <= 6666) $this->type = '2';
+		elseif($probability === 6667) $this->type = '3';
+		elseif($probability <= 10000) $this->type = '4';
+		elseif($probability <= 10003) $this->type = 'O';
+		elseif($probability <= 23000) $this->type = 'B';
+		elseif($probability <= 83000) $this->type = 'A';
+		elseif($probability <= 383000) $this->type = 'F';
+		elseif($probability <= 1143000) $this->type = 'G';
+		elseif($probability <= 2353000) $this->type = 'K';
 		else $this->type = 'M';
 	}
 
 	private function _properties()
 	{
 		$CI =& get_instance();
-		switch($this->type)
+		switch ($this->type)
 		{
 			case '1':
 				$this->mass			= mt_rand(0,1) ? mt_rand(5E+2, 10E+2)/100 : mt_rand(3E+2, 20E+2)/100;
@@ -152,9 +152,9 @@ final class Star extends Body
 	 */
 	public function num_bodies($random = FALSE)
 	{
-		if($random)
+		if ($random)
 		{
-			switch($this->type)
+			switch ($this->type)
 			{
 				case 'O': case '1': case '2': case '3':
 					$bodies = 0;
@@ -194,9 +194,18 @@ final class Star extends Body
 		unset($this->tb);
 		$this->luminosity	= round($this->luminosity*1E+12);
 
-		if($this->type === '1' OR $this->type === '2' OR $this->type === '3') $this->radius = round($this->radius);
-		else if($this->type === '4') $this->radius = round($this->radius/1000);
-		else $this->radius = $this->radius*100;
+		if ($this->type === '1' OR $this->type === '2' OR $this->type === '3')
+		{
+			$this->radius = round($this->radius);
+		}
+		elseif($this->type === '4')
+		{
+			$this->radius = round($this->radius/1000);
+		}
+		else
+		{
+			$this->radius = $this->radius*100;
+		}
 
 		$this->mass			= $this->mass*100;
 		$this->density		= round($this->density*10);
@@ -204,7 +213,7 @@ final class Star extends Body
 
 	private function _titius_bode()
 	{
-		if(isset($this->bodies) && $this->bodies > 1)
+		if (isset($this->bodies) && $this->bodies > 1)
 		{
 			$this->tb = array();
 
@@ -218,7 +227,15 @@ final class Star extends Body
 	private function _radius()
 	{
 		$CI =& get_instance();
-		return ($this->type === '1' OR $this->type === '2' OR $this->type === '3' OR $this->type === '4') ? $this->radius : $this->radius*$CI->config->item('sun_radius');
+		if (($this->type === '1') OR ($this->type === '2') OR ($this->type === '3') OR ($this->type === '4'))
+		{
+			$radius	= $this->radius;
+		}
+		else
+		{
+			$radius	= $this->radius*$CI->config->item('sun_radius');
+		}
+		return $radius;
 	}
 }
 

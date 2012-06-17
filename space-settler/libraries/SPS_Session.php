@@ -8,7 +8,6 @@
  * @category	Libraries
  * @link		http://www.razican.com/
  */
-
 class SPS_Session extends CI_Session {
 
   function __construct()

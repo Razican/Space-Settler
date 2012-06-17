@@ -20,18 +20,22 @@ class SPS_Loader extends CI_Loader {
 	{
 		$vars = $this->_ci_object_to_array($vars);
 
-		if(file_exists(APPPATH.'views/overal/'.$view.'.php'))
+		if (file_exists(APPPATH.'views/overal/'.$view.'.php'))
 		{
-			if(file_exists($this->_ci_view_paths.$view.'.php'))
+			if (file_exists($this->_ci_view_paths.$view.'.php'))
+			{
 				$skin	= $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $vars, '_ci_return' => TRUE));
+			}
 			else
+			{
 				$skin	= '';
+			}
 
 			$array = array('skin' => $skin);
 
 			$page		= $this->_ci_load(array('_ci_view' => 'overal/'.$view, '_ci_vars' => $array, '_ci_return' => $return));
 		}
-		elseif( ! $return)
+		elseif ( ! $return)
 		{
 			$this->view('head');
 			$page	= $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $vars, '_ci_return' => FALSE));

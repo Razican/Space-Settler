@@ -1,8 +1,12 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Orbit
-{
-	public $major_mass, $orbiting_mass, $semimajor_axis, $eccentricity, $time;
+class Orbit {
+
+	public $major_mass;
+	public $orbiting_mass;
+	public $semimajor_axis;
+	public $eccentricity;
+	public $time;
 
 	public function __construct($param)
 	{
@@ -31,7 +35,7 @@ class Orbit
 		$E0				= $M;
 		$E1				= $M+$this->eccentricity*sin($E0);
 
-		while(abs($E1-$E0 > 0.0001))
+		while (abs($E1-$E0 > 0.0001))
 		{
 			$E0			= $E1;
 			$E1			= $M+$this->eccentricity*sin($E0);

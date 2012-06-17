@@ -8,8 +8,8 @@
  * @category	Bodies
  * @link		http://www.razican.com/
  */
-final class Moon extends Body
-{
+final class Moon extends Body {
+
 	public $star;
 	public $position;
 	public $terrestrial;

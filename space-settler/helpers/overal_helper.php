@@ -5,8 +5,6 @@
  *
  * @param	string
  * @param	string
- * @param	bool
- * @param	bool
  * @return	void
  */
 function message($message, $dest = '/')
@@ -16,7 +14,7 @@ function message($message, $dest = '/')
 	$data['topbar']		= '';
 	$data['menu']		= '';
 	$data['license']	= $CI->load->view('license', '', TRUE);
-	if(defined('INGAME'))
+	if (defined('INGAME'))
 	{
 		$CI->lang->load('menu');
 		$data['topbar']		= $CI->load->view('ingame/topbar', '', TRUE).'<div class="clear"></div>';
@@ -66,8 +64,10 @@ function is_alnum($string, $space = FALSE)
 {
 	$valid			= array('-', '_');
 
-	if($space)
+	if ($space)
+	{
 		$valid[]	= ' ';
+	}
 
 	return ctype_alnum(str_replace($valid, '', $string));
 }
@@ -88,7 +88,7 @@ function gravity($mass, $distance)
 /**
  * Return the current languaje key
  *
- * @return	string
+ * @return	string	Language key
  */
 function current_lang()
 {
@@ -102,9 +102,9 @@ function current_lang()
 /**
  * It gets the name for a given user ID (Alias of $this->user->get_name())
  *
- * @param	int
- * @param	boolean
- * @return	string
+ * @param	int			User's ID
+ * @param	boolean		Is admin?
+ * @return	string		Name
  */
 function get_name($id, $is_admin = FALSE)
 {
@@ -116,16 +116,20 @@ function get_name($id, $is_admin = FALSE)
 /**
  * It gets the name for a given user ID (Alias of $this->user->get_name())
  *
- * @param	int
- * @param	int
- * @return	string
+ * @param	int			Number
+ * @param	int			Decimals
+ * @return	string		Formatted number
  */
 function format_number($number, $decimals = 0)
 {
 	$CI =& get_instance();
 
-	require_once(APPPATH.'language/'.$CI->config->item('language').'/config.php');
-	if( ! defined('LANG_DEC') OR ( ! defined('LANG_THO'))) show_error('ERROR! language not configured correctly!');
+	require_once(APPPATH.'language/'.config_item('language').'/config.php');
+	if ( ! defined('LANG_DEC') OR ( ! defined('LANG_THO')))
+	{
+		log_message('error', '"'.config_item('language').'" language not configured correctly');
+		show_error('ERROR! language not configured correctly!');
+	}
 
 	return number_format($number, $decimals, LANG_DEC, LANG_THO);
 }
@@ -138,10 +142,9 @@ function format_number($number, $decimals = 0)
 function list_skins($config_item = NULL)
 {
 	$skins	= array();
-	foreach(scandir(FCPATH.'skins') as $dir)
+	foreach (scandir(FCPATH.'skins') as $dir)
 	{
-		if( ! is_dir(FCPATH.'skins/'.$dir)) break;
-		if($dir != '.' && $dir != '..')
+		if (is_dir(FCPATH.'skins/'.$dir) && ($dir != '.') && ($dir != '..'))
 		{
 			require_once(FCPATH.'skins/'.$dir.'/config.php');
 			if( ! isset($config)) show_error(lang('overal.config_error'));

@@ -4,10 +4,10 @@ class Reset_password extends SPS_Controller {
 
 	public function index()
 	{
-		if($this->uri->segment(2))
+		if ($this->uri->segment(2))
 			redirect('reset_password', 'location', 301);
 
-		if( ! $this->session->userdata('logged_in'))
+		if ( ! $this->session->userdata('logged_in'))
 		{
 			define('LOGIN', TRUE);
 			$this->lang->load('login');
@@ -17,9 +17,9 @@ class Reset_password extends SPS_Controller {
 				$this->load->helper('email');
 
 				$email	= $this->input->post('email');
-				if(valid_email($email))
+				if (valid_email($email))
 				{
-					if( ! $this->user->exists_email($email))
+					if ( ! $this->user->exists_email($email))
 					{
 						message(lang('login.email_not_exist'), 'reset_password');
 					}

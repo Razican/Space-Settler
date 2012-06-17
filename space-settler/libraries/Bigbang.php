@@ -8,9 +8,8 @@
  * @category	Libraries
  * @link		http://www.razican.com/
  */
+class Bigbang {
 
-class Bigbang
-{
 	private	$current_galaxies;
 	private	$current_stars;
 	private	$current_bodies;
@@ -41,7 +40,7 @@ class Bigbang
 	 * Create a new galaxy
 	 *
 	 * @access	public
-	 * @param	int
+	 * @param	int			Current solar systems
 	 * @return	boolean
 	 */
 	public function create_galaxy($solar_systems)
@@ -142,7 +141,7 @@ class Bigbang
 		$CI->db->select_max('galaxy');
 		$query	= $CI->db->get('stars');
 
-		foreach($query->result() as $total);
+		foreach ($query->result() as $total);
 
 		return is_null($total->galaxy) ? 0 : $total->galaxy;
 	}
