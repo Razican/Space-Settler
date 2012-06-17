@@ -13,45 +13,69 @@ class SPS_Session extends CI_Session {
   function __construct()
   {
     parent::__construct();
-
-    $this->now = time();
   }
+	/**
+	 * Get the "now" time
+	 *
+	 * @access	private
+	 * @return	string
+	 */
+	function _get_time()
+	{
+		$timezone = config_item('timezone');
 
-  	/**
-	 * Write the session cookie
+		if ($timezone === 'local' OR $timezone === date_default_timezone_get())
+		{
+			return time();
+		}
+
+		$datetime = new DateTime('now', new DateTimeZone($timezone));
+		sscanf($datetime->format('j-n-Y G:i:s'), '%d-%d-%d %d:%d:%d', $day, $month, $year, $hour, $minute, $second);
+
+		return mktime($hour, $minute, $second, $month, $day, $year);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Change the session expiration
 	 *
 	 * @access	public
 	 * @return	void
 	 */
-	function _set_cookie($cookie_data = NULL)
+	public function set_expiration($seconds = 0)
 	{
-		if (is_null($cookie_data))
+		if ($seconds !== 0)
 		{
-			$cookie_data	= $this->userdata;
-		}
-
-		$cookie_data = $this->_serialize($cookie_data);
-
-		if ($this->sess_encrypt_cookie == TRUE)
-		{
-			$cookie_data	= $this->CI->encrypt->encode($cookie_data);
+			$expire						= time() + $seconds;
+			$this->sess_expire_on_close	= FALSE;
 		}
 		else
 		{
-			$cookie_data	= $cookie_data.md5($cookie_data.$this->encryption_key);
+			$this->sess_expire_on_close	= TRUE;
 		}
 
-		$expire				= (config_item('sess_expire_on_close') === TRUE) ? 0 : $this->sess_expiration + time();
-		$secure_cookie		= (config_item('cookie_secure') === TRUE) ? 1 : 0;
+		// Serialize the userdata for the cookie
+		$cookie_data = $this->_serialize($this->userdata);
 
+		if ($this->sess_encrypt_cookie == TRUE)
+		{
+			$cookie_data = $this->CI->encrypt->encode($cookie_data);
+		}
+		else
+		{
+			// if encryption is not used, we provide an md5 hash to prevent userside tampering
+			$cookie_data = $cookie_data.md5($cookie_data.$this->encryption_key);
+		}
+
+		// Set the cookie
 		setcookie(
 					$this->sess_cookie_name,
 					$cookie_data,
 					$expire,
 					$this->cookie_path,
 					$this->cookie_domain,
-					0,
-					$secure_cookie
+					$this->cookie_secure
 				);
 	}
 }

@@ -28,17 +28,6 @@ function message($message, $dest = '/')
 }
 
 /**
- * Convert an IP address to an unsigned integer
- *
- * @param	string
- * @return	integer
- */
-function ip2int($ip_address)
-{
-	return sprintf("%u", ip2long($ip_address));
-}
-
-/**
  * Return current skin
  *
  * @return	string

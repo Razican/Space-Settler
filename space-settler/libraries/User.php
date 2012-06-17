@@ -31,8 +31,8 @@ class User {
 
 		if($query->num_rows() === 1)
 		{
-			if( ! $remember)
-				$CI->config->set_item('sess_expire_on_close', TRUE);
+			if($remember)
+				$CI->session->set_expiration(config_item('sess_expiration'));
 
 			foreach($query->result() as $user){}
 
@@ -105,7 +105,7 @@ class User {
 		$CI->load->helper('string');
 
 		$password	= random_string('alnum', 8);
-		$IP			= ip2int($CI->input->ip_address());
+		$IP			= $CI->input->ip_address();
 		$code		= random_string('alnum', 15);
 		$time		= now();
 

@@ -19,7 +19,7 @@ class SPS_Controller extends CI_Controller {
 				{
 					$this->db->set('last_active', now());
 				}
-				$this->db->set('last_ip', ip2int($this->input->ip_address()));
+				$this->db->set('last_ip', $this->input->ip_address());
 				$this->db->update('users');
 			}
 		}

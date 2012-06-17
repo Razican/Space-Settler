@@ -15,8 +15,7 @@ class Main extends SPS_Controller {
 			{
 				if ($this->user->login($this->input->post('username'),
 					$this->input->post('password'),
-					$this->input->post('pass_conf'),
-					$this->input->post('email')))
+					(bool) $this->input->post('rememberme')))
 				{
 					redirect('/');
 				}

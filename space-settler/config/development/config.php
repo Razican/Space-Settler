@@ -246,7 +246,7 @@ $config['encryption_key'] = '5aB5blkWWcN33z4L7J40YRXV64uVt8mx';
 */
 $config['sess_cookie_name']		= 'sps_session';
 $config['sess_expiration']		= 604800; //60*60*24*7
-$config['sess_expire_on_close']	= FALSE;
+$config['sess_expire_on_close']	= TRUE;
 $config['sess_encrypt_cookie']	= TRUE;
 $config['sess_use_database']	= TRUE;
 $config['sess_table_name']		= 'sessions';

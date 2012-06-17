@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 13-06-2012 a las 23:36:12
+-- Tiempo de generación: 17-06-2012 a las 17:05:08
 -- Versión del servidor: 5.5.24
 -- Versión de PHP: 5.3.10-1ubuntu3.1
 
@@ -92,8 +92,8 @@ CREATE TABLE IF NOT EXISTS `sps_sessions` (
 --
 -- Estructura de tabla para la tabla `sps_stars`
 --
--- Creación: 16-04-2012 a las 17:56:11
--- Última actualización: 16-04-2012 a las 17:56:17
+-- Creación: 17-06-2012 a las 15:03:27
+-- Última actualización: 17-06-2012 a las 15:03:27
 --
 
 DROP TABLE IF EXISTS `sps_stars`;
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `sps_stars` (
   `luminosity` bigint(20) unsigned NOT NULL,
   `temperature` mediumint(7) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=985 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `sps_support` (
 --
 -- Estructura de tabla para la tabla `sps_users`
 --
--- Creación: 12-06-2012 a las 09:29:34
+-- Creación: 17-06-2012 a las 15:04:32
 --
 
 DROP TABLE IF EXISTS `sps_users`;
@@ -149,8 +149,8 @@ CREATE TABLE IF NOT EXISTS `sps_users` (
   `validation` char(15) DEFAULT NULL,
   `validated` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `name` varchar(20) NOT NULL,
-  `last_ip` int(10) unsigned NOT NULL,
-  `reg_ip` int(10) unsigned NOT NULL,
+  `last_ip` varchar(45) NOT NULL,
+  `reg_ip` varchar(45) NOT NULL,
   `register_time` int(10) unsigned NOT NULL,
   `homeworld` mediumint(8) unsigned NOT NULL,
   `last_active` int(10) unsigned NOT NULL,
