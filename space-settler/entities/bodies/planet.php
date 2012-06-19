@@ -28,7 +28,10 @@ final class Planet extends Body {
 		$args	= func_get_args();
 		if (func_num_args() === 1)
 		{
+			//IF it's an integer
 			//$this->_load($args[0]);
+			//If it's an array or an object
+			//Update current values
 		}
 		else
 		{
@@ -283,10 +286,27 @@ final class Planet extends Body {
 				$this->temperature['avg']	= $this->temperature['eff']+pow($this->atmosphere['greenhouse'], 1.225)+25+mt_rand(0, 10);
 			}
 
-			//Max y min según duración del día y ef. invernadero
+			if ($this->rotation['axTilt'] < 10)
+			{
+				//Solo se tiene en cuenta la duración del día y el efecto invernadero
+				//Como en Venus o Mercurio
+			}
+			elseif ($this->rotation['axTilt'] > 50)
+			{
+				//Se considera un planeta acoplado
+				//Como Mercurio, pero más exagerado, o como Venus pero más exagerado
+			}
+			else
+			{
+				//Estaciones, etc, como en la Tierra o Marte
+			}
 			/*
 			 * Si la inclinación es pequeña solo se tiene en cuenta la duración del día (-10º) Si es grande (+10º)
-			 * se tiene en cuenta también las estaciones y los polos.
+			 * se tiene en cuenta también las estaciones y los polos. Si es muy grande (+50º) se
+			 * considera como si fuera un planeta acoplado.
+			 *
+			 * El efecto invernadero se aplica a las temperaturas máximas, pero a las mínimas solo si
+			 * el planeta no se consifera acoplado.
 			 *
 			 * Aquí hay problemas a la hora de hacer el cálculo realista, dado que no hay deasiados datos de planetas
 			 * rocosos.

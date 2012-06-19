@@ -36,7 +36,7 @@ function skin()
 {
 	$CI		=& get_instance();
 
-	$skin	=  $CI->session->userdata('logged_in') ? $CI->session->userdata('skin') : $CI->config->item('skin');
+	$skin	=  $CI->session->userdata('logged_in') ? $CI->session->userdata('skin') : config_item('skin');
 	$skin	= ( ! empty($skin)) ? $skin : 'default';
 
 	return $skin;
@@ -71,7 +71,7 @@ function is_alnum($string, $space = FALSE)
 function gravity($mass, $distance)
 {
 	$CI =& get_instance();
-	return $CI->config->item('G')*$mass/pow($distance, 2);
+	return config_item('G')*$mass/pow($distance, 2);
 }
 
 /**
@@ -82,7 +82,7 @@ function gravity($mass, $distance)
 function current_lang()
 {
 	$CI =& get_instance();
-	require_once(APPPATH.'language/'.$CI->config->item('language').'/config.php');
+	require_once(APPPATH.'language/'.config_item('language').'/config.php');
 	if( ! defined('LANG_KEY')) show_error('ERROR! language not configured correctly!');
 
 	return LANG_KEY;
@@ -136,8 +136,14 @@ function list_skins($config_item = NULL)
 		if (is_dir(FCPATH.'skins/'.$dir) && ($dir != '.') && ($dir != '..'))
 		{
 			require_once(FCPATH.'skins/'.$dir.'/config.php');
-			if( ! isset($config)) show_error(lang('overal.config_error'));
-			$skins[$dir] = is_null($config_item) ? $config : $config[$config_item];
+			if(isset($config))
+			{
+				$skins[$dir] = is_null($config_item) ? $config : $config[$config_item];
+			}
+			else
+			{
+				show_error(lang('overal.config_error'));
+			}
 		}
 	}
 	return $skins;

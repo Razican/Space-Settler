@@ -25,3 +25,7 @@ class SPS_Controller extends CI_Controller {
 		}
 	}
 }
+
+
+/* End of file SPS_Controller.php */
+/* Location: ./application/core/SPS_Controller.php */

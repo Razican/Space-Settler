@@ -90,7 +90,7 @@ class Bigbang {
 		//			$planet->finish();
 				}
 			}
-			//Create dwarf-planets
+			//Create dwarf-planets (Kuiper's Belt)
 
 			$star->finish();
 		}
