@@ -34,7 +34,7 @@ class User {
 			if($remember)
 				$CI->session->set_expiration(config_item('sess_expiration'));
 
-			foreach($query->result() as $user){}
+			foreach($query->result() as $user);
 
 			$userdata	= array(
 				'id'			=> $user->id,

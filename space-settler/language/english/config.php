@@ -6,4 +6,4 @@
 
 
 /* End of file config.php */
-/* Location: ./application/languaje/english/config.php */
+/* Location: ./application/language/english/config.php */
