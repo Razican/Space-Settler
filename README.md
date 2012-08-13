@@ -5,7 +5,7 @@ Requisitos Mínimos
 * Necesario **PHP >= 5.3.0**.
 * Soporta MySQL (5.1+), MySQLi, MS SQL, SQLSRV, Oracle, PostgreSQL, SQLite, CUBRID, Interbase, ODBC y PDO.
 
-* El programa ofrecerá un poco más de exactitud al usar un sistema operativo de 64 bits, ya que se ueden usar números más grandes.
+* El programa ofrecerá un poco más de exactitud al usar un sistema operativo de 64 bits, ya que se pueden usar números más grandes.
 * De momento solo se soporta IPv4 pero se pretende incluir soporte para IPv6 próximamente.
 
 Instalación:
@@ -61,7 +61,7 @@ que se podrá encontrar en la sección galaxia. El diámetro no estará corréct
 Fórmulas no implementadas:
 ------------------
 
-* Hay que tener en cuenta las esferas de Hill de los cuerpos, y la excentricidad de las órbitas, para que no se salgan: 
+* Hay que tener en cuenta las esferas de Hill de los cuerpos, y la excentricidad de las órbitas, para que no se salgan:
 * Muy importante el límite de roche, para que no se rompan los cuerpos: r*(2M/m)^(1/3) //Donde M es la masa del planeta,
 m la del satélite y r el rádio del satélite.
 
@@ -137,6 +137,12 @@ Rotación planetaria:
 
 Si un planeta tiene rotación 0 es que no rota respecto a la estrella, es decir, tiene el mismo periodo
 de rotación que de translación. Si el día dura 0, entonces el día es infinito por la misma razón.
+
+Duración del día:
+=================
+
+Se ha usado esta fórmula para calcular la duración de los días:
+http://en.wikipedia.org/wiki/Sidereal_time#Sidereal_days_compared_to_solar_days_on_other_planets
 
 Sistemas multiestelares:
 ========================

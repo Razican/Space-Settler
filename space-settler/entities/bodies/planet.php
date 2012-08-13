@@ -215,7 +215,7 @@ final class Planet extends Body {
 			{
 				$day	= $this->rotation['period']/(1-$this->rotation['period']/$this->orbit['period']);
 			}
-			elseif ($this->rotation['period'] > 0)
+			elseif ($this->rotation['period'] < 0)
 			{
 				$day	= $this->rotation['period']/(1+$this->rotation['period']/$this->orbit['period']);
 			}
@@ -224,6 +224,8 @@ final class Planet extends Body {
 				$day	= 0;
 			}
 		}
+
+		$this->rotation['day']	= $day;
 	}
 
 	private function _albedo($look_ground = FALSE)
@@ -286,19 +288,27 @@ final class Planet extends Body {
 				$this->temperature['avg']	= $this->temperature['eff']+pow($this->atmosphere['greenhouse'], 1.225)+25+mt_rand(0, 10);
 			}
 
-			if ($this->rotation['axTilt'] < 10)
+			if ($this->rotation['axTilt'] < 10 OR $this->rotation['axTilt'] > 170)
 			{
+				//TODO Todavía esta fórmula no es realista
+				$change	= $this->temperature['avg']*$this->rotation['day']/$this->atmosphere['greenhouse'];
+
+				$this->temperature['min']	= $this->temperature['avg']-mt_rand(round($change*0.8*100), round($change*1.2*100)/100);
+				$this->temperature['max']	= $this->temperature['avg']+mt_rand(round($change*0.8*100), round($change*1.2*100)/100);
+
 				//Solo se tiene en cuenta la duración del día y el efecto invernadero
 				//Como en Venus o Mercurio
 			}
-			elseif ($this->rotation['axTilt'] > 50)
+			elseif ($this->rotation['axTilt'] > 50 && $this->rotation['axTilt'] < 130)
 			{
 				//Se considera un planeta acoplado
 				//Como Mercurio, pero más exagerado, o como Venus pero más exagerado
+				//También hay que tener en cuenta la duración del día
 			}
 			else
 			{
 				//Estaciones, etc, como en la Tierra o Marte
+				//Pero hay que tener en cuenta la duración del día
 			}
 			/*
 			 * Si la inclinación es pequeña solo se tiene en cuenta la duración del día (-10º) Si es grande (+10º)
@@ -306,9 +316,9 @@ final class Planet extends Body {
 			 * considera como si fuera un planeta acoplado.
 			 *
 			 * El efecto invernadero se aplica a las temperaturas máximas, pero a las mínimas solo si
-			 * el planeta no se consifera acoplado.
+			 * el planeta no se considera acoplado.
 			 *
-			 * Aquí hay problemas a la hora de hacer el cálculo realista, dado que no hay deasiados datos de planetas
+			 * Aquí hay problemas a la hora de hacer el cálculo realista, ya que no hay suficientes datos de planetas
 			 * rocosos.
 			 */
 		}

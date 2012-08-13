@@ -22,13 +22,13 @@ class SPS_Loader extends CI_Loader {
 
 		if (file_exists(APPPATH.'views/overal/'.$view.'.php'))
 		{
-			if (file_exists($this->_ci_view_paths.$view.'.php'))
+			$skin = '';
+			foreach ($this->_ci_view_paths as $path => $bool)
 			{
-				$skin	= $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $vars, '_ci_return' => TRUE));
-			}
-			else
-			{
-				$skin	= '';
+				if ($bool && file_exists($path.$view.'.php'))
+				{
+					$skin	= $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $vars, '_ci_return' => TRUE));
+				}
 			}
 
 			$array = array('skin' => $skin);

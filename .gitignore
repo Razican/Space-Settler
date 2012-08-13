@@ -5,6 +5,8 @@
 *geany*
 *error_log*
 .DS_Store
+*.sublime-*
+node_modules
 
 space-settler/cache/*
 !space-settler/cache/index.html
