@@ -1,38 +1,8 @@
 @charset "utf8";
-
-input, select, textarea
-{
-	border-radius:		3px;
-}
-
-body
-{
-	margin:				0px;
-	background-color:	#a5b0ff;
-}
-
-a
-{
-	text-decoration:	none;
-	color:				white;
-}
-
-.table
-{
-	display:			table;
-}
-
-.table-cell
-{
-	display:			table-cell;
-}
-
-.table-row
-{
-	display:			table-row;
-}
-
-.clear
-{
-	clear:				both;
-}
+input,select,textarea{border-radius:3px;}
+body{margin:0px;background-color:#a5b0ff;}
+a{text-decoration:none;color:white;}
+.table{display:table;}
+.table-cell{display:table-cell;}
+.table-row{display:table-row;}
+.clear{clear:both;}

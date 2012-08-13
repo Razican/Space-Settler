@@ -7,7 +7,7 @@ DirectoryIndex index.php
 
 <IfModule mod_rewrite.c>
 	RewriteEngine On
-	RewriteBase /space_settler/
+	RewriteBase /space-settler/
 
 	RewriteCond %{REQUEST_FILENAME} !index.php
 	RewriteRule (.*)\.php$ index.php/$1
@@ -26,3 +26,20 @@ DirectoryIndex index.php
 <IfModule !mod_rewrite.c>
 	ErrorDocument 404 /index.php
 </IfModule>
+
+<ifModule mod_headers.c>
+	<filesMatch "\.(jpg|png|css|js)$">
+		Header set Cache-Control "max-age=604800, public"
+	</filesMatch>
+</ifModule>
+
+<ifModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/html
+	AddOutputFilterByType DEFLATE text/xml
+	AddOutputFilterByType DEFLATE text/css
+	AddOutputFilterByType DEFLATE application/javascript
+	AddOutputFilterByType DEFLATE application/x-javascript
+	AddOutputFilterByType DEFLATE application/xml
+	AddOutputFilterByType DEFLATE application/xhtml+xml
+	AddOutputFilterByType DEFLATE application/rss+xml
+</ifModule>
