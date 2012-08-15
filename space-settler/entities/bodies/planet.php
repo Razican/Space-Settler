@@ -136,7 +136,7 @@ final class Planet extends Body {
 
 	private function _greenhouse()
 	{
-		if ( ! $this->type)
+		if ( ! $this->type && ! is_null($this->atmosphere))
 		{
 			$this->atmosphere['greenhouse']	= $this->atmosphere['composition']['CO2']*$this->atmosphere['pressure']/35;
 			if ($this->atmosphere['greenhouse'] > 1) $this->atmosphere['greenhouse'] = pow($this->atmosphere['greenhouse'], 0.637);
@@ -164,6 +164,7 @@ final class Planet extends Body {
 				$this->mass		= $mass;
 			break;
 			case 1:
+				//Estos planetas no tienen masa!
 				$this->radius	= mt_rand(2E+6,125E+6);
 				$mass			= pow($this->radius/1E+3, 1.6)*1.2E+19-0.5E+26;
 
@@ -187,11 +188,11 @@ final class Planet extends Body {
 
 			if ($this->rotation['axTilt'] >= 90)
 			{
-				$this->rotation['period']	= mt_rand(50000, 25000000);
+				$this->rotation['period']	= -mt_rand(50000, ($this->orbit['period'] < 25000000 ? $this->orbit['period'] : 25000000));
 			}
 			else
 			{
-				$this->rotation['period']	= mt_rand(18000, 180000);
+				$this->rotation['period']	= mt_rand(18000, ($this->orbit['period'] < 180000 ? $this->orbit['period'] : 180000));
 			}
 		}
 		elseif ($this->orbit['sma'] > $tidal_lock/2)
@@ -213,11 +214,11 @@ final class Planet extends Body {
 		{
 			if ($this->rotation['period'] > 0)
 			{
-				$day	= $this->rotation['period']/(1-$this->rotation['period']/$this->orbit['period']);
+				$day	= $this->rotation['period']/(1-($this->rotation['period']/$this->orbit['period']));
 			}
 			elseif ($this->rotation['period'] < 0)
 			{
-				$day	= $this->rotation['period']/(1+$this->rotation['period']/$this->orbit['period']);
+				$day	= abs($this->rotation['period'])/(1+(abs($this->rotation['period'])/$this->orbit['period']));
 			}
 			else
 			{
@@ -225,6 +226,7 @@ final class Planet extends Body {
 			}
 		}
 
+		if ($day < 0) log_message('debug', 'Duración del día: '.$day.' | Periodo de rotación: '.$this->rotation['period'].' | Duración del año: '.$this->orbit['period']);
 		$this->rotation['day']	= $day;
 	}
 
@@ -239,6 +241,14 @@ final class Planet extends Body {
 			if ($this->type)
 			{
 				$this->albedo = mt_rand(4000, 6000)/10000;
+			}
+			elseif (is_null($this->atmosphere))
+			{
+				if (empty($this->ground))
+				{
+					$this->albedo = mt_rand(0, 1000)/10000;
+				}
+				//TODO recalcular tras ground
 			}
 			else
 			{
@@ -272,16 +282,18 @@ final class Planet extends Body {
 
 	private function _temperature()
 	{
+		$CI		=& get_instance();
+
+		$l		= $this->star->luminosity*$CI->config->item('sun_luminosity');
+		$this->temperature['eff']	= pow(($l*(1-$this->albedo))/(16*M_PI*$CI->config->item('Boltzman_constant')*pow($this->orbit['sma']*$CI->config->item('AU'), 2)),1/4);
+
 		if ( ! $this->type)
 		{
-			$CI		=& get_instance();
+			if ($this->temperature['eff'] > 1000)
+			{
+				$this->atmosphere = array('pressure' => 0, 'greenhouse' => 0);
+			}
 
-			$l		= $this->star->luminosity*$CI->config->item('sun_luminosity');
-			$this->temperature['eff']	= pow(($l*(1-$this->albedo))/(16*M_PI*$CI->config->item('Boltzman_constant')*pow($this->orbit['apa']*$CI->config->item('AU'), 2)),1/4);
-
-			//ERROR: En planetas muy cercanos a estrellas muy calientes, la temperatura se voltea al negativo en 32 bits
-			//Se debe hacer que la temperatura media no pueda superar los 3.000K, más o menos, así que en casos de muy, muy
-			//alta temperatura, se destruye la atmósfera, y se crea un super planeta caliente.
 			if ($this->atmosphere['greenhouse'] <= 1)
 			{
 				$this->temperature['avg']	= $this->temperature['eff']+$this->atmosphere['greenhouse']*20+mt_rand(0, 15)*$this->atmosphere['greenhouse'];
@@ -294,23 +306,26 @@ final class Planet extends Body {
 			if ($this->rotation['axTilt'] < 10 OR $this->rotation['axTilt'] > 170)
 			{
 				//TODO Todavía esta fórmula no es realista
+				$change	= ($this->temperature['avg']*$this->rotation['day']/pow(1.035, $this->atmosphere['greenhouse']))/1E+6;
 
-		//		$change	= $this->temperature['avg']*$this->rotation['day']/$this->atmosphere['greenhouse'];
-
-		//		$this->temperature['min']	= $this->temperature['avg']-mt_rand(round($change*0.8*10), round($change*1.2*10))/10;
-		//		$this->temperature['max']	= $this->temperature['avg']+mt_rand(round($change*0.8*10), round($change*1.2*10))/10;
+				$this->temperature['min']	= $this->temperature['avg']-mt_rand(round($change*0.8*10), round($change*1.2*10))/10;
+				$this->temperature['max']	= $this->temperature['avg']+mt_rand(round($change*0.8*10), round($change*1.2*10))/10;
 
 				//Solo se tiene en cuenta la duración del día y el efecto invernadero
 				//Como en Venus o Mercurio
 			}
 			elseif ($this->rotation['axTilt'] > 50 && $this->rotation['axTilt'] < 130)
 			{
+				$this->temperature['min']	= $this->temperature['avg'];
+				$this->temperature['max']	= $this->temperature['avg'];
 				//Se considera un planeta acoplado
 				//Como Mercurio, pero más exagerado, o como Venus pero más exagerado
 				//También hay que tener en cuenta la duración del día
 			}
 			else
 			{
+				$this->temperature['min']	= $this->temperature['avg'];
+				$this->temperature['max']	= $this->temperature['avg'];
 				//Estaciones, etc, como en la Tierra o Marte
 				//Pero hay que tener en cuenta la duración del día
 			}

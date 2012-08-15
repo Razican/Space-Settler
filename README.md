@@ -62,8 +62,7 @@ Fórmulas no implementadas:
 ------------------
 
 * Hay que tener en cuenta las esferas de Hill de los cuerpos, y la excentricidad de las órbitas, para que no se salgan:
-* Muy importante el límite de roche, para que no se rompan los cuerpos: r*(2M/m)^(1/3) //Donde M es la masa del planeta,
-m la del satélite y r el rádio del satélite.
+* Muy importante el límite de roche, para que no se rompan los cuerpos: r*(2M/m)^(1/3) //Donde M es la masa del planeta, m la del satélite y r el rádio del satélite.
 
 Tiempo:
 -------
@@ -159,3 +158,10 @@ Referidos
 
 Esta implementado un sistema no funcional de referidos. Actualmente el sistema de registros acepta referidos
 pero no los usa. En un futuro es previsible que se usen para dar algún beneficio a los usuarios referentes.
+
+Problemas conocidos:
+====================
+
+* Se ha detectado una baja concentración de planetas calientes, por lo que se debe reconfigurar el sistema para que eso no ocurra.
+* Resulta que hay a veces planetas con el mismo periodo de translación, se presupone que en el mismo sistema, pero se debe mejorar el diagnóstico.
+* Los planetas gaseosos tienen masa cero.
