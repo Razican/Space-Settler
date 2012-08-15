@@ -12,7 +12,7 @@ class Creation extends SPS_Controller {
 			$this->config->load('physics');
 			$this->load->library('bigbang');
 
-			$stars = mt_rand(950, 1050);
+			$stars = mt_rand(95000, 105000);
 			if ($this->bigbang->create_galaxy($stars))
 			{
 				echo 'Galaxia creada'.PHP_EOL.PHP_EOL;
@@ -29,9 +29,13 @@ class Creation extends SPS_Controller {
 				echo 'Tipo G: '.format_number($this->bigbang->stats['G_stars']).PHP_EOL;
 				echo 'Tipo K: '.format_number($this->bigbang->stats['K_stars']).PHP_EOL;
 				echo 'Tipo M: '.format_number($this->bigbang->stats['M_stars']).PHP_EOL.PHP_EOL;
-			/*	echo 'Cinturones de asteroides: '.format_number($this->bigbang->stats['belts']).PHP_EOL;
-				echo 'Planetas: '.format_number($this->bigbang->stats['planets']).PHP_EOL;
-				echo 'Lunas: '.format_number($this->bigbang->stats['moons']).PHP_EOL;*/
+			//	echo 'Cinturones de asteroides: '.format_number($this->bigbang->stats['belts']).PHP_EOL;
+				echo 'Planetas (sin guardar): '.format_number($this->bigbang->stats['planets']).PHP_EOL;
+				echo '	De los cuales: '.PHP_EOL;
+				echo '	Gaseosos: '.format_number($this->bigbang->stats['planets_1']).PHP_EOL;
+				echo '	Rocosos: '.format_number($this->bigbang->stats['planets_0']).PHP_EOL;
+				echo '		De los cuales, supertierras: '.format_number($this->bigbang->stats['earths']).PHP_EOL;
+			//	echo 'Lunas: '.format_number($this->bigbang->stats['moons']).PHP_EOL;
 
 				if ( ! $this->bigbang->save_galaxy())
 				{

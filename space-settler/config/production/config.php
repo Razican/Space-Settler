@@ -1,4 +1,29 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+/**
+ * CodeIgniter
+ *
+ * An open source application development framework for PHP 5.2.4 or newer
+ *
+ * NOTICE OF LICENSE
+ *
+ * Licensed under the Academic Free License version 3.0
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0) that is
+ * bundled with this package in the files license_afl.txt / license_afl.rst.
+ * It is also available through the world wide web at this URL:
+ * http://opensource.org/licenses/AFL-3.0
+ * If you did not receive a copy of the license and are unable to obtain it
+ * through the world wide web, please send an email to
+ * licensing@ellislab.com so we can send you a copy immediately.
+ *
+ * @package		CodeIgniter
+ * @author		EllisLab Dev Team
+ * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
+ * @license		http://opensource.org/licenses/AFL-3.0 Academic Free License (AFL 3.0)
+ * @link		http://codeigniter.com
+ * @since		Version 1.0
+ * @filesource
+ */
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +39,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://sps.razican.com/';
+$config['base_url']	= 'http://www.example.com/space-settler';
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +104,8 @@ $config['language']	= 'spanish';
 | This determines which character set is used by default in various methods
 | that require a character set to be provided.
 |
+| See http://php.net/htmlspecialchars for a list of supported charsets.
+|
 */
 $config['charset'] = 'UTF-8';
 
@@ -91,7 +118,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = TRUE;
+$config['enable_hooks'] = FALSE;
 
 
 /*
@@ -176,11 +203,15 @@ $config['directory_trigger']	= 'd'; // experimental not currently in use
 |	3 = Informational Messages
 |	4 = All Messages
 |
+| You can also pass in a array with threshold levels to show individual error types
+|
+| 	array(2) = Debug Messages, without Error Messages
+|
 | For a live site you'll usually only enable Errors (1) to be logged otherwise
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 4;
 
 /*
 |--------------------------------------------------------------------------
@@ -223,8 +254,11 @@ $config['cache_path'] = '';
 | If you use the Encryption class or the Session class you
 | MUST set an encryption key.  See the user guide for info.
 |
+| http://codeigniter.com/user_guide/libraries/encryption.html
+| http://codeigniter.com/user_guide/libraries/sessions.html
+|
 */
-$config['encryption_key'] = 'pBijja75CV4rhx3Z0vbmFG5GEkGqFFBg';
+$config['encryption_key'] = 'v4x83xQytc65tN2W5iXier6XubROFeSk';
 
 /*
 |--------------------------------------------------------------------------
@@ -246,11 +280,11 @@ $config['encryption_key'] = 'pBijja75CV4rhx3Z0vbmFG5GEkGqFFBg';
 */
 $config['sess_cookie_name']		= 'sps_session';
 $config['sess_expiration']		= 604800; //60*60*24*7
-$config['sess_expire_on_close']	= FALSE;
+$config['sess_expire_on_close']	= TRUE;
 $config['sess_encrypt_cookie']	= TRUE;
 $config['sess_use_database']	= TRUE;
 $config['sess_table_name']		= 'sessions';
-$config['sess_match_ip']		= TRUE;
+$config['sess_match_ip']		= FALSE;
 $config['sess_match_useragent']	= TRUE;
 $config['sess_time_to_update']	= 900; //60*15
 
@@ -263,12 +297,14 @@ $config['sess_time_to_update']	= 900; //60*15
 | 'cookie_domain' = Set to .your-domain.com for site-wide cookies
 | 'cookie_path'   =  Typically will be a forward slash
 | 'cookie_secure' =  Cookies will only be set if a secure HTTPS connection exists.
+| 'cookie_httponly' = Cookie will only be accessible via HTTP(S) (no javascript)
 |
 */
-$config['cookie_prefix']	= "";
-$config['cookie_domain']	= "sps.razican.com";
-$config['cookie_path']		= "/";
+$config['cookie_prefix']	= '';
+$config['cookie_domain']	= 'www.example.com';
+$config['cookie_path']		= '/space-settler';
 $config['cookie_secure']	= FALSE;
+$config['cookie_httponly'] 	= FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -292,11 +328,15 @@ $config['global_xss_filtering'] = TRUE;
 | 'csrf_token_name' = The token name
 | 'csrf_cookie_name' = The cookie name
 | 'csrf_expire' = The number in seconds the token should expire.
+| 'csrf_regenerate' = Regenerate token on every submission
+| 'csrf_exclude_uris' = Array of URIs which ignore CSRF checks
 */
-$config['csrf_protection']	= TRUE;
-$config['csrf_token_name']	= 'SPS_csrf';
-$config['csrf_cookie_name']	= 'SPS_csrf';
-$config['csrf_expire']		= 7200; //60*60*2
+$config['csrf_protection']		= TRUE;
+$config['csrf_token_name']		= 'SPS_csrf-token';
+$config['csrf_cookie_name']		= 'SPS_csrf-cookie';
+$config['csrf_expire']			= 7200; //60*60*2
+$config['csrf_regenerate']		= TRUE;
+$config['csrf_exclude_uris']	= array();
 
 /*
 |--------------------------------------------------------------------------
@@ -319,16 +359,28 @@ $config['compress_output'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
+| Minify
+|--------------------------------------------------------------------------
+|
+| Removes extra characters (usually unnecessary spaces) from your
+| output for faster page load speeds.  Makes your outputted HTML source
+| code less readable.
+|
+*/
+$config['minify_output'] = TRUE;
+
+/*
+|--------------------------------------------------------------------------
 | Master Time Reference
 |--------------------------------------------------------------------------
 |
-| Options are 'local' or 'gmt'.  This pref tells the system whether to use
-| your server's local time as the master 'now' reference, or convert it to
-| GMT.  See the 'date helper' page of the user guide for information
-| regarding date handling.
+| Options are 'local' or any PHP supported timezone. This preference tells
+| the system whether to use your server's local time as the master 'now'
+| reference, or convert it to the configured one timezone. See the 'date
+| helper' page of the user guide for information regarding date handling.
 |
 */
-$config['time_reference'] = 'gmt';
+$config['time_reference'] = 'UTC';
 
 
 /*
@@ -358,5 +410,6 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 
+
 /* End of file config.php */
-/* Location: ./application/config/config.php */
+/* Location: ./application/config/production/config.php */

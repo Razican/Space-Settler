@@ -26,4 +26,4 @@ $config['sleep']  = 0;
 
 
 /* End of file enviroment.php */
-/* Location: ./megapublik/config/production/enviroment.php */
+/* Location: ./application/config/production/enviroment.php */

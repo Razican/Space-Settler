@@ -3,9 +3,9 @@
 /**
  * Physics constants
  *
- * @subpackage	Libraries
+ * @subpackage	Configuration
  * @author		Razican
- * @category	Libraries
+ * @category	Physics
  * @link		http://www.razican.com/
  */
 

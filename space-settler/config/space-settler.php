@@ -14,18 +14,6 @@ $config['version']		= 'Pre-Alpha 3-dev';
 
 /*
 |--------------------------------------------------------------------------
-| Timezone
-|--------------------------------------------------------------------------
-|
-| This is the default timezone for the game. It will be used for every task
-| which needs a time parameter.
-|
-*/
-
-$config['timezone']		= 'Europe/Madrid';
-
-/*
-|--------------------------------------------------------------------------
 | Default Language
 |--------------------------------------------------------------------------
 |
@@ -64,7 +52,7 @@ $config['min_pass_lenght']	= 6;
 | This will be the default format when showing date
 |
 */
-$config['date_format']	= '%WEEKDAY% %DAY-0% %OF% %MONTHNAME% %OF% %YEAR% - %HOUR%:%MINUTE%'; //Jueves 1 de Diciembre de 2011 - 18:50
+$config['date_format']	= '%WEEKDAY%, %DAY-0% %OF% %MONTHNAME% %OF% %YEAR% - %HOUR%:%MINUTE%'; //Jueves, 1 de Diciembre de 2011 - 18:50
 
 /*
 |--------------------------------------------------------------------------

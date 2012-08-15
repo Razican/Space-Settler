@@ -49,7 +49,7 @@ final class Planet extends Body {
 			$this->_rotation();
 			$this->_albedo();
 			$this->_temperature();
-		//	$this->_ground();
+			$this->_ground();
 		//	$this->_is_habitable();
 
 		//	$this->_titius_bode();
@@ -100,7 +100,7 @@ final class Planet extends Body {
 				{
 					$this->atmosphere['composition']['CO2'] = mt_rand(7500, 9900)/100;
 					$total += $this->atmosphere['composition']['CO2'];
-					$this->atmosphere['composition']['NO2'] = mt_rand(0, (100-$total)*100)/100;
+					$this->atmosphere['composition']['N2'] = mt_rand(0, (100-$total)*100)/100;
 					$total += $this->atmosphere['composition']['N2'];
 					$this->atmosphere['composition']['O2'] = mt_rand(0, (100-$total)*100)/100;
 					$total += $this->atmosphere['composition']['O2'];
@@ -277,8 +277,11 @@ final class Planet extends Body {
 			$CI		=& get_instance();
 
 			$l		= $this->star->luminosity*$CI->config->item('sun_luminosity');
-			$this->temperature['eff']	= pow(($l*(1-$this->albedo))/(16*M_PI*$CI->config->item('Boltzman_constant')*pow($this->orbit['apa']*$CI->config->item['AU'], 2)),1/4);
+			$this->temperature['eff']	= pow(($l*(1-$this->albedo))/(16*M_PI*$CI->config->item('Boltzman_constant')*pow($this->orbit['apa']*$CI->config->item('AU'), 2)),1/4);
 
+			//ERROR: En planetas muy cercanos a estrellas muy calientes, la temperatura se voltea al negativo en 32 bits
+			//Se debe hacer que la temperatura media no pueda superar los 3.000K, más o menos, así que en casos de muy, muy
+			//alta temperatura, se destruye la atmósfera, y se crea un super planeta caliente.
 			if ($this->atmosphere['greenhouse'] <= 1)
 			{
 				$this->temperature['avg']	= $this->temperature['eff']+$this->atmosphere['greenhouse']*20+mt_rand(0, 15)*$this->atmosphere['greenhouse'];
@@ -291,10 +294,11 @@ final class Planet extends Body {
 			if ($this->rotation['axTilt'] < 10 OR $this->rotation['axTilt'] > 170)
 			{
 				//TODO Todavía esta fórmula no es realista
-				$change	= $this->temperature['avg']*$this->rotation['day']/$this->atmosphere['greenhouse'];
 
-				$this->temperature['min']	= $this->temperature['avg']-mt_rand(round($change*0.8*100), round($change*1.2*100)/100);
-				$this->temperature['max']	= $this->temperature['avg']+mt_rand(round($change*0.8*100), round($change*1.2*100)/100);
+		//		$change	= $this->temperature['avg']*$this->rotation['day']/$this->atmosphere['greenhouse'];
+
+		//		$this->temperature['min']	= $this->temperature['avg']-mt_rand(round($change*0.8*10), round($change*1.2*10))/10;
+		//		$this->temperature['max']	= $this->temperature['avg']+mt_rand(round($change*0.8*10), round($change*1.2*10))/10;
 
 				//Solo se tiene en cuenta la duración del día y el efecto invernadero
 				//Como en Venus o Mercurio

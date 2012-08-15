@@ -33,6 +33,7 @@ final class Star extends Body {
 			$this->galaxy			= $args[1]+1;
 			$this->_luminosity();
 
+			$this->_num_bodies();
 			$this->_titius_bode();
 		}
 	}
@@ -141,7 +142,7 @@ final class Star extends Body {
 	/**
 	 * Calculate the density of a star
 	 */
-	private function _density()
+	protected function _density()
 	{
 		$CI					=& get_instance();
 		$this->density		= ($this->type === '1') ? 0 : $this->mass*$CI->config->item('sun_mass')/$this->volume();
@@ -150,42 +151,37 @@ final class Star extends Body {
 	/**
 	 * Return the number of bodies of the star
 	 */
-	public function num_bodies($random = FALSE)
+	public function _num_bodies()
 	{
-		if ($random)
+		switch ($this->type)
 		{
-			switch ($this->type)
-			{
-				case 'O': case '1': case '2': case '3':
-					$bodies = 0;
-				break;
-				case '4':
-					$bodies = mt_rand(0,2);
-				break;
-				case 'B':
-					if($this->mass < 4) $bodies = mt_rand(0,1) ? mt_rand(1,2) : 0;
-					else $bodies = 0;
-				break;
-				case 'A':
-					$bodies = mt_rand(0,3) ? mt_rand(1,3) : 0;
-				break;
-				case 'F':
-					$bodies = mt_rand(0,8) ? mt_rand(2,6) : mt_rand(0,1);
-				break;
-				case 'G':
-					$bodies = mt_rand(0,20) ? mt_rand(5,12) : mt_rand(0,4);
-				break;
-				case 'K':
-					$bodies = mt_rand(0,15) ? mt_rand(3,10) : mt_rand(0,2);
-				break;
-				case 'M':
-					$bodies = mt_rand(0,15) ? mt_rand(2,8) : mt_rand(0,1);
-				break;
-			}
-			$this->bodies = $bodies;
+			case 'O': case '1': case '2': case '3':
+				$bodies = 0;
+			break;
+			case '4':
+				$bodies = mt_rand(0,2);
+			break;
+			case 'B':
+				if($this->mass < 4) $bodies = mt_rand(0,1) ? mt_rand(1,2) : 0;
+				else $bodies = 0;
+			break;
+			case 'A':
+				$bodies = mt_rand(0,3) ? mt_rand(1,3) : 0;
+			break;
+			case 'F':
+				$bodies = mt_rand(0,8) ? mt_rand(2,6) : mt_rand(0,1);
+			break;
+			case 'G':
+				$bodies = mt_rand(0,20) ? mt_rand(5,12) : mt_rand(0,4);
+			break;
+			case 'K':
+				$bodies = mt_rand(0,15) ? mt_rand(3,10) : mt_rand(0,2);
+			break;
+			case 'M':
+				$bodies = mt_rand(0,15) ? mt_rand(2,8) : mt_rand(0,1);
+			break;
 		}
-
-		return $this->bodies;
+		$this->bodies = $bodies;
 	}
 
 	public function finish()
@@ -213,7 +209,7 @@ final class Star extends Body {
 
 	private function _titius_bode()
 	{
-		if (isset($this->bodies) && $this->bodies > 1)
+		if (isset($this->bodies) && $this->bodies > 0)
 		{
 			$this->tb = array();
 

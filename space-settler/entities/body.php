@@ -36,7 +36,7 @@ class Body {
 	/**
 	 * Calculate the density of a body
 	 */
-	private function _density()
+	protected function _density()
 	{
 		$this->density	= $this->mass/$this->volume();
 	}

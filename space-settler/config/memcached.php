@@ -21,21 +21,26 @@
  * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/AFL-3.0 Academic Free License (AFL 3.0)
  * @link		http://codeigniter.com
- * @since		Version 1.0
+ * @since		Version 2.0
  * @filesource
  */
 
 /*
 | -------------------------------------------------------------------------
-| Hooks
+| Memcached settings
 | -------------------------------------------------------------------------
-| This file lets you define "hooks" to extend CI without hacking the core
-| files.  Please see the user guide for info:
+| Your Memcached servers can be specified below.
 |
-|	http://codeigniter.com/user_guide/general/hooks.html
+|	See: http://codeigniter.com/user_guide/libraries/caching.html#memcached
 |
 */
+$config = array(
+	'default' => array(
+		'hostname' => '127.0.0.1',
+		'port'     => '11211',
+		'weight'   => '1',
+	),
+);
 
-
-/* End of file hooks.php */
-/* Location: ./application/config/hooks.php */
+/* End of file memcached.php */
+/* Location: ./application/config/memcached.php */

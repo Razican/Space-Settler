@@ -27,7 +27,8 @@ class Bigbang {
 		$this->current_bodies	= $this->_count_bodies();
 		$this->stats			= array('1_stars' => 0, '2_stars' => 0, '3_stars' => 0, '4_stars' =>0,
 										'O_stars' => 0, 'B_stars' => 0, 'A_stars' => 0, 'F_stars' => 0, 'G_stars' => 0,
-										'K_stars' => 0, 'M_stars' => 0, 'belts' => 0, 'planets' => 0, 'moons' => 0);
+										'K_stars' => 0, 'M_stars' => 0, 'belts' => 0, 'planets' => 0, 'planets_0' => 0,
+										'planets_1' => 0, 'earths' => 0, 'moons' => 0);
 
 		require_once(APPPATH.'entities/body.php');
 		require_once(APPPATH.'entities/bodies/star.php');
@@ -48,7 +49,7 @@ class Bigbang {
 		$CI =& get_instance();
 		$CI->benchmark->mark('galaxy_start');
 
-		for($i = 1; $i <= $solar_systems; $i++)
+		for ($i = 1; $i <= $solar_systems; $i++)
 		{
 			/* Star Creation */
 			$star			= new Star($this->current_stars, $this->current_galaxies);
@@ -58,9 +59,9 @@ class Bigbang {
 			$this->current_stars++;
 
 			/* Planets and asteroid belts creation */
-			$star_bodies	= $star->num_bodies(TRUE);
+			$star_bodies	= $star->bodies;
 			$last_distance	= 0;
-			for($h = 1; $h <= $star_bodies; $h++)
+			for ($h = 1; $h <= $star_bodies; $h++)
 			{
 				if(mt_rand(1,10) === 1)
 				{
@@ -75,10 +76,15 @@ class Bigbang {
 					$planet				= new Planet($star, $this->current_bodies, $h, $last_distance);
 					$this->planets[]	=& $planet;
 					$this->stats['planets']++;
+					$this->stats['planets_'.$planet->type]++;
+					if ( ! $planet->type && $planet->radius > 6E+6 && $planet->radius < 65E+5
+						&& $planet->mass > 25E+23 && $planet->mass < 1E+25)
+						$this->stats['earths']++;
+
 					$this->current_bodies++;
 
 		//			$planet_moons		= $planet->num_moons(TRUE);
-		//			for($g = 1; $g <= $planet_moons; $g++)
+		//			for ($g = 1; $g <= $planet_moons; $g++)
 		//			{
 		//				/* Moons */
 		//				$this->moons[]		= new Moon($planet, $this->current_bodies(), $g);
@@ -86,7 +92,7 @@ class Bigbang {
 		//				$this->current_bodies++;
 		//			}
 
-					$last_distance = $planet->distance;
+					$last_distance = $planet->orbit['sma'];
 		//			$planet->finish();
 				}
 			}
