@@ -8,7 +8,7 @@
 | It tells when occurred the Big Bang (When was the universe started)
 |
 */
-$config['bigbang_time']	= 1345040382;
+$config['bigbang_time']	= 1345042415;
 
 
 /* End of file universe.php */

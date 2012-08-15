@@ -39,8 +39,6 @@ class Bigbang {
 										'max_planet_temp' => array('id' => NULL, 'temp' => NULL), 'min_planet_temp' => array('id' => NULL, 'temp' => NULL),
 										);
 
-		$this->debug			= array('maxmass_planets' => 0);
-
 		require_once(APPPATH.'entities/body.php');
 		require_once(APPPATH.'entities/bodies/star.php');
 		require_once(APPPATH.'entities/bodies/belt.php');
@@ -100,7 +98,7 @@ class Bigbang {
 
 					if (is_null($this->records['max_planet_mass']['id']) OR $this->records['max_planet_mass']['mass'] < $planet->mass)
 						$this->records['max_planet_mass'] = array('id' => $planet->id, 'mass' => $planet->mass);
-					if ($planet->mass !== 0 && (is_null($this->records['min_planet_mass']['id']) OR $this->records['min_planet_mass']['mass'] > $planet->mass))
+					if (is_null($this->records['min_planet_mass']['id']) OR $this->records['min_planet_mass']['mass'] > $planet->mass)
 						$this->records['min_planet_mass'] = array('id' => $planet->id, 'mass' => $planet->mass);
 					if (( ! $planet->type) && (is_null($this->records['max_planet_temp']['id']) OR $this->records['max_planet_temp']['temp'] < $planet->temperature['max']))
 						$this->records['max_planet_temp'] = array('id' => $planet->id, 'temp' => $planet->temperature['max']);

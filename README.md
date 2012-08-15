@@ -5,7 +5,6 @@ Requisitos Mínimos
 * Necesario **PHP >= 5.3.0**.
 * Soporta MySQL (5.1+), MySQLi, MS SQL, SQLSRV, Oracle, PostgreSQL, SQLite, CUBRID, Interbase, ODBC y PDO.
 
-* El programa ofrecerá un poco más de exactitud al usar un sistema operativo de 64 bits, ya que se pueden usar números más grandes.
 * De momento solo se soporta IPv4 pero se pretende incluir soporte para IPv6 próximamente.
 
 Instalación:
@@ -165,3 +164,4 @@ Problemas conocidos:
 * Se ha detectado una baja concentración de planetas calientes, por lo que se debe reconfigurar el sistema para que eso no ocurra.
 * Resulta que hay a veces planetas con el mismo periodo de translación, se presupone que en el mismo sistema, pero se debe mejorar el diagnóstico.
 * Los planetas gaseosos tienen masa cero.
+* La temperatura máxima de los planetas está siempre cerca de los 108 000 ºK.

@@ -164,11 +164,10 @@ final class Planet extends Body {
 				$this->mass		= $mass;
 			break;
 			case 1:
-				//Estos planetas no tienen masa!
-				$this->radius	= mt_rand(2E+6,125E+6);
+				$this->radius	= mt_rand(2E+7,1.5E+8);
 				$mass			= pow($this->radius/1E+3, 1.6)*1.2E+19-0.5E+26;
 
-				$this->mass		= mt_rand(round($mass/1.5), round($mass*1.5));
+				$this->mass		= mt_rand(round(($mass/1.5)/1E+20), round(($mass*1.5)/1E+20))*1E+20;
 			break;
 		}
 
