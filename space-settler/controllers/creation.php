@@ -6,6 +6,7 @@ class Creation extends SPS_Controller {
 	{
 		if ($this->input->is_cli_request())
 		{
+			$this->benchmark->mark('creation_start');
 			ini_set('memory_limit','10G');
 			ini_set('max_execution_time', 3600);
 
@@ -13,6 +14,8 @@ class Creation extends SPS_Controller {
 			$this->load->library('bigbang');
 
 			$stars = mt_rand(95000, 105000);
+			echo 'Comienza la creación de la galaxia'.PHP_EOL.PHP_EOL;
+
 			if ($this->bigbang->create_galaxy($stars))
 			{
 				echo 'Galaxia creada'.PHP_EOL.PHP_EOL;
@@ -35,29 +38,14 @@ class Creation extends SPS_Controller {
 				echo '	Gaseosos: '.format_number($this->bigbang->stats['planets_1']).PHP_EOL;
 				echo '		De los cuales, júpiteres calientes: '.format_number($this->bigbang->stats['hot_jupiters']).PHP_EOL;
 				echo '	Rocosos: '.format_number($this->bigbang->stats['planets_0']).PHP_EOL;
-				echo '		De los cuales, hipercalientes: '.format_number($this->bigbang->stats['hot_planets']).PHP_EOL;
 				echo '		De los cuales, supertierras: '.format_number($this->bigbang->stats['earths']).PHP_EOL;
 				echo 'Lunas (sin crear): '.format_number($this->bigbang->stats['moons']).PHP_EOL.PHP_EOL;
+				echo 'Objetos habitables totales: '.format_number($this->bigbang->stats['habitable']).PHP_EOL.PHP_EOL;
 				echo 'Records:'.PHP_EOL;
-				echo '	Estrella más masiva:'.PHP_EOL;
-				echo '		ID-> '.format_number($this->bigbang->records['max_star_mass']['id']).PHP_EOL;
-				echo '		Masa-> '.format_number($this->bigbang->records['max_star_mass']['mass'], 2).' masas solares'.PHP_EOL;
-				echo '	Estrella menos masiva:'.PHP_EOL;
-				echo '		ID-> '.format_number($this->bigbang->records['min_star_mass']['id']).PHP_EOL;
-				echo '		Masa-> '.format_number($this->bigbang->records['min_star_mass']['mass'], 2).' masas solares'.PHP_EOL;
-				echo '	Planeta más masivo:'.PHP_EOL;
-				echo '		ID-> '.format_number($this->bigbang->records['max_planet_mass']['id']).PHP_EOL;
-				echo '		Masa-> '.$this->bigbang->records['max_planet_mass']['mass'].' Kg'.PHP_EOL;
-				echo '	Planeta menos masivo:'.PHP_EOL;
-				echo '		ID-> '.format_number($this->bigbang->records['min_planet_mass']['id']).PHP_EOL;
-				echo '		Masa-> '.$this->bigbang->records['min_planet_mass']['mass'].' Kg'.PHP_EOL;
-				echo '	Planeta más caliente:'.PHP_EOL;
-				echo '		ID-> '.format_number($this->bigbang->records['max_planet_temp']['id']).PHP_EOL;
-				echo '		Temperatura-> '.format_number($this->bigbang->records['max_planet_temp']['temp'], 2).' ºK'.PHP_EOL;
-				echo '	Planeta más frío:'.PHP_EOL;
-				echo '		ID-> '.format_number($this->bigbang->records['min_planet_temp']['id']).PHP_EOL;
-				echo '		Temperatura-> '.format_number($this->bigbang->records['min_planet_temp']['temp'], 2).' ºK'.PHP_EOL;
-
+				echo '	Mínima distancia a la estrella:'.PHP_EOL;
+				echo '		Semieje mayor-> '.format_number($this->bigbang->records['min_sma'], 2).' UA'.PHP_EOL;
+				echo '	Máxima distancia a la estrella:'.PHP_EOL;
+				echo '		Semieje mayor-> '.format_number($this->bigbang->records['max_sma'], 2).' UA'.PHP_EOL;
 				echo PHP_EOL;
 
 				if ( ! $this->bigbang->save_galaxy())
@@ -74,7 +62,7 @@ class Creation extends SPS_Controller {
 				echo 'Ocurrio un error al crear la galaxia'.PHP_EOL;
 			}
 
-			if ($this->config->item('debug'))
+			if (config_item('debug'))
 			{
 				echo 'Tiempo tardado en crear la galaxia: '.format_number($this->benchmark->elapsed_time('galaxy_start', 'galaxy_end'), 4).' segundos'.PHP_EOL;
 				echo 'Tiempo tardado en guardar las '.format_number($stars).' estrellas: '.format_number($this->benchmark->elapsed_time('stars_start', 'stars_end'), 4).' segundos'.PHP_EOL;
@@ -87,6 +75,12 @@ class Creation extends SPS_Controller {
 			else
 			{
 				echo 'Big Bang acabado correctamente'.PHP_EOL.PHP_EOL;
+			}
+
+			$this->benchmark->mark('creation_end');
+			if (config_item('debug'))
+			{
+				echo 'Tiempo total de la creación: '.format_number($this->benchmark->elapsed_time('creation_start', 'creation_end'), 4).' segundos'.PHP_EOL.PHP_EOL;
 			}
 		}
 		else

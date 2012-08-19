@@ -21,8 +21,6 @@ class Bigbang {
 	public	$stats		= array();
 	public	$records	= array();
 
-	private $debug		= array();
-
 	public function __construct()
 	{
 		$this->current_galaxies	= $this->_count_galaxies();
@@ -30,14 +28,12 @@ class Bigbang {
 		$this->current_bodies	= $this->_count_bodies();
 
 		$this->stats			= array('1_stars' => 0, '2_stars' => 0, '3_stars' => 0, '4_stars' =>0,
-										'O_stars' => 0, 'B_stars' => 0, 'A_stars' => 0, 'F_stars' => 0, 'G_stars' => 0,
-										'K_stars' => 0, 'M_stars' => 0, 'belts' => 0, 'planets' => 0, 'planets_0' => 0,
-										'planets_1' => 0, 'hot_planets' => 0, 'hot_jupiters' => 0, 'earths' => 0, 'moons' => 0);
+										'O_stars' => 0, 'B_stars' => 0, 'A_stars' => 0, 'F_stars' => 0,
+										'G_stars' => 0, 'K_stars' => 0, 'M_stars' => 0, 'belts' => 0,
+										'planets' => 0, 'planets_0' => 0, 'planets_1' => 0, 'hot_jupiters' => 0,
+										'earths' => 0, 'habitable' => 0, 'moons' => 0);
 
-		$this->records			= array('max_star_mass' => array('id' => NULL, 'mass' => NULL), 'min_star_mass' => array('id' => NULL, 'mass' => NULL),
-										'max_planet_mass' => array('id' => NULL, 'mass' => NULL), 'min_planet_mass' => array('id' => NULL, 'mass' => NULL),
-										'max_planet_temp' => array('id' => NULL, 'temp' => NULL), 'min_planet_temp' => array('id' => NULL, 'temp' => NULL),
-										);
+		$this->records			= array('min_sma' => 0, 'max_sma' => 0);
 
 		require_once(APPPATH.'entities/body.php');
 		require_once(APPPATH.'entities/bodies/star.php');
@@ -63,10 +59,6 @@ class Bigbang {
 			/* Star Creation */
 			$star			= new Star($this->current_stars, $this->current_galaxies);
 			$this->stats[$star->type.'_stars']++;
-			if (is_null($this->records['max_star_mass']['id']) OR $this->records['max_star_mass']['mass'] < $star->mass)
-				$this->records['max_star_mass'] = array('id' => $star->id, 'mass' => $star->mass);
-			if (is_null($this->records['min_star_mass']['id']) OR $this->records['min_star_mass']['mass'] > $star->mass)
-				$this->records['min_star_mass'] = array('id' => $star->id, 'mass' => $star->mass);
 
 			$this->stars[]	= $star;
 			$this->current_stars++;
@@ -76,7 +68,7 @@ class Bigbang {
 			$last_distance	= 0;
 			for ($h = 1; $h <= $star_bodies; $h++)
 			{
-				if(mt_rand(1,10) === 1)
+				if( ! mt_rand(0,10))
 				{
 					/* Asteroid Belt */
 		//			$this->belts[]		= new Belt($star, $this->current_bodies(), $h);
@@ -87,27 +79,21 @@ class Bigbang {
 				{
 					/* Planet */
 					$planet				= new Planet($star, $this->current_bodies, $h, $last_distance);
-					$this->planets[]	=& $planet;
+					$this->planets[]	= $planet;
 					$this->stats['planets']++;
 					$this->stats['planets_'.$planet->type]++;
 					if ( ! $planet->type && $planet->radius > 6E+6 && $planet->radius < 65E+5
 						&& $planet->mass > 25E+23 && $planet->mass < 1E+25)
 						$this->stats['earths']++;
-					if ( ! $planet->type && $planet->temperature['eff'] > 1000) $this->stats['hot_planets']++;
 					if ($planet->type && $planet->temperature['eff'] > 1000) $this->stats['hot_jupiters']++;
+					if ($planet->habitable) $this->stats['habitable']++;
 
-					if (is_null($this->records['max_planet_mass']['id']) OR $this->records['max_planet_mass']['mass'] < $planet->mass)
-						$this->records['max_planet_mass'] = array('id' => $planet->id, 'mass' => $planet->mass);
-					if (is_null($this->records['min_planet_mass']['id']) OR $this->records['min_planet_mass']['mass'] > $planet->mass)
-						$this->records['min_planet_mass'] = array('id' => $planet->id, 'mass' => $planet->mass);
-					if (( ! $planet->type) && (is_null($this->records['max_planet_temp']['id']) OR $this->records['max_planet_temp']['temp'] < $planet->temperature['max']))
-						$this->records['max_planet_temp'] = array('id' => $planet->id, 'temp' => $planet->temperature['max']);
-					if (( ! $planet->type) && (is_null($this->records['min_planet_temp']['id']) OR $this->records['min_planet_temp']['temp'] > $planet->temperature['min']))
-						$this->records['min_planet_temp'] = array('id' => $planet->id, 'temp' => $planet->temperature['eff']);
-					if ($planet->type && (is_null($this->records['max_planet_temp']['id']) OR $this->records['max_planet_temp']['temp'] < $planet->temperature['eff']))
-						$this->records['max_planet_temp'] = array('id' => $planet->id, 'temp' => $planet->temperature['eff']);
-					if ($planet->type && (is_null($this->records['min_planet_temp']['id']) OR $this->records['min_planet_temp']['temp'] > $planet->temperature['eff']))
-						$this->records['min_planet_temp'] = array('id' => $planet->id, 'temp' => $planet->temperature['eff']);
+					if ($this->records['min_sma'] === 0 OR $this->records['min_sma'] > $planet->orbit['sma'])
+						$this->records['min_sma'] = $planet->orbit['sma'];
+					if ($this->records['max_sma'] < $planet->orbit['sma'])
+						$this->records['max_sma'] = $planet->orbit['sma'];
+
+
 
 					$this->current_bodies++;
 
@@ -115,8 +101,11 @@ class Bigbang {
 		//			for ($g = 1; $g <= $planet_moons; $g++)
 		//			{
 		//				/* Moons */
-		//				$this->moons[]		= new Moon($planet, $this->current_bodies(), $g);
+		//				$moon				= new Moon($planet, $this->current_bodies(), $g)
+		//				$this->moons[]		= $moon;
 		//				$this->stats['moons']++;
+		//				if ($moon->habitable) $this->stats['habitable']++;
+
 		//				$this->current_bodies++;
 		//			}
 

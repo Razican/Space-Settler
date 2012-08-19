@@ -62,13 +62,12 @@ final class Star extends Body {
 
 	private function _properties()
 	{
-		$CI =& get_instance();
 		switch ($this->type)
 		{
 			case '1':
 				$this->mass			= mt_rand(0,1) ? mt_rand(5E+2, 10E+2)/100 : mt_rand(3E+2, 20E+2)/100;
 				$this->temperature	= 0;
-				$this->radius		= (2*$CI->config->item('G')*$this->mass*$CI->config->item('sun_mass'))/(pow($CI->config->item('c'), 2));
+				$this->radius		= (2*config_item('G')*$this->mass*config_item('sun_mass'))/(pow(config_item('c'), 2));
 			break;
 			case '2':
 				$this->mass			= mt_rand(138, 2E+2)/100;
@@ -83,7 +82,7 @@ final class Star extends Body {
 			case '4':
 				$this->mass			= mt_rand(50, 800)/100;
 				$this->temperature	= mt_rand(0,3) ? mt_rand(8E+3, 12E+3) : mt_rand(6E+3, 5E+4);
-				$this->radius		= pow((3*$this->mass*$CI->config->item('sun_mass'))/(4E+9*M_PI), 1/3);
+				$this->radius		= pow((3*$this->mass*config_item('sun_mass'))/(4E+9*M_PI), 1/3);
 			break;
 			case 'O':
 				$this->mass			= mt_rand(15E+2, 90E+2)/100;
@@ -116,16 +115,15 @@ final class Star extends Body {
 				$this->radius		= mt_rand(70, 96)/100;
 			break;
 			case 'M':
-				$this->mass			= mt_rand(8, 45)/100;
-				$this->temperature	= mt_rand(2300, 3700);
-				$this->radius		= mt_rand(8, 70)/100;
+				$this->mass			= mt_rand(10, 45)/100;
+				$this->temperature	= mt_rand(2500, 3700);
+				$this->radius		= mt_rand(10, 70)/100;
 		}
 	}
 
 	private function _luminosity()
 	{
-		$CI					=& get_instance();
-		$this->luminosity	= 4*M_PI*pow($this->_radius(), 2)*$CI->config->item('Boltzman_constant')*pow($this->temperature, 4)/$CI->config->item('sun_luminosity');
+		$this->luminosity	= 4*M_PI*pow($this->_radius(), 2)*config_item('Boltzman_constant')*pow($this->temperature, 4)/config_item('sun_luminosity');
 	}
 
 	/**
@@ -135,7 +133,6 @@ final class Star extends Body {
 	 */
 	public function volume()
 	{
-		$CI					=& get_instance();
 		return 4/3*M_PI*pow($this->_radius(), 3);
 	}
 
@@ -144,8 +141,7 @@ final class Star extends Body {
 	 */
 	protected function _density()
 	{
-		$CI					=& get_instance();
-		$this->density		= ($this->type === '1') ? 0 : $this->mass*$CI->config->item('sun_mass')/$this->volume();
+		$this->density		= ($this->type === '1') ? 0 : $this->mass*config_item('sun_mass')/$this->volume();
 	}
 
 	/**
@@ -159,26 +155,25 @@ final class Star extends Body {
 				$bodies = 0;
 			break;
 			case '4':
-				$bodies = mt_rand(0,2);
+				$bodies = ($this->luminosity < 300) ? mt_rand(0,2) : 0;
 			break;
 			case 'B':
-				if($this->mass < 4) $bodies = mt_rand(0,1) ? mt_rand(1,2) : 0;
-				else $bodies = 0;
+				$bodies = ($this->luminosity < 300 && mt_rand(0,1)) ? mt_rand(1,2) : 0;
 			break;
 			case 'A':
-				$bodies = mt_rand(0,3) ? mt_rand(1,3) : 0;
+				$bodies = mt_rand(0,3);
 			break;
 			case 'F':
 				$bodies = mt_rand(0,8) ? mt_rand(2,6) : mt_rand(0,1);
 			break;
 			case 'G':
-				$bodies = mt_rand(0,20) ? mt_rand(5,12) : mt_rand(0,4);
+				$bodies = mt_rand(0,10) ? mt_rand(4,10) : mt_rand(0,3);
 			break;
 			case 'K':
-				$bodies = mt_rand(0,15) ? mt_rand(3,10) : mt_rand(0,2);
+				$bodies = mt_rand(0,15) ? mt_rand(4,10) : mt_rand(0,3);
 			break;
 			case 'M':
-				$bodies = mt_rand(0,15) ? mt_rand(2,8) : mt_rand(0,1);
+				$bodies = mt_rand(0,20) ? mt_rand(5,12) : mt_rand(0,4);
 			break;
 		}
 		$this->bodies = $bodies;
@@ -213,23 +208,38 @@ final class Star extends Body {
 		{
 			$this->tb = array();
 
-			$m				= mt_rand(0, 10) ? mt_rand(35, 2000) : mt_rand(35, 6000);
+			if ($this->luminosity < 0.01)
+			{
+				$m			= mt_rand(50, 250);
+			}
+			elseif ($this->luminosity < 0.5)
+			{
+				$m			= mt_rand(250, 1000);
+			}
+			elseif ($this->luminosity < 10)
+			{
+				$m			= mt_rand(0, round(10-$this->luminosity)) ? mt_rand(300, 2000) : mt_rand(350, 7500);
+			}
+			else
+			{
+				$m			= mt_rand($this->luminosity*50, 10000 | $this->luminosity*60);
+			}
+
 			$this->tb['m']	= $m/10000;
-			$n				= sqrt($this->tb['m'])*1.7+0.165;
+			$n				= ($m > 350) ? sqrt($this->tb['m'])*1.7+0.165 : 0.017/$this->tb['m'];
 			$this->tb['n']	= mt_rand(round($n*0.8*10000), round($n*1.2*10000))/10000;
 		}
 	}
 
 	private function _radius()
 	{
-		$CI =& get_instance();
 		if (($this->type === '1') OR ($this->type === '2') OR ($this->type === '3') OR ($this->type === '4'))
 		{
 			$radius	= $this->radius;
 		}
 		else
 		{
-			$radius	= $this->radius*$CI->config->item('sun_radius');
+			$radius	= $this->radius*config_item('sun_radius');
 		}
 		return $radius;
 	}

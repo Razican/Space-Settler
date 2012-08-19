@@ -33,5 +33,6 @@ $config['earth_mass']		= 5.9736E+24; //Kg
 $config['earth_atmosphere']	= 101325; //Pa
 $config['earth_density']	= 5515; //Kg*m⁻³
 
+
 /* End of file physics.php */
 /* Location: ./space_settler/config/physics.php */

@@ -12,7 +12,6 @@ final class Planet extends Body {
 
 	public $star;
 	public $position;
-	public $terrestrial;
 	public $double_planet;
 	public $atmosphere;
 	public $albedo;
@@ -39,8 +38,10 @@ final class Planet extends Body {
 
 			$this->id				= $args[1]+1;
 			$this->star				= &$args[0];
-			$this->position			= $args[2]+1;
-			$this->planet			= NULL;
+			$this->position			= $args[2];
+			$this->double_planet	= FALSE;
+			$this->owner			= NULL;
+			$this->constructions	= array();
 			$this->_orbit($args[3]);
 			$this->_rotation();
 			$this->_type();
@@ -50,7 +51,7 @@ final class Planet extends Body {
 			$this->_albedo();
 			$this->_temperature();
 			$this->_ground();
-		//	$this->_is_habitable();
+			$this->_is_habitable();
 
 		//	$this->_titius_bode();
 		}
@@ -70,22 +71,31 @@ final class Planet extends Body {
 
 		$sma					= exp($this->star->tb['m']*$this->position - $this->star->tb['n'])*100;
 		$sma					= mt_rand(round($sma*0.9), round($sma*1.1))/100;
-		$this->orbit['sma']		= $sma < $last_distance ? $last_distance+0.05 : $sma;
+		$this->orbit['sma']		= $sma < $last_distance+0.02 ? $last_distance+mt_rand(2, 5)/100 : $sma;
 		$this->orbit['ecc']		= ($this->orbit['sma'] < ($this->star->mass/2) ? mt_rand(50, 250) : mt_rand(0, 100))/1000;
-		$this->orbit['incl']	= (mt_rand(0, 100)/10)*M_PI/180;
-		$this->orbit['lan']		= (mt_rand(0, 3599)/10)*M_PI/180;
-		$this->orbit['ArgPe']	= (mt_rand(0, 3599)/10)*M_PI/180;
-		$this->orbit['Ma0']		= (mt_rand(0, 3599)/10)*M_PI/180;
+		$this->orbit['incl']	= round((mt_rand(0, 100)/10)*M_PI/180*1000)/1000;
+		$this->orbit['lan']		= round((mt_rand(0, 3599)/10)*M_PI/180*1000)/1000;
+		$this->orbit['ArgPe']	= round((mt_rand(0, 3599)/10)*M_PI/180*1000)/1000;
+		$this->orbit['Ma0']		= round((mt_rand(0, 3599)/10)*M_PI/180*1000)/1000;
 
 		/*Extra*/
-		$this->orbit['period']	= 2*M_PI*sqrt(pow($this->orbit['sma'], 3)/($CI->config->item('G')*$this->star->mass));
-		$this->orbit['apa']		= $this->orbit['sma']*(1+$this->orbit['ecc']);
-		$this->orbit['pea']		= $this->orbit['sma']*(1-$this->orbit['ecc']);
+		$this->orbit['period']	= round(2*M_PI*sqrt(pow($this->orbit['sma'], 3)/(config_item('G')*$this->star->mass)));
+		$this->orbit['apa']		= round($this->orbit['sma']*(1+$this->orbit['ecc'])*1000)/1000;
+		$this->orbit['pea']		= round($this->orbit['sma']*(1-$this->orbit['ecc'])*1000)/1000;
+
+		if ($this->orbit['period'] < 3600) log_message('debug', print_r($this, TRUE));
 	}
 
 	private function _type()
 	{
-		$this->type = mt_rand(0,1);
+		if ($this->star->luminosity > 10 && ($this->orbit['sma'] < sqrt($this->star->luminosity)*25))
+		{
+			$this->type	= 1;
+		}
+		else
+		{
+			$this->type = ($this->orbit['sma'] < sqrt($this->star->luminosity)*50) ? mt_rand(0,1) : 0;
+		}
 	}
 
 	private function _atmosphere()
@@ -93,39 +103,40 @@ final class Planet extends Body {
 		$this->atmosphere = array();
 		if ( ! $this->type)
 		{
-				$this->atmosphere['pressure']		= mt_rand(0, 1) ? mt_rand(0, 100) : mt_rand(0, 1000000);
+				$this->atmosphere['pressure']		= (mt_rand(0, 1) ? mt_rand(0, 10000) : mt_rand(0, 10000000))/100;
 				$this->atmosphere['composition']	= array();
 				$total = 0;
-				if (mt_rand(0,1))
+
+				if ($this->atmosphere['pressure'] > 0 && mt_rand(0,1))
 				{
-					$this->atmosphere['composition']['CO2'] = mt_rand(7500, 9900)/100;
+					$this->atmosphere['composition']['CO2'] = mt_rand(75000, 99000)/1000;
 					$total += $this->atmosphere['composition']['CO2'];
-					$this->atmosphere['composition']['N2'] = mt_rand(0, (100-$total)*100)/100;
+					$this->atmosphere['composition']['N2'] = mt_rand(1, (100-$total)*1000-3)/1000;
 					$total += $this->atmosphere['composition']['N2'];
-					$this->atmosphere['composition']['O2'] = mt_rand(0, (100-$total)*100)/100;
+					$this->atmosphere['composition']['O2'] = mt_rand(1, (100-$total)*1000-2)/1000;
 					$total += $this->atmosphere['composition']['O2'];
 				}
-				else
+				elseif ($this->atmosphere['pressure'] > 0)
 				{
-					$this->atmosphere['composition']['N2'] = mt_rand(5000, 9500)/100;
+					$this->atmosphere['composition']['N2'] = mt_rand(50000, 95000)/1000;
 					$total += $this->atmosphere['composition']['N2'];
 					if (mt_rand(0,1))
 					{
-						$this->atmosphere['composition']['CO2'] = mt_rand(400, (100-$total)*100)/100;
+						$this->atmosphere['composition']['CO2'] = mt_rand(400, (100-$total)*1000-3)/1000;
 						$total += $this->atmosphere['composition']['CO2'];
-						$this->atmosphere['composition']['O2'] = mt_rand(0, (100-$total)*100)/100;
+						$this->atmosphere['composition']['O2'] = mt_rand(1, (100-$total)*1000-2)/1000;
 						$total += $this->atmosphere['composition']['O2'];
 					}
 					else
 					{
-						$this->atmosphere['composition']['O2'] = mt_rand(400, (100-$total)*100)/100;
+						$this->atmosphere['composition']['O2'] = mt_rand(400, (100-$total)*1000-3)/1000;
 						$total += $this->atmosphere['composition']['O2'];
-						$this->atmosphere['composition']['CO2'] = mt_rand(0, (100-$total)*100)/100;
+						$this->atmosphere['composition']['CO2'] = mt_rand(1, (100-$total)*1000-2)/1000;
 						$total += $this->atmosphere['composition']['CO2'];
 					}
 				}
 
-				$this->atmosphere['composition']['others'] = $total;
+				$this->atmosphere['composition']['others'] = 100-$total;
 				$this->_greenhouse();
 		}
 		else
@@ -136,10 +147,14 @@ final class Planet extends Body {
 
 	private function _greenhouse()
 	{
-		if ( ! $this->type && ! is_null($this->atmosphere))
+		if ( ! $this->type && ! is_null($this->atmosphere) && round($this->atmosphere['pressure']) > 0)
 		{
-			$this->atmosphere['greenhouse']	= $this->atmosphere['composition']['CO2']*$this->atmosphere['pressure']/35;
-			if ($this->atmosphere['greenhouse'] > 1) $this->atmosphere['greenhouse'] = pow($this->atmosphere['greenhouse'], 0.637);
+			$greenhouse						= 2.1E-4*pow($this->atmosphere['composition']['CO2'], 0.313)*pow(round($this->atmosphere['pressure']), 0.829)+1E-7*round($this->atmosphere['pressure'])+0.0033*$this->atmosphere['composition']['CO2'];
+			$this->atmosphere['greenhouse']	= mt_rand(round($greenhouse*0.95*100), round($greenhouse*1.05*100))/100;
+		}
+		else
+		{
+			$this->atmosphere['greenhouse']	= 0;
 		}
 	}
 
@@ -165,9 +180,15 @@ final class Planet extends Body {
 			break;
 			case 1:
 				$this->radius	= mt_rand(2E+7,1.5E+8);
-				$mass			= pow($this->radius/1E+3, 1.6)*1.2E+19-0.5E+26;
+				$mass			= pow($this->radius/1E+3, 1.3)*1.445E+21-5E+26;
+				$mass			= mt_rand(round(($mass/5)/1E+20), round(($mass*5)/1E+20))*1E+20;
 
-				$this->mass		= mt_rand(round(($mass/1.5)/1E+20), round(($mass*1.5)/1E+20))*1E+20;
+				if ($mass > 1E+28 && mt_rand(0,3000))
+				{
+					$mass		= $mass/10;
+				}
+
+				$this->mass		= $mass;
 			break;
 		}
 
@@ -179,7 +200,7 @@ final class Planet extends Body {
 	{
 		$CI				=& get_instance();
 		$this->rotation = array();
-		$tidal_lock		= sqrt($this->star->mass/$CI->config->item('sun_mass'))/2;
+		$tidal_lock		= sqrt($this->star->mass/config_item('sun_mass'))/2;
 
 		if ($this->orbit['sma'] > $tidal_lock)
 		{
@@ -187,14 +208,14 @@ final class Planet extends Body {
 
 			if ($this->rotation['axTilt'] >= 90)
 			{
-				$this->rotation['period']	= -mt_rand(50000, ($this->orbit['period'] < 25000000 ? $this->orbit['period'] : 25000000));
+				$this->rotation['period']	= $this->orbit['period'] < 50000 ? -mt_rand(round($this->orbit['period']*0.8), $this->orbit['period']) : -mt_rand(50000, ($this->orbit['period'] < 25000000 ? $this->orbit['period'] : 25000000));
 			}
 			else
 			{
-				$this->rotation['period']	= mt_rand(18000, ($this->orbit['period'] < 180000 ? $this->orbit['period'] : 180000));
+				$this->rotation['period']	= $this->orbit['period'] < 18000 ? mt_rand(round($this->orbit['period']*0.8), $this->orbit['period']) : mt_rand(18000, ($this->orbit['period'] < 180000 ? $this->orbit['period'] : 180000));
 			}
 		}
-		elseif ($this->orbit['sma'] > $tidal_lock/2)
+		elseif ($this->orbit['sma'] > sqrt($tidal_lock)/3)
 		{
 			$this->rotation['axTilt']	= mt_rand(0, 100)/100;
 			$this->rotation['period']	= $this->orbit['period']*mt_rand(3, 6)/2;
@@ -213,7 +234,14 @@ final class Planet extends Body {
 		{
 			if ($this->rotation['period'] > 0)
 			{
-				$day	= $this->rotation['period']/(1-($this->rotation['period']/$this->orbit['period']));
+				if ($this->rotation['period'] === $this->orbit['period'])
+				{
+					$day = $this->rotation['period'];
+				}
+				else
+				{
+					$day	= $this->rotation['period']/(1-($this->rotation['period']/$this->orbit['period']));
+				}
 			}
 			elseif ($this->rotation['period'] < 0)
 			{
@@ -226,7 +254,7 @@ final class Planet extends Body {
 		}
 
 		if ($day < 0) log_message('debug', 'Duración del día: '.$day.' | Periodo de rotación: '.$this->rotation['period'].' | Duración del año: '.$this->orbit['period']);
-		$this->rotation['day']	= $day;
+		$this->rotation['day']	= round($day);
 	}
 
 	private function _albedo($look_ground = FALSE)
@@ -243,11 +271,7 @@ final class Planet extends Body {
 			}
 			elseif (is_null($this->atmosphere))
 			{
-				if (empty($this->ground))
-				{
-					$this->albedo = mt_rand(0, 1000)/10000;
-				}
-				//TODO recalcular tras ground
+				$this->albedo = mt_rand(0, 1000)/10000;
 			}
 			else
 			{
@@ -281,11 +305,10 @@ final class Planet extends Body {
 
 	private function _temperature()
 	{
-		$CI		=& get_instance();
+		$l		= $this->star->luminosity*config_item('sun_luminosity');
+		$this->temperature['eff']	= round(pow(($l*(1-$this->albedo))/(16*M_PI*config_item('Boltzman_constant')*pow($this->orbit['sma']*config_item('AU'), 2)),0.25)*100)/100;
 
-		$l		= $this->star->luminosity*$CI->config->item('sun_luminosity');
-		$this->temperature['eff']	= pow(($l*(1-$this->albedo))/(16*M_PI*$CI->config->item('Boltzman_constant')*pow($this->orbit['sma']*$CI->config->item('AU'), 2)),1/4);
-
+		//CUIDADO!!! hay que tener en cuenta la excentricidad!!!
 		if ( ! $this->type)
 		{
 			if ($this->temperature['eff'] > 1000)
@@ -295,23 +318,19 @@ final class Planet extends Body {
 
 			if ($this->atmosphere['greenhouse'] <= 1)
 			{
-				$this->temperature['avg']	= $this->temperature['eff']+$this->atmosphere['greenhouse']*20+mt_rand(0, 15)*$this->atmosphere['greenhouse'];
+				$this->temperature['avg']	= round(($this->temperature['eff']+$this->atmosphere['greenhouse']*20+mt_rand(0, 15)*$this->atmosphere['greenhouse'])*100)/100;
 			}
 			else
 			{
-				$this->temperature['avg']	= $this->temperature['eff']+pow($this->atmosphere['greenhouse'], 1.225)+25+mt_rand(0, 10);
+				$this->temperature['avg']	= round(($this->temperature['eff']+pow($this->atmosphere['greenhouse'], 1.225)+25+mt_rand(0, 10))*100)/100;
 			}
 
 			if ($this->rotation['axTilt'] < 10 OR $this->rotation['axTilt'] > 170)
 			{
-				//TODO Todavía esta fórmula no es realista
-				$change	= ($this->temperature['avg']*$this->rotation['day']/pow(1.035, $this->atmosphere['greenhouse']))/1E+6;
+				$change	= round((($this->temperature['avg']*pow($this->rotation['day'], 0.8)*5/pow(1.01, $this->atmosphere['greenhouse']))/1E+6)*100)/100;
 
-				$this->temperature['min']	= $this->temperature['avg']-mt_rand(round($change*0.8*10), round($change*1.2*10))/10;
-				$this->temperature['max']	= $this->temperature['avg']+mt_rand(round($change*0.8*10), round($change*1.2*10))/10;
-
-				//Solo se tiene en cuenta la duración del día y el efecto invernadero
-				//Como en Venus o Mercurio
+				$this->temperature['min']	= $this->temperature['avg']-mt_rand(round($change*1.2*100), round($change*1.7*100))/100;
+				$this->temperature['max']	= $this->temperature['avg']+mt_rand(round($change*0.05*100), round($change*0.2*100))/100;
 			}
 			elseif ($this->rotation['axTilt'] > 50 && $this->rotation['axTilt'] < 130)
 			{
@@ -344,6 +363,8 @@ final class Planet extends Body {
 
 	private function _ground()
 	{
+		$ground = array();
+
 		if ( ! $this->type)
 		{
 			//Solo tendrán suelo los planetas rocosos.
@@ -354,6 +375,19 @@ final class Planet extends Body {
 		 * -Se recalcula el agua y el hielo
 		 * -Se calcula el resto de materiales
 		 */
+		$this->ground = $ground;
+	}
+
+	private function _is_habitable()
+	{
+		$habitable = FALSE;
+
+		if ( ! $this->type)
+		{
+			// Comprobar habitabilidad
+		}
+
+		$this->habitable = $habitable;
 	}
 }
 

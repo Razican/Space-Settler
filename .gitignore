@@ -7,6 +7,7 @@
 .DS_Store
 *.sublime-*
 node_modules
+files/C/*
 
 space-settler/cache/*
 !space-settler/cache/index.html
