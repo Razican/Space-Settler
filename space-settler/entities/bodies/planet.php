@@ -78,7 +78,7 @@ final class Planet extends Body {
 		$this->orbit['ArgPe']	= round((mt_rand(0, 3599)/10)*M_PI/180*1000)/1000;
 		$this->orbit['Ma0']		= round((mt_rand(0, 3599)/10)*M_PI/180*1000)/1000;
 
-		/*Extra*/
+		//Extra
 		$this->orbit['period']	= round(2*M_PI*sqrt(pow($this->orbit['sma'], 3)/(config_item('G')*$this->star->mass)));
 		$this->orbit['apa']		= round($this->orbit['sma']*(1+$this->orbit['ecc'])*1000)/1000;
 		$this->orbit['pea']		= round($this->orbit['sma']*(1-$this->orbit['ecc'])*1000)/1000;
