@@ -306,7 +306,7 @@ final class Planet extends Body {
 	private function _temperature()
 	{
 		$l		= $this->star->luminosity*config_item('sun_luminosity');
-		$this->temperature['eff']	= round(pow(($l*(1-$this->albedo))/(16*M_PI*config_item('Boltzman_constant')*pow($this->orbit['sma']*config_item('AU'), 2)),0.25)*100)/100;
+		$this->temperature['eff']	= round(pow(($l*(1-$this->albedo))/(16*M_PI*config_item('Boltzman_constant')*pow($this->orbit['sma']*config_item('au'), 2)),0.25)*100)/100;
 
 		//CUIDADO!!! hay que tener en cuenta la excentricidad!!!
 		if ( ! $this->type)

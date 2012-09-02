@@ -24,7 +24,7 @@ class Orbit {
 	{
 		$major_mass		= $this->major_mass*config_item('sun_mass');
 		$orbiting_mass	= $this->orbiting_mass*config_item('earth_mass');
-		$a				= $this->semimajor_axis*config_item('AU');
+		$a				= $this->semimajor_axis*config_item('au');
 
 		$period			= 2*M_PI*sqrt(pow($a, 3)/(config_item('G')*($major_mass+$orbiting_mass)));
 
@@ -41,7 +41,7 @@ class Orbit {
 
 		$zeta			= 2*atan(sqrt((1+$this->eccentricity)/(1-$this->eccentricity))*tan($E1/2));
 		$distance		= $a*(1-pow($this->eccentricity, 2))/(1+$this->eccentricity*cos($zeta));
-		$this->distance	= $distance/config_item('AU');
+		$this->distance	= $distance/config_item('au');
 
 		return $this->distance;
 	}
