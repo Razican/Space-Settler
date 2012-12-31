@@ -82,7 +82,7 @@ function gravity($mass, $distance)
 function current_lang()
 {
 	$CI =& get_instance();
-	require_once(APPPATH.'language/'.config_item('language').'/config.php');
+	require_once(APPPATH.'language/'.$CI->config->item('language').'/config.php');
 	if( ! defined('LANG_KEY')) show_error('ERROR! language not configured correctly!');
 
 	return LANG_KEY;
