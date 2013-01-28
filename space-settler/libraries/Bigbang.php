@@ -114,7 +114,7 @@ class Bigbang {
 
 			if ($i % 10000 === 0)
 			{
-				echo 'Creadas '.$i.' estrellas de '.$solar_systems.PHP_EOL;
+				echo 'Creadas '.format_number($i).' estrellas de '.format_number($solar_systems).PHP_EOL;
 			}
 		}
 		$this->current_galaxies++;

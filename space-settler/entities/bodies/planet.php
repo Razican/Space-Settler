@@ -208,11 +208,11 @@ final class Planet extends Body {
 
 			if ($this->rotation['axTilt'] >= 90)
 			{
-				$this->rotation['period']	= $this->orbit['period'] < 50000 ? -mt_rand(round($this->orbit['period']*0.8), $this->orbit['period']) : -mt_rand(50000, ($this->orbit['period'] < 25000000 ? $this->orbit['period'] : 25000000));
+				$this->rotation['period']	= $this->orbit['period'] < 50000 ? -mt_rand(round($this->orbit['period']*0.8), $this->orbit['period']-1) : -mt_rand(50000, ($this->orbit['period'] < 25000000 ? $this->orbit['period']-1 : 25000000));
 			}
 			else
 			{
-				$this->rotation['period']	= $this->orbit['period'] < 18000 ? mt_rand(round($this->orbit['period']*0.8), $this->orbit['period']) : mt_rand(18000, ($this->orbit['period'] < 180000 ? $this->orbit['period'] : 180000));
+				$this->rotation['period']	= $this->orbit['period'] < 18000 ? mt_rand(round($this->orbit['period']*0.8), $this->orbit['period']-1) : mt_rand(18000, ($this->orbit['period'] < 180000 ? $this->orbit['period']-1 : 180000));
 			}
 		}
 		elseif ($this->orbit['sma'] > sqrt($tidal_lock)/3)

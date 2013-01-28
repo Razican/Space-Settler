@@ -18,7 +18,7 @@ class Creation extends SPS_Controller {
 
 			if ($this->bigbang->create_galaxy($stars))
 			{
-				echo PHP_EOL.'Galaxia creada, con '.$stars.' estrellas'.PHP_EOL;
+				echo PHP_EOL.'Galaxia creada, con '.format_number($stars).' estrellas'.PHP_EOL;
 				echo 'Datos:'.PHP_EOL.PHP_EOL;
 				echo 'Agujeros Negros: '.number_format($this->bigbang->stats['1_stars'], 0, ',', ' ').PHP_EOL;
 				echo 'Estrellas de Neutrones: '.number_format($this->bigbang->stats['2_stars'], 0, ',', ' ').PHP_EOL;
