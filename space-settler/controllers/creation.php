@@ -18,7 +18,7 @@ class Creation extends SPS_Controller {
 
 			if ($this->bigbang->create_galaxy($stars))
 			{
-				echo 'Galaxia creada'.PHP_EOL.PHP_EOL;
+				echo PHP_EOL.'Galaxia creada, con '.$stars.' estrellas'.PHP_EOL;
 				echo 'Datos:'.PHP_EOL.PHP_EOL;
 				echo 'Agujeros Negros: '.number_format($this->bigbang->stats['1_stars'], 0, ',', ' ').PHP_EOL;
 				echo 'Estrellas de Neutrones: '.number_format($this->bigbang->stats['2_stars'], 0, ',', ' ').PHP_EOL;
@@ -47,25 +47,10 @@ class Creation extends SPS_Controller {
 				echo '	Máxima distancia a la estrella:'.PHP_EOL;
 				echo '		Semieje mayor-> '.format_number($this->bigbang->records['max_sma'], 2).' UA'.PHP_EOL;
 				echo PHP_EOL;
-
-				if ( ! $this->bigbang->save_galaxy())
-				{
-					echo 'Ocurrió un error al guardar la galaxia'.PHP_EOL;
-				}
-				else
-				{
-					echo 'Galaxia guardada'.PHP_EOL;
-				}
 			}
 			else
 			{
 				echo 'Ocurrio un error al crear la galaxia'.PHP_EOL;
-			}
-
-			if (config_item('debug'))
-			{
-				echo 'Tiempo tardado en crear la galaxia: '.format_number($this->benchmark->elapsed_time('galaxy_start', 'galaxy_end'), 4).' segundos'.PHP_EOL;
-				echo 'Tiempo tardado en guardar las '.format_number($stars).' estrellas: '.format_number($this->benchmark->elapsed_time('stars_start', 'stars_end'), 4).' segundos'.PHP_EOL;
 			}
 
 			if ( ! $this->bigbang->finish())

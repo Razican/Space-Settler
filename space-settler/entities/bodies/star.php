@@ -179,29 +179,6 @@ final class Star extends Body {
 		$this->bodies = $bodies;
 	}
 
-	public function finish()
-	{
-		unset($this->bodies);
-		unset($this->tb);
-		$this->luminosity	= round($this->luminosity*1E+12);
-
-		if ($this->type === '1' OR $this->type === '2' OR $this->type === '3')
-		{
-			$this->radius = round($this->radius);
-		}
-		elseif($this->type === '4')
-		{
-			$this->radius = round($this->radius/1000);
-		}
-		else
-		{
-			$this->radius = $this->radius*100;
-		}
-
-		$this->mass			= $this->mass*100;
-		$this->density		= round($this->density*10);
-	}
-
 	private function _titius_bode()
 	{
 		if (isset($this->bodies) && $this->bodies > 0)

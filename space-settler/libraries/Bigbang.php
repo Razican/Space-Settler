@@ -13,10 +13,6 @@ class Bigbang {
 	private	$current_galaxies;
 	private	$current_stars;
 	private	$current_bodies;
-	private $stars		= array();
-	private $belts		= array();
-	private $planets	= array();
-	private $moons		= array();
 
 	public	$stats		= array();
 	public	$records	= array();
@@ -65,6 +61,7 @@ class Bigbang {
 
 			/* Planets and asteroid belts creation */
 			$star_bodies	= $star->bodies;
+			$planets		= array();
 			$last_distance	= 0;
 			for ($h = 1; $h <= $star_bodies; $h++)
 			{
@@ -78,8 +75,8 @@ class Bigbang {
 				else
 				{
 					/* Planet */
-					$planet				= new Planet($star, $this->current_bodies, $h, $last_distance);
-					$this->planets[]	= $planet;
+					$planet		= new Planet($star, $this->current_bodies, $h, $last_distance);
+					$planets[]	= $planet;
 					$this->stats['planets']++;
 					$this->stats['planets_'.$planet->type]++;
 					if ( ! $planet->type && $planet->radius > 6E+6 && $planet->radius < 65E+5
@@ -92,8 +89,6 @@ class Bigbang {
 						$this->records['min_sma'] = $planet->orbit['sma'];
 					if ($this->records['max_sma'] < $planet->orbit['sma'])
 						$this->records['max_sma'] = $planet->orbit['sma'];
-
-
 
 					$this->current_bodies++;
 
@@ -115,40 +110,18 @@ class Bigbang {
 			}
 			//Create dwarf-planets (Kuiper's Belt)
 
-			$star->finish();
+			$this->_insert($star, $planets);
+
+			if ($i % 10000 === 0)
+			{
+				echo 'Creadas '.$i.' estrellas de '.$solar_systems.PHP_EOL;
+			}
 		}
 		$this->current_galaxies++;
 
 		$CI->benchmark->mark('galaxy_end');
 
 		return TRUE;
-	}
-
-	/**
-	 * Save the new galaxy
-	 *
-	 * @access	public
-	 * @return	boolean
-	 */
-	public function save_galaxy()
-	{
-		$CI		=& get_instance();
-
-		/* Star Insertion */
-		$CI->benchmark->mark('stars_start');
-		$stars		= $CI->db->insert_batch('stars', $this->stars);
-		$CI->benchmark->mark('stars_end');
-
-		/* Planet Insertion */
-	//	$planets	= $CI->db->insert_batch('bodies', $this->planets);
-
-		/* Asteroid belt insertion */
-	//	$belts		= $CI->db->insert_batch('bodies', $this->belts);
-
-		/* Moon insertion */
-	//	$moons		= $CI->db->insert_batch('bodies', $this->moons);
-
-		return $stars;//($stars && $planets && $belts && $moons);
 	}
 
 	/**
@@ -193,6 +166,48 @@ class Bigbang {
 		$CI		=& get_instance();
 
 		return $CI->db->count_all_results('bodies');
+	}
+
+	/**
+	 * Insert a star into the database
+	 *
+	 * @access	private
+	 * @return	bool
+	 */
+	private function _insert($star, $planets)
+	{
+		$CI	=& get_instance();
+		unset($star->bodies);
+		unset($star->tb);
+		$star->luminosity	= round($star->luminosity*1E+12);
+
+		if ($star->type === '1' OR $star->type === '2' OR $star->type === '3')
+		{
+			$star->radius = round($star->radius);
+		}
+		elseif($star->type === '4')
+		{
+			$star->radius = round($star->radius/1000);
+		}
+		else
+		{
+			$star->radius = $star->radius*100;
+		}
+
+		$star->mass			= $star->mass*100;
+		$star->density		= round($star->density*10);
+
+		/* Planet Insertion */
+	//	$planets	= $CI->db->insert_batch('bodies', $this->planets);
+
+		/* Asteroid belt insertion */
+	//	$belts		= $CI->db->insert_batch('bodies', $this->belts);
+
+		/* Moon insertion */
+	//	$moons		= $CI->db->insert_batch('bodies', $this->moons);
+
+
+		return $CI->db->insert('stars', $star);
 	}
 
 	/**
