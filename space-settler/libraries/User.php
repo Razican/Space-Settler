@@ -83,7 +83,7 @@ class User {
 		$CI->load->helper('email');
 		$CI->load->library('email');
 
-		if( ! valid_email($email))
+		if( ! filter_var($email, FILTER_VALIDATE_EMAIL))
 			$this->register_errors	.= lang('login.email_not_valid').'<br />';
 
 		if($this->exists_email($email))

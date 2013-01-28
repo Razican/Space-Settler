@@ -17,7 +17,7 @@ class Reset_password extends SPS_Controller {
 				$this->load->helper('email');
 
 				$email	= $this->input->post('email');
-				if (valid_email($email))
+				if (filter_var($email, FILTER_VALIDATE_EMAIL))
 				{
 					if ( ! $this->user->exists_email($email))
 					{

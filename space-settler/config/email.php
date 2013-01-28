@@ -1,4 +1,13 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+/**
+ * Email configuration
+ *
+ * @subpackage	Configuration
+ * @author		Razican
+ * @category	Configuration
+ * @link		http://www.razican.com/
+ */
 
 /*
 |--------------------------------------------------------------------------

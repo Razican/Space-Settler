@@ -18,7 +18,7 @@
  *
  * @package		CodeIgniter
  * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
+ * @copyright	Copyright (c) 2008 - 2013, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/AFL-3.0 Academic Free License (AFL 3.0)
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -49,14 +49,14 @@ return array(
 	'sea'	=>	'application/octet-stream',
 	'dll'	=>	'application/octet-stream',
 	'oda'	=>	'application/oda',
-	'pdf'	=>	array('application/pdf', 'application/x-download'),
+	'pdf'	=>	array('application/pdf', 'application/x-download', 'binary/octet-stream'),
 	'ai'	=>	'application/postscript',
 	'eps'	=>	'application/postscript',
 	'ps'	=>	'application/postscript',
 	'smi'	=>	'application/smil',
 	'smil'	=>	'application/smil',
 	'mif'	=>	'application/vnd.mif',
-	'xls'	=>	array('application/excel', 'application/vnd.ms-excel', 'application/msexcel'),
+	'xls'	=>	array('application/vnd.ms-excel', 'application/msexcel', 'application/x-msexcel', 'application/x-ms-excel', 'application/x-excel', 'application/x-dos_ms_excel', 'application/xls', 'application/x-xls', 'application/excel', 'application/download', 'application/vnd.ms-office', 'application/msword'),
 	'ppt'	=>	array('application/powerpoint', 'application/vnd.ms-powerpoint'),
 	'pptx'	=> 	'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 	'wbxml'	=>	'application/wbxml',
@@ -73,7 +73,7 @@ return array(
 	'php3'	=>	'application/x-httpd-php',
 	'phtml'	=>	'application/x-httpd-php',
 	'phps'	=>	'application/x-httpd-php-source',
-	'js'	=>	'application/x-javascript',
+	'js'	=>	array('application/x-javascript', 'text/plain'),
 	'swf'	=>	'application/x-shockwave-flash',
 	'sit'	=>	'application/x-stuffit',
 	'tar'	=>	'application/x-tar',
@@ -104,16 +104,16 @@ return array(
 	'png'	=>	array('image/png',  'image/x-png'),
 	'tiff'	=>	'image/tiff',
 	'tif'	=>	'image/tiff',
-	'css'	=>	'text/css',
-	'html'	=>	'text/html',
-	'htm'	=>	'text/html',
-	'shtml'	=>	'text/html',
+	'css'	=>	array('text/css', 'text/plain'),
+	'html'	=>	array('text/html', 'text/plain'),
+	'htm'	=>	array('text/html', 'text/plain'),
+	'shtml'	=>	array('text/html', 'text/plain'),
 	'txt'	=>	'text/plain',
 	'text'	=>	'text/plain',
 	'log'	=>	array('text/plain', 'text/x-log'),
 	'rtx'	=>	'text/richtext',
 	'rtf'	=>	'text/rtf',
-	'xml'	=>	array('application/xml', 'text/xml'),
+	'xml'	=>	array('application/xml', 'text/xml', 'text/plain'),
 	'xsl'	=>	array('application/xml', 'text/xsl', 'text/xml'),
 	'mpeg'	=>	'video/mpeg',
 	'mpg'	=>	'video/mpeg',
@@ -123,8 +123,10 @@ return array(
 	'avi'	=>	array('video/x-msvideo', 'video/msvideo', 'video/avi', 'application/x-troff-msvideo'),
 	'movie'	=>	'video/x-sgi-movie',
 	'doc'	=>	array('application/msword', 'application/vnd.ms-office'),
-	'docx'	=>	array('application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/zip'),
-	'xlsx'	=>	array('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/zip'),
+	'docx'	=>	array('application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/zip', 'application/msword'),
+	'dot'	=>	array('application/msword', 'application/vnd.ms-office'),
+	'dotx'	=>	array('application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/zip', 'application/msword'),
+	'xlsx'	=>	array('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/zip', 'application/vnd.ms-excel', 'application/msword'),
 	'word'	=>	array('application/msword', 'application/octet-stream'),
 	'xl'	=>	'application/excel',
 	'eml'	=>	'message/rfc822',
@@ -152,6 +154,7 @@ return array(
 	'mp4'   =>	'video/mp4',
 	'm4a'   =>	'audio/x-m4a',
 	'f4v'   =>	'video/mp4',
+	'webm'	=>	'video/webm',
 	'aac'   =>	'audio/x-acc',
 	'm4u'   =>	'application/vnd.mpegurl',
 	'm3u'   =>	'text/plain',
@@ -164,7 +167,12 @@ return array(
 	'ogg'   =>	'audio/ogg',
 	'kmz'	=>	array('application/vnd.google-earth.kmz', 'application/zip', 'application/x-zip'),
 	'kml'	=>	array('application/vnd.google-earth.kml+xml', 'application/xml', 'text/xml'),
-	'ics'	=>	'text/calendar'
+	'ics'	=>	'text/calendar',
+	'zsh'	=>	'text/x-scriptzsh',
+	'7zip'	=>	array('application/x-compressed', 'application/x-zip-compressed', 'application/zip', 'multipart/x-zip'),
+	'cdr'	=>	array('application/cdr', 'application/coreldraw', 'application/x-cdr', 'application/x-coreldraw', 'image/cdr', 'image/x-cdr', 'zz-application/zz-winassoc-cdr'),
+	'wma'	=>	array('audio/x-ms-wma', 'video/x-ms-asf'),
+	'jar'	=>	array('application/java-archive', 'application/x-java-application', 'application/x-jar', 'application/x-compressed')
 );
 
 /* End of file mimes.php */

@@ -148,7 +148,7 @@ Sistemas multiestelares:
 Es posible que en futuras versiones se incluyan sistemas multiestelares. No obstante, estos sistemas
 tendrían las estrellas en el centro, muy juntas, formando un único centro de masas para los planetas.
 Sería un gran problema si tuvieramos que generar aleatóriamente sistemas que cumplieran el problema de
-los n cuerposo con estrellas separadas y planetas entre ellas, ya que las órbitas no serían estables,
+los n cuerpos o con estrellas separadas y planetas entre ellas, ya que las órbitas no serían estables,
 y si lo fueran, no serían elípticas, como en el caso de los 2 cuerpos. No obstante, esta característica
 está en estudio por su dificil implementación.
 

@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 /**
  * CodeIgniter
  *
@@ -18,12 +18,13 @@
  *
  * @package		CodeIgniter
  * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
+ * @copyright	Copyright (c) 2008 - 2013, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Common Functions
@@ -150,7 +151,7 @@ if ( ! function_exists('load_class'))
 
 				if (class_exists($name) === FALSE)
 				{
-					require($path.$directory.'/'.$class.'.php');
+					require_once($path.$directory.'/'.$class.'.php');
 				}
 
 				break;
@@ -164,7 +165,7 @@ if ( ! function_exists('load_class'))
 
 			if (class_exists($name) === FALSE)
 			{
-				require(APPPATH.$directory.'/'.config_item('subclass_prefix').$class.'.php');
+				require_once(APPPATH.$directory.'/'.config_item('subclass_prefix').$class.'.php');
 			}
 		}
 
@@ -240,7 +241,7 @@ if ( ! function_exists('get_config'))
 		}
 
 		// Is the config file in the environment folder?
-		if (defined('ENVIRONMENT') && file_exists($file_path = APPPATH.'config/'.ENVIRONMENT.'/config.php'))
+		if (file_exists($file_path = APPPATH.'config/'.ENVIRONMENT.'/config.php'))
 		{
 			require($file_path);
 		}
@@ -315,7 +316,7 @@ if ( ! function_exists('get_mimes'))
 	{
 		static $_mimes = array();
 
-		if (defined('ENVIRONMENT') && is_file(APPPATH.'config/'.ENVIRONMENT.'/mimes.php'))
+		if (is_file(APPPATH.'config/'.ENVIRONMENT.'/mimes.php'))
 		{
 			$_mimes = include(APPPATH.'config/'.ENVIRONMENT.'/mimes.php');
 		}
@@ -325,6 +326,24 @@ if ( ! function_exists('get_mimes'))
 		}
 
 		return $_mimes;
+	}
+}
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('is_https'))
+{
+	/**
+	 * Is HTTPS?
+	 *
+	 * Determines if the application is accessed via an encrypted
+	 * (HTTPS) connection.
+	 *
+	 * @return	bool
+	 */
+	function is_https()
+	{
+		return ( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off');
 	}
 }
 
@@ -394,14 +413,23 @@ if ( ! function_exists('log_message'))
 	 */
 	function log_message($level = 'error', $message, $php_error = FALSE)
 	{
-		static $_log;
+		static $_log, $_log_threshold;
+		
+		if ($_log_threshold === NULL)
+		{
+			$_log_threshold = config_item('log_threshold');
+		}
 
-		if (config_item('log_threshold') === 0)
+		if ($_log_threshold === 0)
 		{
 			return;
 		}
 
-		$_log =& load_class('Log');
+		if ($_log === NULL)
+		{
+			$_log =& load_class('Log', 'core');
+		}
+		
 		$_log->write_log($level, $message, $php_error);
 	}
 }
@@ -488,13 +516,9 @@ if ( ! function_exists('set_status_header'))
 		{
 			header('Status: '.$code.' '.$text, TRUE);
 		}
-		elseif ($server_protocol === 'HTTP/1.0')
-		{
-			header('HTTP/1.0 '.$code.' '.$text, TRUE, $code);
-		}
 		else
 		{
-			header('HTTP/1.1 '.$code.' '.$text, TRUE, $code);
+			header(($server_protocol ? $server_protocol : 'HTTP/1.1').' '.$code.' '.$text, TRUE, $code);
 		}
 	}
 }
@@ -524,18 +548,17 @@ if ( ! function_exists('_exception_handler'))
 	{
 		$_error =& load_class('Exceptions', 'core');
 
-		// Should we display the error? We'll get the current error_reporting
+		// Should we ignore the error? We'll get the current error_reporting
 		// level and add its bits with the severity bits to find out.
-		// And respect display_errors
-		if (($severity & error_reporting()) === $severity && (bool) ini_get('display_errors') === TRUE)
-		{
-			$_error->show_php_error($severity, $message, $filepath, $line);
-		}
-
-		// Should we log the error? No? We're done...
-		if (config_item('log_threshold') === 0)
+		if (($severity & error_reporting()) !== $severity)
 		{
 			return;
+		}
+
+		// Should we display the error?
+		if ((bool) ini_get('display_errors') === TRUE)
+		{
+			$_error->show_php_error($severity, $message, $filepath, $line);
 		}
 
 		$_error->log_exception($severity, $message, $filepath, $line);
@@ -634,6 +657,58 @@ if ( ! function_exists('_stringify_attributes'))
 		}
 
 		return rtrim($atts, ',');
+	}
+}
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('function_usable'))
+{
+	/**
+	 * Function usable
+	 *
+	 * Executes a function_exists() check, and if the Suhosin PHP
+	 * extension is loaded - checks whether the function that is
+	 * checked might be disabled in there as well.
+	 *
+	 * This is useful as function_exists() will return FALSE for
+	 * functions disabled via the *disable_functions* php.ini
+	 * setting, but not for *suhosin.executor.func.blacklist* and
+	 * *suhosin.executor.disable_eval*. These settings will just
+	 * terminate script execution if a disabled function is executed.
+	 *
+	 * @link	http://www.hardened-php.net/suhosin/
+	 * @param	string	$function_name	Function to check for
+	 * @return	bool	TRUE if the function exists and is safe to call,
+	 *			FALSE otherwise.
+	 */
+	function function_usable($function_name)
+	{
+		static $_suhosin_func_blacklist;
+
+		if (function_exists($function_name))
+		{
+			if ( ! isset($_suhosin_func_blacklist))
+			{
+				if (extension_loaded('suhosin'))
+				{
+					$_suhosin_func_blacklist = explode(',', trim(@ini_get('suhosin.executor.func.blacklist')));
+
+					if ( ! in_array('eval', $_suhosin_func_blacklist, TRUE) && @ini_get('suhosin.executor.disable_eval'))
+					{
+						$_suhosin_func_blacklist[] = 'eval';
+					}
+				}
+				else
+				{
+					$_suhosin_func_blacklist = array();
+				}
+			}
+
+			return ! in_array($function_name, $_suhosin_func_blacklist, TRUE);
+		}
+
+		return FALSE;
 	}
 }
 

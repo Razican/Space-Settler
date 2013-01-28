@@ -18,7 +18,7 @@
  *
  * @package		CodeIgniter
  * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
+ * @copyright	Copyright (c) 2008 - 2013, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/AFL-3.0 Academic Free License (AFL 3.0)
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -62,11 +62,11 @@ $config['index_page'] = '';
 | URI string.  The default setting of 'AUTO' works for most servers.
 | If your links do not seem to work, try one of the other delicious flavors:
 |
-| 'AUTO'			Default - auto detects
-| 'PATH_INFO'		Uses the PATH_INFO
-| 'QUERY_STRING'	Uses the QUERY_STRING
-| 'REQUEST_URI'		Uses the REQUEST_URI
-| 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
+| 'AUTO'		Default - auto detects
+| 'CLI' or 'argv'	Uses $_SERVER['argv'] (for php-cli only)
+| 'PATH_INFO'		Uses $_SERVER['PATH_INFO']
+| 'REQUEST_URI'		Uses $_SERVER['REQUEST_URI']
+| 'QUERY_STRING'	Uses $_SERVER['QUERY_STRING']
 |
 */
 $config['uri_protocol']	= 'AUTO';
@@ -241,7 +241,7 @@ $config['log_date_format'] = 'd-m-Y H:i:s';
 |--------------------------------------------------------------------------
 |
 | Leave this BLANK unless you would like to set something other than the default
-| system/cache/ folder.  Use a full server path with trailing slash.
+| application/cache/ folder.  Use a full server path with trailing slash.
 |
 */
 $config['cache_path'] = '';
@@ -258,13 +258,16 @@ $config['cache_path'] = '';
 | http://codeigniter.com/user_guide/libraries/sessions.html
 |
 */
-$config['encryption_key'] = '4y1ky392B16ARMO42rniBJ4LLH1p8ezD';
+$config['encryption_key'] = 'GgdpABDe8y03r33NU88L8K9VP6S9Tj75';
 
 /*
 |--------------------------------------------------------------------------
 | Session Variables
 |--------------------------------------------------------------------------
 |
+| 'sess_driver'				= the driver to load: cookie (Classic), native (PHP sessions),
+|	or your custom driver name
+| 'sess_valid_drivers'		= additional valid drivers which may be loaded
 | 'sess_cookie_name'		= the name you want for the cookie
 | 'sess_expiration'			= the number of SECONDS you want the session to last.
 |   by default sessions last 7200 seconds (two hours).  Set to zero for no expiration.
@@ -278,7 +281,9 @@ $config['encryption_key'] = '4y1ky392B16ARMO42rniBJ4LLH1p8ezD';
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'sps_session';
+$config['sess_driver']			= 'cookie';
+$config['sess_valid_drivers']	= array();
+$config['sess_cookie_name']		= 'ci_session';
 $config['sess_expiration']		= 604800; //60*60*24*7
 $config['sess_expire_on_close']	= TRUE;
 $config['sess_encrypt_cookie']	= TRUE;
@@ -331,12 +336,12 @@ $config['global_xss_filtering'] = TRUE;
 | 'csrf_regenerate' = Regenerate token on every submission
 | 'csrf_exclude_uris' = Array of URIs which ignore CSRF checks
 */
-$config['csrf_protection']		= TRUE;
-$config['csrf_token_name']		= 'SPS_csrf-token';
-$config['csrf_cookie_name']		= 'SPS_csrf-cookie';
-$config['csrf_expire']			= 7200; //60*60*2
-$config['csrf_regenerate']		= TRUE;
-$config['csrf_exclude_uris']	= array();
+$config['csrf_protection'] = TRUE;
+$config['csrf_token_name'] = 'SPS_csrf-token';
+$config['csrf_cookie_name'] = 'SPS_csrf-cookie';
+$config['csrf_expire'] = 7200; //60*60*2
+$config['csrf_regenerate'] = TRUE;
+$config['csrf_exclude_uris'] = array();
 
 /*
 |--------------------------------------------------------------------------
@@ -401,15 +406,19 @@ $config['rewrite_short_tags'] = FALSE;
 | Reverse Proxy IPs
 |--------------------------------------------------------------------------
 |
-| If your server is behind a reverse proxy, you must whitelist the proxy IP
-| addresses from which CodeIgniter should trust the HTTP_X_FORWARDED_FOR
-| header in order to properly identify the visitor's IP address.
-| Comma-delimited, e.g. '10.0.1.200,10.0.1.201'
+| If your server is behind a reverse proxy, you must whitelist the proxy
+| IP addresses from which CodeIgniter should trust headers such as
+| HTTP_X_FORWARDED_FOR and HTTP_CLIENT_IP in order to properly identify
+| the visitor's IP address.
 |
+| You can use both an array or a comma-separated list of proxy addresses,
+| as well as specifying whole subnets. Here are a few examples:
+|
+| Comma-separated:	'10.0.1.200,192.168.5.0/24'
+| Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
 
 
-
 /* End of file config.php */
-/* Location: ./application/config/development/config.php */
+/* Location: ./application/config/config.php */

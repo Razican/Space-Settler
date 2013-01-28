@@ -77,7 +77,7 @@ class Settings extends SPS_Controller {
 		{
 			message(lang('settings.confirm_pass'), 'settings');
 		}
-		elseif ($this->input->post('email') && ( ! valid_email($this->input->post('email'))))
+		elseif ($this->input->post('email') && ( !filter_var($this->input->post('email'), FILTER_VALIDATE_EMAIL)))
 		{
 			message(lang('settings.email_not_valid'), 'settings');
 		}

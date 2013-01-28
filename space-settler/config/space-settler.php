@@ -1,4 +1,13 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+/**
+ * Main Space Settler's configuration file
+ *
+ * @subpackage	Configuration
+ * @author		Razican
+ * @category	Configuration
+ * @link		http://www.razican.com/
+ */
 
 /*
 |--------------------------------------------------------------------------

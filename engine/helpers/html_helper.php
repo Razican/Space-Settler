@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 /**
  * CodeIgniter
  *
@@ -18,12 +18,13 @@
  *
  * @package		CodeIgniter
  * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
+ * @copyright	Copyright (c) 2008 - 2013, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * CodeIgniter HTML Helpers
@@ -156,12 +157,12 @@ if ( ! function_exists('br'))
 	/**
 	 * Generates HTML BR tags based on number supplied
 	 *
-	 * @param	int
+	 * @param	int	$count	Number of times to repeat the tag
 	 * @return	string
 	 */
-	function br($num = 1)
+	function br($count = 1)
 	{
-		return str_repeat('<br />', $num);
+		return str_repeat('<br />', $count);
 	}
 }
 
@@ -215,7 +216,7 @@ if ( ! function_exists('img'))
 			}
 		}
 
-		return $img._stringify_attributes($attributes).'/>';
+		return $img._stringify_attributes($attributes).' />';
 	}
 }
 
@@ -241,7 +242,7 @@ if ( ! function_exists('doctype'))
 
 		if ( ! is_array($_doctypes))
 		{
-			if (defined('ENVIRONMENT') && is_file(APPPATH.'config/'.ENVIRONMENT.'/doctypes.php'))
+			if (is_file(APPPATH.'config/'.ENVIRONMENT.'/doctypes.php'))
 			{
 				include(APPPATH.'config/'.ENVIRONMENT.'/doctypes.php');
 			}

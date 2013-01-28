@@ -196,7 +196,7 @@ class Bigbang {
 	}
 
 	/**
-	 * Get the number bodies in the current universe
+	 * Finish the Big Bang and create the config file
 	 *
 	 * @access	public
 	 * @return	boolean

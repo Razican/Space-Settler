@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 /**
  * CodeIgniter
  *
@@ -18,12 +18,13 @@
  *
  * @package		CodeIgniter
  * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2012, EllisLab, Inc. (http://ellislab.com/)
+ * @copyright	Copyright (c) 2008 - 2013, EllisLab, Inc. (http://ellislab.com/)
  * @license		http://opensource.org/licenses/OSL-3.0 Open Software License (OSL 3.0)
  * @link		http://codeigniter.com
  * @since		Version 1.0
  * @filesource
  */
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * CodeIgniter Text Helpers
@@ -89,7 +90,8 @@ if ( ! function_exists('character_limiter'))
 			return $str;
 		}
 
-		$str = preg_replace('/\s+/', ' ', str_replace(array("\r\n", "\r", "\n"), ' ', $str));
+		// a bit complicated, but faster than preg_replace with \s+
+		$str = preg_replace('/ {2,}/', ' ', str_replace(array("\r", "\n", "\t", "\x0B", "\x0C"), ' ', $str));
 
 		if (strlen($str) <= $n)
 		{
@@ -117,18 +119,15 @@ if ( ! function_exists('ascii_to_entities'))
 	/**
 	 * High ASCII to Entities
 	 *
-	 * Converts High ascii text and MS Word special characters to character entities
+	 * Converts high ASCII text and MS Word special characters to character entities
 	 *
-	 * @param	string
+	 * @param	string	$str
 	 * @return	string
 	 */
 	function ascii_to_entities($str)
 	{
-		$count	= 1;
-		$out	= '';
-		$temp	= array();
-
-		for ($i = 0, $s = strlen($str); $i < $s; $i++)
+		$out = '';
+		for ($i = 0, $s = strlen($str), $count = 1, $temp = array(); $i < $s; $i++)
 		{
 			$ordinal = ord($str[$i]);
 
@@ -140,7 +139,7 @@ if ( ! function_exists('ascii_to_entities'))
 				*/
 				if (count($temp) === 1)
 				{
-					$out  .= '&#'.array_shift($temp).';';
+					$out .= '&#'.array_shift($temp).';';
 					$count = 1;
 				}
 
@@ -368,7 +367,7 @@ if ( ! function_exists('convert_accented_characters'))
 
 		if ( ! isset($foreign_characters) OR ! is_array($foreign_characters))
 		{
-			if (defined('ENVIRONMENT') && is_file(APPPATH.'config/'.ENVIRONMENT.'/foreign_chars.php'))
+			if (is_file(APPPATH.'config/'.ENVIRONMENT.'/foreign_chars.php'))
 			{
 				include(APPPATH.'config/'.ENVIRONMENT.'/foreign_chars.php');
 			}
@@ -389,19 +388,19 @@ if ( ! function_exists('convert_accented_characters'))
 
 // ------------------------------------------------------------------------
 
-/**
- * Word Wrap
- *
- * Wraps text at the specified character. Maintains the integrity of words.
- * Anything placed between {unwrap}{/unwrap} will not be word wrapped, nor
- * will URLs.
- *
- * @param	string	the text string
- * @param	int	the number of characters to wrap at
- * @return	string
- */
 if ( ! function_exists('word_wrap'))
 {
+	/**
+	 * Word Wrap
+	 *
+	 * Wraps text at the specified character. Maintains the integrity of words.
+	 * Anything placed between {unwrap}{/unwrap} will not be word wrapped, nor
+	 * will URLs.
+	 *
+	 * @param	string	$str		the text string
+	 * @param	int	$charlim = 76	the number of characters to wrap at
+	 * @return	string
+	 */
 	function word_wrap($str, $charlim = 76)
 	{
 		// Set the character limit
