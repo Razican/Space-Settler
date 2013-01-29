@@ -123,7 +123,7 @@ final class Star extends Body {
 
 	private function _luminosity()
 	{
-		$this->luminosity	= 4*M_PI*pow($this->_radius(), 2)*config_item('Boltzman_constant')*pow($this->temperature, 4)/config_item('sun_luminosity');
+		$this->luminosity	= 4*M_PI*pow($this->radius(), 2)*config_item('Boltzman_constant')*pow($this->temperature, 4)/config_item('sun_luminosity');
 	}
 
 	/**
@@ -133,7 +133,7 @@ final class Star extends Body {
 	 */
 	public function volume()
 	{
-		return 4/3*M_PI*pow($this->_radius(), 3);
+		return 4/3*M_PI*pow($this->radius(), 3);
 	}
 
 	/**
@@ -187,15 +187,15 @@ final class Star extends Body {
 
 			if ($this->luminosity < 0.01)
 			{
-				$m			= mt_rand(50, 250);
+				$m			= mt_rand(40, 250);
 			}
 			elseif ($this->luminosity < 0.5)
 			{
-				$m			= mt_rand(250, 1000);
+				$m			= mt_rand(100, 1000);
 			}
 			elseif ($this->luminosity < 10)
 			{
-				$m			= mt_rand(0, round(10-$this->luminosity)) ? mt_rand(300, 2000) : mt_rand(350, 7500);
+				$m			= mt_rand(0, round(10-$this->luminosity)) ? mt_rand(200, 2000) : mt_rand(300, 7500);
 			}
 			else
 			{
@@ -208,7 +208,7 @@ final class Star extends Body {
 		}
 	}
 
-	private function _radius()
+	public function radius()
 	{
 		if (($this->type === '1') OR ($this->type === '2') OR ($this->type === '3') OR ($this->type === '4'))
 		{

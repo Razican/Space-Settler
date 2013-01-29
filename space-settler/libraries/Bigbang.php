@@ -29,7 +29,7 @@ class Bigbang {
 										'planets' => 0, 'planets_0' => 0, 'planets_1' => 0, 'hot_jupiters' => 0,
 										'earths' => 0, 'habitable' => 0, 'moons' => 0);
 
-		$this->records			= array('min_sma' => 0, 'max_sma' => 0);
+		$this->records			= array('min_sma' => 0, 'max_sma' => 0, 'min_period' => 0, 'max_period' => 0);
 
 		require_once(APPPATH.'entities/body.php');
 		require_once(APPPATH.'entities/bodies/star.php');
@@ -76,21 +76,28 @@ class Bigbang {
 				{
 					/* Planet */
 					$planet		= new Planet($star, $this->current_bodies, $h, $last_distance);
-					$planets[]	= $planet;
-					$this->stats['planets']++;
-					$this->stats['planets_'.$planet->type]++;
-					if ( ! $planet->type && $planet->radius > 6E+6 && $planet->radius < 65E+5
-						&& $planet->mass > 25E+23 && $planet->mass < 1E+25)
-						$this->stats['earths']++;
-					if ($planet->type && $planet->temperature['eff'] > 1000) $this->stats['hot_jupiters']++;
-					if ($planet->habitable) $this->stats['habitable']++;
 
-					if ($this->records['min_sma'] === 0 OR $this->records['min_sma'] > $planet->orbit['sma'])
-						$this->records['min_sma'] = $planet->orbit['sma'];
-					if ($this->records['max_sma'] < $planet->orbit['sma'])
-						$this->records['max_sma'] = $planet->orbit['sma'];
+					if ($planet->is_roche_ok)
+					{
+						$planets[]	= $planet;
+						$this->stats['planets']++;
+						$this->stats['planets_'.$planet->type]++;
+						if ( ! $planet->type && $planet->radius > 6E+6 && $planet->radius < 65E+5
+							&& $planet->mass > 25E+23 && $planet->mass < 1E+25)
+							$this->stats['earths']++;
+						if ($planet->type && $planet->temperature['eff'] > 800) $this->stats['hot_jupiters']++;
+						if ($planet->habitable) $this->stats['habitable']++;
 
-					$this->current_bodies++;
+						if ($this->records['min_sma'] === 0 OR $this->records['min_sma'] > $planet->orbit['sma'])
+							$this->records['min_sma'] = $planet->orbit['sma'];
+						if ($this->records['max_sma'] < $planet->orbit['sma'])
+							$this->records['max_sma'] = $planet->orbit['sma'];
+						if ($this->records['min_period'] === 0 OR $this->records['min_period'] > $planet->orbit['period']/3600)
+							$this->records['min_period'] = $planet->orbit['period']/3600;
+						if ($this->records['max_period'] < $planet->orbit['period']/31536000)
+							$this->records['max_period'] = $planet->orbit['period']/31536000;
+
+						$this->current_bodies++;
 
 		//			$planet_moons		= $planet->num_moons(TRUE);
 		//			for ($g = 1; $g <= $planet_moons; $g++)
@@ -104,8 +111,13 @@ class Bigbang {
 		//				$this->current_bodies++;
 		//			}
 
-					$last_distance = $planet->orbit['sma'];
+						$last_distance = $planet->orbit['sma'];
 		//			$planet->finish();
+					}
+					else
+					{
+						//TODO Crear cinturón de asteroides
+					}
 				}
 			}
 			//Create dwarf-planets (Kuiper's Belt)

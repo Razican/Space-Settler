@@ -7,7 +7,7 @@ class Creation extends SPS_Controller {
 		if ($this->input->is_cli_request())
 		{
 			$this->benchmark->mark('creation_start');
-			ini_set('memory_limit','10G');
+			ini_set('memory_limit','2G');
 			ini_set('max_execution_time', 3600);
 
 			$this->config->load('physics');
@@ -43,9 +43,13 @@ class Creation extends SPS_Controller {
 				echo 'Objetos habitables totales: '.format_number($this->bigbang->stats['habitable']).PHP_EOL.PHP_EOL;
 				echo 'Records:'.PHP_EOL;
 				echo '	Mínima distancia a la estrella:'.PHP_EOL;
-				echo '		Semieje mayor-> '.format_number($this->bigbang->records['min_sma'], 2).' UA'.PHP_EOL;
+				echo '		Semieje mayor-> '.format_number($this->bigbang->records['min_sma'], 3).' UA'.PHP_EOL;
 				echo '	Máxima distancia a la estrella:'.PHP_EOL;
 				echo '		Semieje mayor-> '.format_number($this->bigbang->records['max_sma'], 2).' UA'.PHP_EOL;
+				echo '	Mínimo periodo orbital:'.PHP_EOL;
+				echo '		Periodo orbital-> '.format_number($this->bigbang->records['min_period'], 2).' horas'.PHP_EOL;
+				echo '	Máximo periodo orbital:'.PHP_EOL;
+				echo '		Periodo orbital-> '.format_number($this->bigbang->records['max_period'], 2).' años'.PHP_EOL;
 				echo PHP_EOL;
 			}
 			else

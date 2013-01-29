@@ -113,6 +113,8 @@ Tipos de Objetos:
 * Estrella: Tabla stars y type = Char(tipo de estrella)
 * Estrella de neutrones: Tabla stars y type = 0 (Char)
 * Agujero negro: Tabla stars y type = 1 (Char)
+* Estrella de quarks: Tabla stars y type = 3 (Char)
+* Enana blanca: Tabla stars y type = 4 (Char)
 * Planeta: Tabla bodies y type = 0-5
 	* Planeta rocoso: type = 0
 	* Gigante gaseoso: type = 1
@@ -163,5 +165,4 @@ Problemas conocidos:
 
 * Se ha detectado una baja concentración de planetas calientes, por lo que se debe reconfigurar el sistema para que eso no ocurra.
 * Resulta que hay a veces planetas con el mismo periodo de translación, se presupone que en el mismo sistema, pero se debe mejorar el diagnóstico.
-* Los planetas gaseosos tienen masa cero.
 * La temperatura máxima de los planetas está siempre cerca de los 108 000 ºK.
