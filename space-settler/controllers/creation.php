@@ -6,6 +6,8 @@ class Creation extends SPS_Controller {
 	{
 		if ($this->input->is_cli_request())
 		{
+			echo (chr(27)."[?25l");
+
 			$this->benchmark->mark('creation_start');
 			ini_set('memory_limit','2G');
 			ini_set('max_execution_time', 3600);
@@ -14,11 +16,11 @@ class Creation extends SPS_Controller {
 			$this->load->library('bigbang');
 
 			$stars = mt_rand(95000, 105000);
-			echo 'Comienza la creación de la galaxia'.PHP_EOL.PHP_EOL;
+			echo PHP_EOL.'Comienza la creación de la galaxia de '.format_number($stars).' estrellas'.PHP_EOL.PHP_EOL;
 
 			if ($this->bigbang->create_galaxy($stars))
 			{
-				echo PHP_EOL.'Galaxia creada, con '.format_number($stars).' estrellas'.PHP_EOL;
+				echo 'Se ha completado la creación de la galaxia correctamente'.PHP_EOL;
 				echo 'Datos:'.PHP_EOL.PHP_EOL;
 				echo 'Agujeros Negros: '.number_format($this->bigbang->stats['1_stars'], 0, ',', ' ').PHP_EOL;
 				echo 'Estrellas de Neutrones: '.number_format($this->bigbang->stats['2_stars'], 0, ',', ' ').PHP_EOL;
@@ -50,6 +52,10 @@ class Creation extends SPS_Controller {
 				echo '		Periodo orbital-> '.format_number($this->bigbang->records['min_period'], 2).' horas'.PHP_EOL;
 				echo '	Máximo periodo orbital:'.PHP_EOL;
 				echo '		Periodo orbital-> '.format_number($this->bigbang->records['max_period'], 2).' años'.PHP_EOL;
+				echo '	Mínima temperatura:'.PHP_EOL;
+				echo '		Temperatura-> '.format_number($this->bigbang->records['min_temperature'], 2).' K'.PHP_EOL;
+				echo '	Máxima temperatura:'.PHP_EOL;
+				echo '		Temperatura-> '.format_number($this->bigbang->records['max_temperature'], 2).' K'.PHP_EOL;
 				echo PHP_EOL;
 			}
 			else
@@ -71,6 +77,8 @@ class Creation extends SPS_Controller {
 			{
 				echo 'Tiempo total de la creación: '.format_number($this->benchmark->elapsed_time('creation_start', 'creation_end'), 4).' segundos'.PHP_EOL.PHP_EOL;
 			}
+
+			echo (chr(27)."[?25h");
 		}
 		else
 		{

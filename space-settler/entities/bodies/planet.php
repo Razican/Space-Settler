@@ -345,7 +345,7 @@ final class Planet extends Body {
 	private function _temperature()
 	{
 		$l		= $this->star->luminosity*config_item('sun_luminosity');
-		$this->temperature['eff']	= round(pow(($l*(1-$this->albedo))/(16*M_PI*config_item('Boltzman_constant')*pow($this->orbit['sma']*config_item('au'), 2)),0.25), 2);
+		$this->temperature['eff']		= round(pow(($l*(1-$this->albedo))/(16*M_PI*config_item('Boltzman_constant')*pow($this->orbit['sma']*config_item('au'), 2)),0.25), 2);
 
 		if ( ! $this->type)
 		{
@@ -373,16 +373,16 @@ final class Planet extends Body {
 			}
 			elseif ($this->rotation['axTilt'] > 50 && $this->rotation['axTilt'] < 130)
 			{
-				$this->temperature['min']	= $this->temperature['avg'];
-				$this->temperature['max']	= $this->temperature['avg'];
+				$this->temperature['min']	= $this->temperature['avg'];//*(1-$this->orbit['ecc'])*pow(1-abs(90-$this->rotation['axTilt'])/90, 2);
+				$this->temperature['max']	= $this->temperature['avg'];//*(1+$this->orbit['ecc'])*pow(1-abs(90-$this->rotation['axTilt'])/90, 2);
 				//Se considera un planeta acoplado
 				//Como Mercurio, pero más exagerado, o como Venus pero más exagerado
 				//También hay que tener en cuenta la duración del día
 			}
 			else
 			{
-				$this->temperature['min']	= $this->temperature['avg'];
-				$this->temperature['max']	= $this->temperature['avg'];
+				$this->temperature['min']	= $this->temperature['avg'];//*(1-$this->orbit['ecc']);
+				$this->temperature['max']	= $this->temperature['avg'];//*(1+$this->orbit['ecc']);
 				//Estaciones, etc, como en la Tierra o Marte
 				//Pero hay que tener en cuenta la duración del día
 			}

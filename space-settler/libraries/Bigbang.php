@@ -29,7 +29,8 @@ class Bigbang {
 										'planets' => 0, 'planets_0' => 0, 'planets_1' => 0, 'hot_jupiters' => 0,
 										'earths' => 0, 'habitable' => 0, 'moons' => 0);
 
-		$this->records			= array('min_sma' => 0, 'max_sma' => 0, 'min_period' => 0, 'max_period' => 0);
+		$this->records			= array('min_sma' => 0, 'max_sma' => 0, 'min_period' => 0, 'max_period' => 0,
+										'min_temperature' => 0, 'max_temperature' => 0);
 
 		require_once(APPPATH.'entities/body.php');
 		require_once(APPPATH.'entities/bodies/star.php');
@@ -49,6 +50,20 @@ class Bigbang {
 	{
 		$CI =& get_instance();
 		$CI->benchmark->mark('galaxy_start');
+
+		//Progress bar initialization
+		$columns = 0;
+		preg_match_all("/rows.([0-9]+);.columns.([0-9]+);/", strtolower(exec('stty -a |grep columns')), $output);
+		if(sizeof($output) == 3)
+		{
+			$columns = $output[2][0];
+		}
+		if ($columns > 0)
+		{
+			echo str_pad("[" , $columns-7)."]   0% ";
+			$pbl = 0;
+			$pbp = 0;
+		}
 
 		for ($i = 1; $i <= $solar_systems; $i++)
 		{
@@ -96,6 +111,10 @@ class Bigbang {
 							$this->records['min_period'] = $planet->orbit['period']/3600;
 						if ($this->records['max_period'] < $planet->orbit['period']/31536000)
 							$this->records['max_period'] = $planet->orbit['period']/31536000;
+						if ( ! $planet->type && ($this->records['min_temperature'] === 0 OR $this->records['min_temperature'] > $planet->temperature['min']))
+							$this->records['min_temperature'] = $planet->temperature['min'];
+						if ( ! $planet->type && ($this->records['max_temperature'] < $planet->temperature['max']))
+							$this->records['max_emperature'] = $planet->temperature['max'];
 
 						$this->current_bodies++;
 
@@ -124,12 +143,32 @@ class Bigbang {
 
 			$this->_insert($star, $planets);
 
-			if ($i % 10000 === 0)
+			if ($columns > 0)
 			{
-				echo 'Creadas '.format_number($i).' estrellas de '.format_number($solar_systems).PHP_EOL;
+				$pbp	= $i/$solar_systems;
+				$npbl	= round($pbp*($columns-8));
+				$npbp	= round($pbp*100);
+
+				if ($pbl !== $npbl OR $pbp !== $npbl)
+				{
+					$pbl = $npbl;
+					$pbp = $npbp;
+					echo str_repeat(chr(8), $columns);
+					echo str_pad("[".($pbl > 0 ? str_repeat("=", $pbl-1).">" : ""), $columns-7)."]".str_pad($pbp, 4, " ", STR_PAD_LEFT)."% ";
+				}
+			}
+			else
+			{
+				echo 'Creadas '.format_number($i).' estrellas'."\r";
 			}
 		}
 		$this->current_galaxies++;
+
+		if ($columns > 0)
+		{
+			echo str_repeat(chr(8), $columns);
+			echo "[".str_repeat("=", $columns-8)."] 100% ".PHP_EOL.PHP_EOL;
+		}
 
 		$CI->benchmark->mark('galaxy_end');
 
