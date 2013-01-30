@@ -240,7 +240,7 @@ final class Planet extends Body {
 	{
 		$CI				=& get_instance();
 		$this->rotation = array();
-		$tidal_lock		= sqrt($this->star->mass/config_item('sun_mass'))/2;
+		$tidal_lock		= sqrt($this->star->mass)/2;
 
 		if ($this->orbit['sma'] > $tidal_lock)
 		{
@@ -258,7 +258,7 @@ final class Planet extends Body {
 		elseif ($this->orbit['sma'] > sqrt($tidal_lock)/3)
 		{
 			$this->rotation['axTilt']	= mt_rand(0, 100)/100;
-			$this->rotation['period']	= $this->orbit['period']*mt_rand(3, 6)/2;
+			$this->rotation['period']	= $this->orbit['period']*2/mt_rand(3, 6);
 		}
 		else
 		{
@@ -346,21 +346,25 @@ final class Planet extends Body {
 	{
 		$l		= $this->star->luminosity*config_item('sun_luminosity');
 		$this->temperature['eff']		= round(pow(($l*(1-$this->albedo))/(16*M_PI*config_item('Boltzman_constant')*pow($this->orbit['sma']*config_item('au'), 2)),0.25), 2);
+		$this->temperature['eff_min']	= round(pow(($l*(1-$this->albedo))/(16*M_PI*config_item('Boltzman_constant')*pow($this->orbit['apa']*config_item('au'), 2)),0.25), 2);
+		$this->temperature['eff_max']	= round(pow(($l*(1-$this->albedo))/(16*M_PI*config_item('Boltzman_constant')*pow($this->orbit['pea']*config_item('au'), 2)),0.25), 2);
+		$min_diff = $this->temperature['eff']-$this->temperature['eff_min'];
+		$max_diff = $this->temperature['eff_max']-$this->temperature['eff'];
 
 		if ( ! $this->type)
 		{
-			if ($this->temperature['eff'] > 800)
+			if ($this->temperature['eff_max'] > 500)
 			{
 				$this->atmosphere = array('pressure' => 0, 'greenhouse' => 0);
 			}
 
 			if ($this->atmosphere['greenhouse'] <= 1)
 			{
-				$this->temperature['avg']	= round(($this->temperature['eff']+$this->atmosphere['greenhouse']*20+mt_rand(0, 15)*$this->atmosphere['greenhouse']), 2);
+				$this->temperature['avg']	= round($this->temperature['eff']+$this->atmosphere['greenhouse']*20+mt_rand(0, 15)*$this->atmosphere['greenhouse'], 2);
 			}
 			else
 			{
-				$this->temperature['avg']	= round(($this->temperature['eff']+pow($this->atmosphere['greenhouse'], 1.225)+25+mt_rand(0, 10)), 2);
+				$this->temperature['avg']	= round($this->temperature['eff']+pow($this->atmosphere['greenhouse'], 1.225)+25+mt_rand(0, 10), 2);
 			}
 
 			//CUIDADO!!! hay que tener en cuenta la excentricidad!!!
@@ -368,21 +372,21 @@ final class Planet extends Body {
 			{
 				$change	= round((($this->temperature['avg']*pow($this->rotation['day'], 0.8)*5/pow(1.01, $this->atmosphere['greenhouse']))/1E+6), 2);
 
-				$this->temperature['min']	= $this->temperature['avg']-mt_rand(round($change*1.2*100), round($change*1.7*100))/100;
-				$this->temperature['max']	= $this->temperature['avg']+mt_rand(round($change*0.05*100), round($change*0.2*100))/100;
+				$this->temperature['min']	= $this->temperature['avg']-$min_diff-mt_rand(round($change*1.2*100), round($change*1.7*100))/100;
+				$this->temperature['max']	= $this->temperature['avg']+$max_diff+mt_rand(round($change*0.05*100), round($change*0.2*100))/100;
 			}
 			elseif ($this->rotation['axTilt'] > 50 && $this->rotation['axTilt'] < 130)
 			{
-				$this->temperature['min']	= $this->temperature['avg'];//*(1-$this->orbit['ecc'])*pow(1-abs(90-$this->rotation['axTilt'])/90, 2);
-				$this->temperature['max']	= $this->temperature['avg'];//*(1+$this->orbit['ecc'])*pow(1-abs(90-$this->rotation['axTilt'])/90, 2);
+				$this->temperature['min']	= $this->temperature['avg']-$min_diff;//*(1-$this->orbit['ecc'])*pow(1-abs(90-$this->rotation['axTilt'])/90, 2);
+				$this->temperature['max']	= $this->temperature['avg']+$max_diff;//*(1+$this->orbit['ecc'])*pow(1-abs(90-$this->rotation['axTilt'])/90, 2);
 				//Se considera un planeta acoplado
 				//Como Mercurio, pero más exagerado, o como Venus pero más exagerado
 				//También hay que tener en cuenta la duración del día
 			}
 			else
 			{
-				$this->temperature['min']	= $this->temperature['avg'];//*(1-$this->orbit['ecc']);
-				$this->temperature['max']	= $this->temperature['avg'];//*(1+$this->orbit['ecc']);
+				$this->temperature['min']	= $this->temperature['avg']-$min_diff;//*(1-$this->orbit['ecc']);
+				$this->temperature['max']	= $this->temperature['avg']+$max_diff;//*(1+$this->orbit['ecc']);
 				//Estaciones, etc, como en la Tierra o Marte
 				//Pero hay que tener en cuenta la duración del día
 			}

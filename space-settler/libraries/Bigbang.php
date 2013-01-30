@@ -100,7 +100,7 @@ class Bigbang {
 						if ( ! $planet->type && $planet->radius > 6E+6 && $planet->radius < 65E+5
 							&& $planet->mass > 25E+23 && $planet->mass < 1E+25)
 							$this->stats['earths']++;
-						if ($planet->type && $planet->temperature['eff'] > 800) $this->stats['hot_jupiters']++;
+						if ($planet->type && $planet->temperature['eff'] > 500) $this->stats['hot_jupiters']++;
 						if ($planet->habitable) $this->stats['habitable']++;
 
 						if ($this->records['min_sma'] === 0 OR $this->records['min_sma'] > $planet->orbit['sma'])
@@ -129,6 +129,11 @@ class Bigbang {
 
 		//				$this->current_bodies++;
 		//			}
+
+						if ($planet->orbit['sma'] > 750)
+						{
+							log_message('info', print_r($star, TRUE));
+						}
 
 						$last_distance = $planet->orbit['sma'];
 		//			$planet->finish();

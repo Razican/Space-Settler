@@ -115,9 +115,9 @@ final class Star extends Body {
 				$this->radius		= mt_rand(70, 96)/100;
 			break;
 			case 'M':
-				$this->mass			= mt_rand(10, 45)/100;
+				$this->mass			= (mt_rand(0, 3) ? mt_rand(10, 25) : mt_rand(10, 45))/100;
 				$this->temperature	= mt_rand(2500, 3700);
-				$this->radius		= mt_rand(10, 70)/100;
+				$this->radius		= mt_rand($this->mass*100-5, mt_rand(0, 3) ? 50 : 70)/100;
 		}
 	}
 
@@ -164,7 +164,7 @@ final class Star extends Body {
 				$bodies = mt_rand(0,3);
 			break;
 			case 'F':
-				$bodies = mt_rand(0,8) ? mt_rand(2,6) : mt_rand(0,1);
+				$bodies = mt_rand(0,8) ? mt_rand(2,8) : mt_rand(0,1);
 			break;
 			case 'G':
 				$bodies = mt_rand(0,10) ? mt_rand(4,10) : mt_rand(0,3);
@@ -187,19 +187,31 @@ final class Star extends Body {
 
 			if ($this->luminosity < 0.01)
 			{
-				$m			= mt_rand(40, 250);
+				$m			= mt_rand(40, 100);
+			}
+			elseif ($this->luminosity < 0.1)
+			{
+				$m			= mt_rand(75, 250);
 			}
 			elseif ($this->luminosity < 0.5)
 			{
-				$m			= mt_rand(100, 1000);
+				$m			= mt_rand(150, 1000);
+			}
+			elseif ($this->luminosity < 6)
+			{
+				$m			= mt_rand(0, round(10-$this->luminosity)) ? mt_rand(100, 1000) : mt_rand(250, 6000);
 			}
 			elseif ($this->luminosity < 10)
 			{
-				$m			= mt_rand(0, round(10-$this->luminosity)) ? mt_rand(200, 2000) : mt_rand(300, 7500);
+				$m			= mt_rand(round($this->luminosity*1000), round($this->luminosity*3000));
+			}
+			elseif ($this->luminosity < 30)
+			{
+				$m			= mt_rand(round($this->luminosity*1000 > 30000 ? 30000 : $this->luminosity*1000), round($this->luminosity*1500 > 30000 ? 30000 : $this->luminosity*1500));
 			}
 			else
 			{
-				$m			= mt_rand($this->luminosity*50, 10000 | $this->luminosity*60);
+				$m			= mt_rand(25000, 50000);
 			}
 
 			$this->tb['m']	= $m/10000;

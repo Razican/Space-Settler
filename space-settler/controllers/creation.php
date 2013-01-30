@@ -16,7 +16,7 @@ class Creation extends SPS_Controller {
 			$this->load->library('bigbang');
 
 			$stars = mt_rand(95000, 105000);
-			echo PHP_EOL.'Comienza la creación de la galaxia de '.format_number($stars).' estrellas'.PHP_EOL.PHP_EOL;
+			echo PHP_EOL.'Comienza la creación de la galaxia, con '.format_number($stars).' estrellas'.PHP_EOL.PHP_EOL;
 
 			if ($this->bigbang->create_galaxy($stars))
 			{

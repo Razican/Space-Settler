@@ -163,6 +163,5 @@ pero no los usa. En un futuro es previsible que se usen para dar algún benefici
 Problemas conocidos:
 ====================
 
-* Se ha detectado una baja concentración de planetas calientes, por lo que se debe reconfigurar el sistema para que eso no ocurra.
 * Resulta que hay a veces planetas con el mismo periodo de translación, se presupone que en el mismo sistema, pero se debe mejorar el diagnóstico.
-* La temperatura máxima de los planetas está siempre cerca de los 108 000 ºK.
+* Las temperaturas son incorrectas y negativas.
