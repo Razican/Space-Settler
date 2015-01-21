@@ -41,38 +41,38 @@ int main(int argc, char *argv[])
 
 		cout << "Data:" << endl << endl;
 
-		cout << "\t" << solar_systems << " solar systems:" << endl;
-		cout << "\t\tBlack holes: " << 0 << endl;
-		cout << "\t\tNeutron stars: " << 0 << endl;
-		cout << "\t\tQuark stars: " << 0 << endl;
-		cout << "\t\tWhite dwarfs: " << 0 << endl;
-		cout << "\t\tType O stars: " << 0 << endl;
-		cout << "\t\tType B stars: " << 0 << endl;
-		cout << "\t\tType A stars: " << 0 << endl;
-		cout << "\t\tType F stars: " << 0 << endl;
-		cout << "\t\tType G stars: " << 0 << endl;
-		cout << "\t\tType K stars: " << 0 << endl;
-		cout << "\t\tType M stars: " << 0 << endl << endl;
+		cout << "   " << solar_systems << " solar systems:" << endl;
+		cout << "      Black holes: " << bigbang.get_black_holes() << endl;
+		cout << "      Neutron stars: " << bigbang.get_neutron_stars() << endl;
+		cout << "      Quark stars: " << bigbang.get_quark_stars() << endl;
+		cout << "      White dwarfs: " << bigbang.get_white_dwarfs() << endl;
+		cout << "      Type O stars: " << bigbang.get_type_o_stars() << endl;
+		cout << "      Type B stars: " << bigbang.get_type_b_stars() << endl;
+		cout << "      Type A stars: " << bigbang.get_type_a_stars() << endl;
+		cout << "      Type F stars: " << bigbang.get_type_f_stars() << endl;
+		cout << "      Type G stars: " << bigbang.get_type_g_stars() << endl;
+		cout << "      Type K stars: " << bigbang.get_type_k_stars() << endl;
+		cout << "      Type M stars: " << bigbang.get_type_m_stars() << endl << endl;
 
-		cout << "\tAsteroid belts: " << 0 << endl << endl;
+		cout << "   Asteroid belts: " << bigbang.get_asteroid_belts() << endl << endl;
 
-		cout << "\t" << 0 << " planets: " << endl;
-		cout << "\t\tGaseous planets: " << 0 << endl;
-		cout << "\t\t\tHot Jupiters: " << 0 << endl;
-		cout << "\t\tRocky planets: " << 0 << endl;
-		cout << "\t\t\tSuper-Earths: " << 0 << endl << endl;
+		cout << "   " << (bigbang.get_gaseous_planets()+bigbang.get_rocky_planets()) << " planets: " << endl;
+		cout << "      Gaseous planets: " << bigbang.get_gaseous_planets() << endl;
+		cout << "         Hot Jupiters: " << bigbang.get_hot_jupiters() << endl;
+		cout << "      Rocky planets: " << bigbang.get_rocky_planets() << endl;
+		cout << "         Super-Earths: " << bigbang.get_super_earths() << endl << endl;
 
-		cout << "\tMoons: " << 0 << endl << endl;
+		cout << "   Moons: " << bigbang.get_moons() << endl << endl;
 
-		cout << "\tTotal habitable bodies:  " << 0 << endl << endl;
+		cout << "   Total habitable bodies:  " << bigbang.get_habitable_bodies() << endl << endl;
 
 		cout << "Records:" << endl;
-		cout << "\tMinimum distance to star: " << 0 << " AU" << endl;
-		cout << "\tMaxium distance to star: " << 0 << " AU" << endl;
-		cout << "\tMinimum orbital period: " << 0 << " hours" << endl;
-		cout << "\tMaximum orbital period: " << 0 << " years" << endl;
-		cout << "\tMinimum temperature: " << 0 << " K" << endl;
-		cout << "\tMaximum temperature: " << 0 << " K" << endl << endl;
+		cout << "   Minimum distance to star: " << bigbang.get_min_dist_star() << " AU" << endl;
+		cout << "   Maxium distance to star: " << bigbang.get_max_dist_star() << " AU" << endl;
+		cout << "   Minimum orbital period: " << (bigbang.get_min_orbital_period()/3600.0) << " hours" << endl;
+		cout << "   Maximum orbital period: " << (bigbang.get_max_orbital_period()/31536000.0) << " years" << endl;
+		cout << "   Minimum temperature: " << bigbang.get_min_temp() << " K" << endl;
+		cout << "   Maximum temperature: " << bigbang.get_max_temp() << " K" << endl << endl;
 
 		cout << "Total creation time: " << (end_time - start_time)/1e+9f << " seconds." << endl << endl;
 	}
@@ -80,18 +80,6 @@ int main(int argc, char *argv[])
 	{
 		cout << "An error occurred when creating the galaxy." << endl << endl;
 	}
-
-
-/*	string msg = "Testing backspace...";
-	cout << msg;
-
-	this_thread::sleep_for(chrono::seconds(5));
-
-	cout << '\r';
-	cout << string(msg.length(),' ');
-	cout << '\r';
-
-	cout << "Success!!" << endl;*/
 
 	system("stty echo");
 	return 0;
