@@ -29,7 +29,7 @@ bool Bigbang::create_galaxy(int solar_systems)
 	for (int i = 1; i <= solar_systems; i++)
 	{
 		// Star Creation
-		//Star star(this->current_star, this->current_galaxies);
+		//Star star(this->current_stars, this->current_galaxies);
 		// update stats for star
 	}
 
