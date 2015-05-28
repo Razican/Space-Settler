@@ -114,7 +114,7 @@ class Bigbang {
 						if ( ! $planet->type && ($this->records['min_temperature'] === 0 OR $this->records['min_temperature'] > $planet->temperature['min']))
 							$this->records['min_temperature'] = $planet->temperature['min'];
 						if ( ! $planet->type && ($this->records['max_temperature'] < $planet->temperature['max']))
-							$this->records['max_emperature'] = $planet->temperature['max'];
+							$this->records['max_temperature'] = $planet->temperature['max'];
 
 						$this->current_bodies++;
 
